@@ -8,7 +8,7 @@
 }
 
 /* ========================= */
-/* LIGHT THEME */
+/* BODY (LIGHT DEFAULT) */
 /* ========================= */
 body {
   background: #f7f7f8;
@@ -44,25 +44,27 @@ body {
   border-radius: 6px;
 }
 
-/* ========================= */
 /* NAV LINKS */
-/* ========================= */
 .nav-links {
   display: flex;
   gap: 20px;
   color: #666;
 }
 
+.nav-links p {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
 .nav-links p:hover {
   color: #111;
-  cursor: pointer;
 }
 
 /* ========================= */
 /* HERO */
 /* ========================= */
 .hero {
-  min-height: 70vh;
+  min-height: 75vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,6 +76,7 @@ body {
 .hero h1 {
   font-size: 64px;
   font-weight: 600;
+  line-height: 1.1;
 }
 
 .hero span {
@@ -84,6 +87,7 @@ body {
   margin-top: 20px;
   color: #555;
   font-size: 18px;
+  max-width: 500px;
 }
 
 /* ========================= */
@@ -102,6 +106,7 @@ body {
   border-radius: 10px;
   border: none;
   transition: 0.2s;
+  cursor: pointer;
 }
 
 .primary:hover {
@@ -114,32 +119,24 @@ body {
   border-radius: 10px;
   background: white;
   color: #111;
+  cursor: pointer;
 }
 
 /* ========================= */
-/* GLOW */
-/* ========================= */
-.glow {
-  position: fixed;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(0,0,0,0.08), transparent);
-  filter: blur(80px);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-}
-
-/* ========================= */
-/* FEATURES */
+/* FEATURES / COURSES */
 /* ========================= */
 .features {
   padding: 100px 20px;
   text-align: center;
 }
 
+.features h2 {
+  font-size: 28px;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 25px;
   margin-top: 40px;
 }
@@ -151,19 +148,20 @@ body {
   border: 1px solid #eee;
   transition: 0.3s;
   cursor: pointer;
+  text-align: left;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  transform: translateY(-6px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.05);
 }
 
-.card h1 {
-  transition: 0.3s;
+.card h3 {
+  font-size: 18px;
 }
 
-.card:active {
-  transform: scale(0.97);
+.card p {
+  margin-top: 5px;
 }
 
 /* ========================= */
@@ -179,6 +177,14 @@ body {
   align-items: center;
   gap: 20px;
   margin-bottom: 30px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.roadmap-item:hover {
+  background: rgba(0,0,0,0.05);
 }
 
 .circle {
@@ -193,12 +199,12 @@ body {
   font-weight: bold;
 }
 
-.content h3 {
-  margin-bottom: 5px;
+.roadmap-item.done {
+  opacity: 0.6;
 }
 
-.content p {
-  color: #666;
+.roadmap-item.done .circle {
+  background: green;
 }
 
 /* ========================= */
@@ -213,7 +219,31 @@ body {
   display: flex;
   justify-content: center;
   gap: 40px;
-  margin-top: 30px;
+}
+
+.stats-grid h1 {
+  font-size: 36px;
+}
+
+/* ========================= */
+/* LESSON PAGE */
+/* ========================= */
+.lesson-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.lesson-container h1 {
+  font-size: 40px;
+}
+
+.lesson-card {
+  margin-top: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #eee;
 }
 
 /* ========================= */
@@ -266,7 +296,8 @@ body.dark .desc {
   color: #bbb;
 }
 
-body.dark .card {
+body.dark .card,
+body.dark .lesson-card {
   background: #1a1a1a;
   border: none;
 }
@@ -282,17 +313,13 @@ body.dark .primary {
   color: black;
 }
 
-body.dark .glow {
-  background: radial-gradient(circle, rgba(255,80,80,0.25), transparent);
-}
-
 body.dark .circle {
   background: white;
   color: black;
 }
 
-body.dark .content p {
-  color: #aaa;
+body.dark .roadmap-item:hover {
+  background: rgba(255,255,255,0.05);
 }
 
 /* ========================= */
@@ -318,6 +345,7 @@ body.dark .content p {
 
   .hero-buttons {
     flex-direction: column;
+    width: 100%;
   }
 
   .primary,
@@ -341,12 +369,12 @@ body.dark .content p {
 /* ========================= */
 @media (max-width: 1024px) {
 
-  .hero h1 {
-    font-size: 48px;
-  }
-
   .grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hero h1 {
+    font-size: 48px;
   }
 
 }
