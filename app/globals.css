@@ -32,7 +32,6 @@ body {
   border-radius: 6px;
 }
 
-/* NAV LINKS */
 .nav-links {
   display: flex;
   gap: 25px;
@@ -46,19 +45,20 @@ body {
   position: relative;
 }
 
-/* GLOW */
-.hero::before {
-  content: "";
+/* PARALLAX */
+.parallax-bg {
   position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(255,80,80,0.2), transparent);
-  top: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255,80,80,0.3), transparent);
+  top: -150px;
   left: 50%;
   transform: translateX(-50%);
   filter: blur(120px);
+  transition: 0.2s;
 }
 
+/* TEXT */
 .hero h1 {
   font-size: 60px;
   margin-top: 20px;
@@ -84,6 +84,10 @@ body {
   color: black;
   border-radius: 12px;
   border: none;
+}
+
+.primary:hover {
+  transform: scale(1.1);
 }
 
 .secondary {
@@ -130,7 +134,7 @@ body {
   margin-top: 40px;
 }
 
-/* SCROLL ANIMATION */
+/* SCROLL */
 .reveal {
   opacity: 0;
   transform: translateY(40px);
