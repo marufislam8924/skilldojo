@@ -1,9 +1,19 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 export default function Home() {
+
+  const [index, setIndex] = useState(0);
+
+  const flashcards = [
+    { jp: "こんにちは", en: "Hello" },
+    { jp: "ありがとう", en: "Thank you" },
+    { jp: "さようなら", en: "Goodbye" },
+  ];
+
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     document.addEventListener("mousemove", (e) => {
@@ -19,82 +29,76 @@ export default function Home() {
     <main>
 
       {/* NAV */}
-      <motion.nav 
-        className="nav"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-      >
+      <nav className="nav">
         <div className="logo">
           <div className="logo-box">道</div>
           Skilldojo
         </div>
-
-        <div className="nav-links">
-          <p>Courses</p>
-          <p>About</p>
-          <p>Contact</p>
-        </div>
-      </motion.nav>
+      </nav>
 
       {/* HERO */}
       <section className="hero">
-
         <div className="glow"></div>
 
-        <div className="hero-content">
+        <h1>
+          Learn Japanese <br />
+          <span>the smart way</span>
+        </h1>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            Learn Japanese <br />
-            <span>faster than ever</span>
-          </motion.h1>
+        <p className="desc">
+          Practice real words with interactive flashcards.
+        </p>
+      </section>
 
-          <motion.p
-            className="desc"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            Structured lessons, flashcards, and AI practice — all in one place.
-          </motion.p>
+      {/* FLASHCARD SECTION */}
+      <section className="features">
 
-          <motion.div
-            className="hero-buttons"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            <button className="primary">Start Learning</button>
-            <button className="secondary">Watch Demo</button>
-          </motion.div>
+        <h2>Flashcards</h2>
 
+        <div className="card" onClick={() => setShow(!show)} style={{cursor:"pointer"}}>
+
+          <h1 style={{fontSize:"40px"}}>
+            {show ? flashcards[index].en : flashcards[index].jp}
+          </h1>
+
+          <p style={{marginTop:"10px"}}>
+            Click to flip
+          </p>
+
+        </div>
+
+        <div style={{marginTop:"20px"}}>
+          <button className="primary" onClick={() => setIndex((index + 1) % flashcards.length)}>
+            Next →
+          </button>
         </div>
 
       </section>
 
-      {/* FEATURES */}
+      {/* LESSONS */}
       <section className="features">
 
-        <h2>Everything you need</h2>
+        <h2>Lessons</h2>
 
         <div className="grid">
 
           <div className="card">
-            <h3>Flashcards</h3>
-            <p>Spaced repetition system for fast memory.</p>
+            <h3>Hiragana</h3>
+            <p>Learn basic Japanese alphabet.</p>
           </div>
 
           <div className="card">
-            <h3>Structured Lessons</h3>
-            <p>JLPT-based roadmap from zero to fluent.</p>
+            <h3>Kanji</h3>
+            <p>Understand essential characters.</p>
           </div>
 
           <div className="card">
-            <h3>AI Practice</h3>
-            <p>Practice real conversations with AI.</p>
+            <h3>Grammar</h3>
+            <p>Build correct Japanese sentences.</p>
           </div>
 
         </div>
+
       </section>
 
     </main>
