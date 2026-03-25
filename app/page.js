@@ -1,6 +1,24 @@
-import { useEffect } from "react";
 "use client";
+
+import { useEffect } from "react";
+
 export default function Home() {
+
+  // Scroll animation
+  useEffect(() => {
+    const elements = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    });
+
+    elements.forEach((el) => observer.observe(el));
+  }, []);
+
   return (
     <main>
 
@@ -19,7 +37,7 @@ export default function Home() {
       </nav>
 
       {/* HERO */}
-      <section className="hero">
+      <section className="hero reveal">
         <p className="tag">▶ Featured Lesson</p>
         <h3 className="jp">日本語を学ぼう</h3>
 
@@ -39,7 +57,7 @@ export default function Home() {
       </section>
 
       {/* FEATURES */}
-      <section className="features">
+      <section className="features reveal">
         <h2>What you’ll learn</h2>
 
         <div className="grid">
@@ -61,7 +79,7 @@ export default function Home() {
       </section>
 
       {/* STATS */}
-      <section className="stats">
+      <section className="stats reveal">
         <h2>Trusted by learners worldwide</h2>
 
         <div className="stats-grid">
