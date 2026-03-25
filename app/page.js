@@ -1,5 +1,5 @@
+import { useEffect } from "react";
 "use client";
-
 export default function Home() {
   return (
     <main>
