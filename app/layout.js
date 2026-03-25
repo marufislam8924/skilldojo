@@ -1,5 +1,6 @@
 import "./globals.css";
 import Cursor from "./components/Cursor";
+import ThemeToggle from "./components/ThemeToggle";
 
 export const metadata = {
   title: "Skilldojo",
@@ -11,6 +12,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Cursor />
+        <ThemeToggle />
         {children}
       </body>
     </html>
