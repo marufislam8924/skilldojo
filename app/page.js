@@ -1,29 +1,31 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function Home() {
 
-  const [index, setIndex] = useState(0);
-
-  const flashcards = [
-    { jp: "こんにちは", en: "Hello" },
-    { jp: "ありがとう", en: "Thank you" },
-    { jp: "さようなら", en: "Goodbye" },
+  const roadmap = [
+    {
+      title: "Hiragana",
+      desc: "Learn all basic Japanese characters",
+    },
+    {
+      title: "Katakana",
+      desc: "Master foreign word characters",
+    },
+    {
+      title: "Basic Grammar",
+      desc: "Understand sentence structure",
+    },
+    {
+      title: "Vocabulary",
+      desc: "Learn 800+ essential words",
+    },
+    {
+      title: "Practice",
+      desc: "Apply everything with exercises",
+    },
   ];
-
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    document.addEventListener("mousemove", (e) => {
-      const glow = document.querySelector(".glow");
-      if (glow) {
-        glow.style.left = e.clientX + "px";
-        glow.style.top = e.clientY + "px";
-      }
-    });
-  }, []);
 
   return (
     <main>
@@ -38,64 +40,35 @@ export default function Home() {
 
       {/* HERO */}
       <section className="hero">
-        <div className="glow"></div>
-
         <h1>
-          Learn Japanese <br />
-          <span>the smart way</span>
+          JLPT N5 Roadmap <br />
+          <span>step by step</span>
         </h1>
 
         <p className="desc">
-          Practice real words with interactive flashcards.
+          Follow a structured path to pass JLPT N5 easily.
         </p>
       </section>
 
-      {/* FLASHCARD SECTION */}
+      {/* ROADMAP */}
       <section className="features">
 
-        <h2>Flashcards</h2>
+        <h2>N5 Learning Path</h2>
 
-        <div className="card" onClick={() => setShow(!show)} style={{cursor:"pointer"}}>
+        <div className="roadmap">
 
-          <h1 style={{fontSize:"40px"}}>
-            {show ? flashcards[index].en : flashcards[index].jp}
-          </h1>
+          {roadmap.map((step, i) => (
+            <div key={i} className="roadmap-item">
 
-          <p style={{marginTop:"10px"}}>
-            Click to flip
-          </p>
+              <div className="circle">{i + 1}</div>
 
-        </div>
+              <div className="content">
+                <h3>{step.title}</h3>
+                <p>{step.desc}</p>
+              </div>
 
-        <div style={{marginTop:"20px"}}>
-          <button className="primary" onClick={() => setIndex((index + 1) % flashcards.length)}>
-            Next →
-          </button>
-        </div>
-
-      </section>
-
-      {/* LESSONS */}
-      <section className="features">
-
-        <h2>Lessons</h2>
-
-        <div className="grid">
-
-          <div className="card">
-            <h3>Hiragana</h3>
-            <p>Learn basic Japanese alphabet.</p>
-          </div>
-
-          <div className="card">
-            <h3>Kanji</h3>
-            <p>Understand essential characters.</p>
-          </div>
-
-          <div className="card">
-            <h3>Grammar</h3>
-            <p>Build correct Japanese sentences.</p>
-          </div>
+            </div>
+          ))}
 
         </div>
 
