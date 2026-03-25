@@ -1,4 +1,9 @@
 import Cursor from "./components/Cursor";
+<body>
+  <Cursor />
+  {children}
+</body>
+
 import "./globals.css";
 
 export const metadata = {
