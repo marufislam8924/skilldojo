@@ -9,6 +9,15 @@
 /* ========================= */
 /* QUIZLET STYLE */
 /* ========================= */
+
+.quizlet-card {
+  transition: transform 0.3s ease;
+}
+
+.quizlet-card:active {
+  transform: scale(0.97);
+}
+
 .quizlet-container {
   display: flex;
   flex-direction: column;
