@@ -6,10 +6,10 @@ export default function Home() {
   const router = useRouter();
 
   const courses = [
-    { key: "hiragana", kana: "あ", title: "Hiragana Complete", desc: "Master all 46 hiragana characters with flashcards.", lessons: 21, level: "Beginner", bg: "#fff0f0" },
-    { key: "katakana", kana: "ア", title: "Katakana Complete", desc: "Learn katakana for loanwords and modern Japanese.", lessons: 21, level: "Beginner", bg: "#f0f4ff" },
-    { key: "vocab",    kana: "言", title: "Daily Vocabulary",  desc: "500+ essential words organized by topic.", lessons: 30, level: "Intermediate", bg: "#f0fff4" },
-    { key: "convo",    kana: "話", title: "Basic Conversation", desc: "Greetings, shopping, travel phrases.", lessons: 15, level: "Beginner", bg: "#fffaf0" },
+    { key: "hiragana", kana: "あ", title: "Hiragana Complete", desc: "Master all 46 hiragana characters with AI voice.", lessons: 21, level: "Beginner", bg: "#fff0f0", live: true },
+    { key: "katakana", kana: "ア", title: "Katakana Complete", desc: "Learn katakana for loanwords and modern Japanese.", lessons: 21, level: "Beginner", bg: "#f0f4ff", live: true },
+    { key: "vocab",    kana: "言", title: "Daily Vocabulary",  desc: "500+ essential words organized by topic.", lessons: 30, level: "Intermediate", bg: "#f0fff4", live: false },
+    { key: "convo",    kana: "話", title: "Basic Conversation", desc: "Greetings, shopping, travel phrases.", lessons: 15, level: "Beginner", bg: "#fffaf0", live: false },
   ];
 
   return (
@@ -80,8 +80,8 @@ export default function Home() {
             <div
               key={c.key}
               className={styles.courseCard}
-              onClick={() => c.key === "hiragana" ? router.push("/hiragana") : null}
-              style={{ cursor: c.key === "hiragana" ? "pointer" : "default" }}
+              onClick={() => c.live ? router.push(`/${c.key}`) : null}
+              style={{ cursor: c.live ? "pointer" : "default" }}
             >
               <div className={styles.courseThumb} style={{ background: c.bg }}>
                 {c.kana}
@@ -101,7 +101,7 @@ export default function Home() {
                     {c.level}
                   </span>
                 </div>
-                {c.key !== "hiragana" && (
+                {!c.live && (
                   <div className={styles.comingSoon}>Coming Soon</div>
                 )}
               </div>
