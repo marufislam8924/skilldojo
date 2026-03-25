@@ -5,7 +5,6 @@ import { useEffect } from "react";
 export default function Home() {
 
   useEffect(() => {
-    // SCROLL ANIMATION
     const elements = document.querySelectorAll(".reveal");
 
     const observer = new IntersectionObserver((entries) => {
@@ -18,15 +17,13 @@ export default function Home() {
 
     elements.forEach((el) => observer.observe(el));
 
-    // PARALLAX
+    // PARALLAX GLOW FOLLOW
     document.addEventListener("mousemove", (e) => {
-      const bg = document.querySelector(".parallax-bg");
+      const glow = document.querySelector(".glow");
 
-      if (bg) {
-        let x = (e.clientX / window.innerWidth) * 20;
-        let y = (e.clientY / window.innerHeight) * 20;
-
-        bg.style.transform = `translate(${x}px, ${y}px)`;
+      if (glow) {
+        glow.style.left = e.clientX + "px";
+        glow.style.top = e.clientY + "px";
       }
     });
 
@@ -52,10 +49,7 @@ export default function Home() {
       {/* HERO */}
       <section className="hero reveal">
 
-        <div className="parallax-bg"></div>
-
-        <p className="tag">▶ Featured Lesson</p>
-        <h3 className="jp">日本語を学ぼう</h3>
+        <div className="glow"></div>
 
         <h1>
           Learn Japanese <br />
@@ -63,7 +57,7 @@ export default function Home() {
         </h1>
 
         <p className="desc">
-          Master Japanese from beginner to fluent with real conversations.
+          Master Japanese with real conversations & structured learning.
         </p>
 
         <div className="hero-buttons">
@@ -78,20 +72,22 @@ export default function Home() {
         <h2>What you’ll learn</h2>
 
         <div className="grid">
-          <div className="card">
+
+          <div className="card tilt">
             <h3>Hiragana & Katakana</h3>
             <p>Learn Japanese alphabets from scratch.</p>
           </div>
 
-          <div className="card">
+          <div className="card tilt">
             <h3>Kanji</h3>
             <p>Master essential characters step by step.</p>
           </div>
 
-          <div className="card">
+          <div className="card tilt">
             <h3>Grammar</h3>
             <p>Understand real Japanese sentence structure.</p>
           </div>
+
         </div>
       </section>
 
