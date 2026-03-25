@@ -15,7 +15,7 @@ body {
 .nav {
   display: flex;
   justify-content: space-between;
-  padding: 24px 50px;
+  padding: 24px 60px;
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
@@ -41,27 +41,13 @@ body {
 /* HERO */
 .hero {
   text-align: center;
-  padding: 120px 20px;
+  padding: 140px 20px;
   position: relative;
 }
 
-/* PARALLAX */
-.parallax-bg {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(255,80,80,0.3), transparent);
-  top: -150px;
-  left: 50%;
-  transform: translateX(-50%);
-  filter: blur(120px);
-  transition: 0.2s;
-}
-
-/* TEXT */
 .hero h1 {
-  font-size: 60px;
-  margin-top: 20px;
+  font-size: 64px;
+  font-weight: 600;
 }
 
 .hero span {
@@ -73,33 +59,45 @@ body {
   color: #bbb;
 }
 
+/* GLOW */
+.glow {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,80,80,0.25), transparent);
+  filter: blur(100px);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
 /* BUTTONS */
 .hero-buttons {
   margin-top: 40px;
 }
 
 .primary {
-  padding: 14px 28px;
+  padding: 14px 30px;
   background: white;
   color: black;
   border-radius: 12px;
   border: none;
 }
 
-.primary:hover {
-  transform: scale(1.1);
-}
-
 .secondary {
-  padding: 14px 28px;
+  padding: 14px 30px;
   border: 1px solid rgba(255,255,255,0.2);
   margin-left: 10px;
   border-radius: 12px;
 }
 
+/* MAGNETIC */
+.magnetic:hover {
+  transform: scale(1.1);
+}
+
 /* FEATURES */
 .features {
-  padding: 100px 20px;
+  padding: 120px 20px;
   text-align: center;
 }
 
@@ -107,12 +105,12 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 25px;
-  margin-top: 50px;
+  margin-top: 60px;
 }
 
 .card {
   background: linear-gradient(145deg, #1a1a1a, #111);
-  padding: 25px;
+  padding: 30px;
   border-radius: 20px;
   transition: 0.3s;
 }
@@ -121,10 +119,15 @@ body {
   transform: translateY(-10px);
 }
 
+/* 3D TILT */
+.tilt:hover {
+  transform: rotateX(8deg) rotateY(-8deg) scale(1.05);
+}
+
 /* STATS */
 .stats {
   text-align: center;
-  padding: 100px 20px;
+  padding: 120px 20px;
 }
 
 .stats-grid {
