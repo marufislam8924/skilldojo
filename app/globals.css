@@ -6,7 +6,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+.card h1 {
+  transition: 0.3s;
+}
 
+.card:active {
+  transform: scale(0.97);
+}
 /* ========================= */
 /* LIGHT THEME (DEFAULT) */
 /* ========================= */
