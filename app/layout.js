@@ -1,3 +1,4 @@
+import Cursor from "./components/Cursor";
 import "./globals.css";
 
 export const metadata = {
