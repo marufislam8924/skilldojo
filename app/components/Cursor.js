@@ -4,37 +4,38 @@ import { useEffect } from "react";
 
 export default function Cursor() {
   useEffect(() => {
-    const cursor = document.getElementById("cursor");
-    const ring = document.getElementById("ring");
+    const cursor = document.createElement("div");
+    const ring = document.createElement("div");
 
-    let mx = 0, my = 0, rx = 0, ry = 0;
+    cursor.id = "cursor";
+    ring.id = "ring";
 
-    document.addEventListener("mousemove", e => {
-      mx = e.clientX;
-      my = e.clientY;
+    document.body.appendChild(cursor);
+    document.body.appendChild(ring);
+
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+
+    document.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      cursor.style.left = mouseX + "px";
+      cursor.style.top = mouseY + "px";
     });
 
     function animate() {
-      if (cursor && ring) {
-        cursor.style.left = mx + "px";
-        cursor.style.top = my + "px";
+      ringX += (mouseX - ringX) * 0.1;
+      ringY += (mouseY - ringY) * 0.1;
 
-        rx += (mx - rx) * 0.15;
-        ry += (my - ry) * 0.15;
+      ring.style.left = ringX + "px";
+      ring.style.top = ringY + "px";
 
-        ring.style.left = rx + "px";
-        ring.style.top = ry + "px";
-      }
       requestAnimationFrame(animate);
     }
 
     animate();
   }, []);
 
-  return (
-    <>
-      <div id="cursor" className="cursor"></div>
-      <div id="ring" className="cursor-ring"></div>
-    </>
-  );
+  return null;
 }
