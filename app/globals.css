@@ -1,69 +1,93 @@
-/* QUIZLET FLASHCARD */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f5f5f7;
+  font-family: system-ui;
+}
+
+/* NAV */
+.nav {
+  padding: 20px;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.hero h1 {
+  font-size: 48px;
+}
+
+.hero span {
+  color: #666;
+}
+
+.primary {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+/* FLASHCARD */
 .quizlet-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  padding: 20px;
 }
 
 .topbar {
-  width: 100%;
-  max-width: 400px;
+  width: 300px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.audio-btn {
-  background: none;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
+  margin-bottom: 10px;
 }
 
 .quizlet-card {
-  width: 100%;
-  max-width: 400px;
-  height: 300px;
+  width: 300px;
+  height: 250px;
   perspective: 1000px;
   position: relative;
 }
 
-.quizlet-card .inner {
+.inner {
   width: 100%;
   height: 100%;
-  transition: transform 0.6s;
+  transition: 0.6s;
   transform-style: preserve-3d;
-  border-radius: 20px;
 }
 
 .quizlet-card.flip .inner {
   transform: rotateY(180deg);
 }
 
-.quizlet-card .front,
-.quizlet-card .back {
+.front, .back {
   position: absolute;
   width: 100%;
   height: 100%;
   background: white;
-  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   backface-visibility: hidden;
+  border-radius: 16px;
 }
 
-/* FRONT */
-.quizlet-card .front {
-  font-size: 100px;
-  font-weight: bold;
+.front {
+  font-size: 80px;
 }
 
-/* BACK */
-.quizlet-card .back {
+.back {
   transform: rotateY(180deg);
 }
 
@@ -71,50 +95,16 @@
   text-align: center;
 }
 
-.back-content h1 {
-  font-size: 40px;
-}
-
-.back-content p {
-  margin-top: 10px;
-  font-size: 16px;
-  color: #666;
-}
-
-/* HINT */
 .hint {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background: #2d2a8c;
-  color: white;
   text-align: center;
-  padding: 10px;
-}
-
-/* NAV BUTTONS */
-.nav-controls {
-  margin-top: 20px;
-  display: flex;
-  gap: 40px;
-}
-
-.nav-controls button {
-  font-size: 24px;
-  background: #eee;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-/* DARK MODE */
-body.dark .quizlet-card .front,
-body.dark .quizlet-card .back {
-  background: #1a1a1a;
+  background: #333;
   color: white;
+  padding: 5px;
 }
 
-body.dark .back-content p {
-  color: #aaa;
+.nav-controls {
+  margin-top: 10px;
 }
