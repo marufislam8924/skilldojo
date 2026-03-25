@@ -1,29 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
 
-  const roadmap = [
+  const router = useRouter();
+
+  const courses = [
     {
-      title: "Hiragana",
-      desc: "Learn all basic Japanese characters",
+      title: "Hiragana & Katakana",
+      jp: "ひらがなとカタカナ",
+      lessons: "24 lessons",
+      path: "hiragana"
     },
     {
-      title: "Katakana",
-      desc: "Master foreign word characters",
+      title: "Conversational Japanese",
+      jp: "日本語会話",
+      lessons: "18 lessons",
+      path: "conversation"
     },
     {
-      title: "Basic Grammar",
-      desc: "Understand sentence structure",
+      title: "Kanji Foundations",
+      jp: "漢字基礎",
+      lessons: "30 lessons",
+      path: "kanji"
     },
     {
-      title: "Vocabulary",
-      desc: "Learn 800+ essential words",
-    },
-    {
-      title: "Practice",
-      desc: "Apply everything with exercises",
+      title: "Grammar",
+      jp: "文法",
+      lessons: "25 lessons",
+      path: "grammar"
     },
   ];
 
@@ -36,40 +42,76 @@ export default function Home() {
           <div className="logo-box">道</div>
           Skilldojo
         </div>
+
+        <div className="nav-links">
+          <p>Courses</p>
+          <p>About</p>
+          <p>Contact</p>
+        </div>
       </nav>
 
       {/* HERO */}
       <section className="hero">
+
         <h1>
-          JLPT N5 Roadmap <br />
-          <span>step by step</span>
+          日本語を学ぼう <br />
+          <span>Learn Japanese</span>
         </h1>
 
         <p className="desc">
-          Follow a structured path to pass JLPT N5 easily.
+          Master Japanese from beginner to conversational level.
         </p>
+
+        <div className="hero-buttons">
+          <button className="primary">Start Learning</button>
+          <button className="secondary">Watch Free Lesson</button>
+        </div>
+
       </section>
 
-      {/* ROADMAP */}
+      {/* COURSES */}
       <section className="features">
 
-        <h2>N5 Learning Path</h2>
+        <h2>Learn by Level</h2>
 
-        <div className="roadmap">
+        <div className="grid">
 
-          {roadmap.map((step, i) => (
-            <div key={i} className="roadmap-item">
-
-              <div className="circle">{i + 1}</div>
-
-              <div className="content">
-                <h3>{step.title}</h3>
-                <p>{step.desc}</p>
-              </div>
-
+          {courses.map((course, i) => (
+            <div 
+              key={i} 
+              className="card"
+              onClick={() => router.push(`/lesson/${course.path}`)}
+            >
+              <h3>{course.title}</h3>
+              <p>{course.jp}</p>
+              <p style={{marginTop:"10px", color:"#888"}}>
+                {course.lessons}
+              </p>
             </div>
           ))}
 
+        </div>
+
+      </section>
+
+      {/* STATS */}
+      <section className="stats">
+
+        <div className="stats-grid">
+          <div>
+            <h1>50K+</h1>
+            <p>Subscribers</p>
+          </div>
+
+          <div>
+            <h1>200+</h1>
+            <p>Lessons</p>
+          </div>
+
+          <div>
+            <h1>15K+</h1>
+            <p>Learners</p>
+          </div>
         </div>
 
       </section>
