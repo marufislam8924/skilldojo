@@ -4,8 +4,8 @@ import { useEffect } from "react";
 
 export default function Home() {
 
-  // Scroll animation
   useEffect(() => {
+    // SCROLL ANIMATION
     const elements = document.querySelectorAll(".reveal");
 
     const observer = new IntersectionObserver((entries) => {
@@ -17,12 +17,25 @@ export default function Home() {
     });
 
     elements.forEach((el) => observer.observe(el));
+
+    // PARALLAX
+    document.addEventListener("mousemove", (e) => {
+      const bg = document.querySelector(".parallax-bg");
+
+      if (bg) {
+        let x = (e.clientX / window.innerWidth) * 20;
+        let y = (e.clientY / window.innerHeight) * 20;
+
+        bg.style.transform = `translate(${x}px, ${y}px)`;
+      }
+    });
+
   }, []);
 
   return (
     <main>
 
-      {/* NAVBAR */}
+      {/* NAV */}
       <nav className="nav">
         <div className="logo">
           <div className="logo-box">道</div>
@@ -38,6 +51,9 @@ export default function Home() {
 
       {/* HERO */}
       <section className="hero reveal">
+
+        <div className="parallax-bg"></div>
+
         <p className="tag">▶ Featured Lesson</p>
         <h3 className="jp">日本語を学ぼう</h3>
 
@@ -51,9 +67,10 @@ export default function Home() {
         </p>
 
         <div className="hero-buttons">
-          <button className="primary">Start Learning</button>
+          <button className="primary magnetic">Start Learning</button>
           <button className="secondary">Watch Free Lesson</button>
         </div>
+
       </section>
 
       {/* FEATURES */}
