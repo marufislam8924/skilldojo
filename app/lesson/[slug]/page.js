@@ -7,7 +7,6 @@ export default function LessonPage() {
 
   const { slug } = useParams();
 
-  /* FULL 46 HIRAGANA */
   const hiragana = [
     { jp:"あ", en:"a", ex:"like 'a' in father" },
     { jp:"い", en:"i", ex:"like 'ee' in feet" },
@@ -29,7 +28,7 @@ export default function LessonPage() {
 
     { jp:"た", en:"ta", ex:"like 'talk'" },
     { jp:"ち", en:"chi", ex:"like 'cheese'" },
-    { jp:"つ", en:"tsu", ex:"tongue to teeth" },
+    { jp:"つ", en:"tsu", ex:"press tongue to teeth" },
     { jp:"て", en:"te", ex:"like 'ten'" },
     { jp:"と", en:"to", ex:"like 'toe'" },
 
@@ -62,27 +61,14 @@ export default function LessonPage() {
     { jp:"ろ", en:"ro", ex:"light r + o" },
 
     { jp:"わ", en:"wa", ex:"like 'water'" },
-    { jp:"を", en:"o", ex:"written wo" },
-    { jp:"ん", en:"n", ex:"like 'ramen n'" },
+    { jp:"を", en:"o", ex:"written 'wo', pronounced 'o'" },
+    { jp:"ん", en:"n", ex:"like 'n' in ramen" },
   ];
 
   const [index, setIndex] = useState(0);
   const [flip, setFlip] = useState(false);
 
-  /* SWIPE */
   const startX = useRef(0);
-
-  const handleTouchStart = (e) => {
-    startX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e) => {
-    const endX = e.changedTouches[0].clientX;
-    const diff = startX.current - endX;
-
-    if (diff > 50) next();      // swipe left
-    if (diff < -50) prev();     // swipe right
-  };
 
   const next = () => {
     setIndex((index + 1) % hiragana.length);
@@ -92,6 +78,18 @@ export default function LessonPage() {
   const prev = () => {
     setIndex((index - 1 + hiragana.length) % hiragana.length);
     setFlip(false);
+  };
+
+  /* SWIPE */
+  const handleTouchStart = (e) => {
+    startX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    const diff = startX.current - e.changedTouches[0].clientX;
+
+    if (diff > 50) next();
+    if (diff < -50) prev();
   };
 
   /* AUDIO */
@@ -111,7 +109,7 @@ export default function LessonPage() {
       {/* TOP */}
       <div className="topbar">
         <p>{index + 1} / {hiragana.length}</p>
-        <button onClick={playSound} className="audio-btn">🔊</button>
+        <button className="audio-btn" onClick={playSound}>🔊</button>
       </div>
 
       {/* CARD */}
@@ -128,8 +126,10 @@ export default function LessonPage() {
           </div>
 
           <div className="back">
-            <h1>{hiragana[index].en}</h1>
-            <p>{hiragana[index].ex}</p>
+            <div className="back-content">
+              <h1>{hiragana[index].en}</h1>
+              <p>{hiragana[index].ex}</p>
+            </div>
           </div>
 
         </div>
@@ -137,7 +137,7 @@ export default function LessonPage() {
         <div className="hint">Tap or Swipe</div>
       </div>
 
-      {/* BUTTON NAV (fallback) */}
+      {/* NAV */}
       <div className="nav-controls">
         <button onClick={prev}>←</button>
         <button onClick={next}>→</button>
