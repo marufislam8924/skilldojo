@@ -1,5 +1,5 @@
 /* RESET */
-* {
+*  {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,6 +9,7 @@ body {
   font-family: Arial, sans-serif;
   background: radial-gradient(circle at top, #1a1a1a, #0f0f0f);
   color: white;
+  scroll-behavior: smooth;
 }
 
 /* NAV */
@@ -47,7 +48,6 @@ body {
 
 .hero h1 {
   font-size: 64px;
-  font-weight: 600;
 }
 
 .hero span {
@@ -90,7 +90,7 @@ body {
   border-radius: 12px;
 }
 
-/* MAGNETIC */
+/* HOVER */
 .magnetic:hover {
   transform: scale(1.1);
 }
@@ -112,16 +112,18 @@ body {
   background: linear-gradient(145deg, #1a1a1a, #111);
   padding: 30px;
   border-radius: 20px;
-  transition: 0.3s;
+  animation: float 6s ease-in-out infinite;
 }
 
 .card:hover {
-  transform: translateY(-10px);
+  transform: rotateX(8deg) rotateY(-8deg) scale(1.05);
 }
 
-/* 3D TILT */
-.tilt:hover {
-  transform: rotateX(8deg) rotateY(-8deg) scale(1.05);
+/* FLOAT */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
 }
 
 /* STATS */
@@ -135,18 +137,6 @@ body {
   justify-content: center;
   gap: 60px;
   margin-top: 40px;
-}
-
-/* SCROLL */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: 0.8s ease;
-}
-
-.reveal.show {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* CURSOR */
