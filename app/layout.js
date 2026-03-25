@@ -1,10 +1,5 @@
-import Cursor from "./components/Cursor";
-<body>
-  <Cursor />
-  {children}
-</body>
-
 import "./globals.css";
+import Cursor from "./components/Cursor";
 
 export const metadata = {
   title: "Skilldojo",
@@ -14,7 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Cursor />
+        {children}
+      </body>
     </html>
   );
 }
