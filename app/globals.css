@@ -196,3 +196,59 @@ body {
   }
 
 }
+/* THEME BUTTON */
+.theme-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* DARK MODE */
+body.dark {
+  background: #0f0f0f;
+  color: white;
+}
+
+body.dark .nav {
+  background: rgba(0,0,0,0.6);
+  border-bottom: 1px solid #222;
+}
+
+body.dark .logo-box {
+  background: white;
+  color: black;
+}
+
+body.dark .nav-links {
+  color: #aaa;
+}
+
+body.dark .hero span {
+  color: #aaa;
+}
+
+body.dark .desc {
+  color: #bbb;
+}
+
+body.dark .card {
+  background: #1a1a1a;
+  border: none;
+}
+
+body.dark .secondary {
+  border: 1px solid #555;
+  color: white;
+  background: transparent;
+}
+
+body.dark .primary {
+  background: white;
+  color: black;
+}
