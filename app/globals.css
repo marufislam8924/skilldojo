@@ -6,7 +6,117 @@
   padding: 0;
   box-sizing: border-box;
 }
+/* ========================= */
+/* QUIZLET STYLE */
+/* ========================= */
+.quizlet-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+}
 
+/* TOP BAR */
+.topbar {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+/* AUDIO BUTTON */
+.audio-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* FLASHCARD */
+.quizlet-card {
+  width: 100%;
+  max-width: 400px;
+  height: 300px;
+  perspective: 1000px;
+  position: relative;
+}
+
+.quizlet-card .inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.quizlet-card.flip .inner {
+  transform: rotateY(180deg);
+}
+
+.quizlet-card .front,
+.quizlet-card .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  backface-visibility: hidden;
+  border-radius: 20px;
+}
+
+/* BACK */
+.quizlet-card .back {
+  transform: rotateY(180deg);
+  font-size: 40px;
+}
+
+/* HINT */
+.hint {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #2d2a8c;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+}
+
+/* CONTROLS */
+.nav-controls {
+  margin-top: 20px;
+  display: flex;
+  gap: 40px;
+}
+
+.nav-controls button {
+  font-size: 24px;
+  background: #eee;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* DARK MODE */
+body.dark .quizlet-card .front,
+body.dark .quizlet-card .back {
+  background: #1a1a1a;
+  color: white;
+}
+
+body.dark .nav-controls button {
+  background: #333;
+  color: white;
+}
 /* ========================= */
 /* BODY */
 /* ========================= */
