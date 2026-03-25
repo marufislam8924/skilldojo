@@ -1,23 +1,4 @@
-/* ========================= */
-/* RESET */
-/* ========================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-/* ========================= */
-/* QUIZLET STYLE */
-/* ========================= */
-
-.quizlet-card {
-  transition: transform 0.3s ease;
-}
-
-.quizlet-card:active {
-  transform: scale(0.97);
-}
-
+/* QUIZLET FLASHCARD */
 .quizlet-container {
   display: flex;
   flex-direction: column;
@@ -27,17 +8,14 @@
   padding: 20px;
 }
 
-/* TOP BAR */
 .topbar {
   width: 100%;
   max-width: 400px;
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
-  font-weight: 500;
 }
 
-/* AUDIO BUTTON */
 .audio-btn {
   background: none;
   border: none;
@@ -45,7 +23,6 @@
   cursor: pointer;
 }
 
-/* FLASHCARD */
 .quizlet-card {
   width: 100%;
   max-width: 400px;
@@ -60,7 +37,6 @@
   transition: transform 0.6s;
   transform-style: preserve-3d;
   border-radius: 20px;
-  overflow: hidden;
 }
 
 .quizlet-card.flip .inner {
@@ -73,18 +49,36 @@
   width: 100%;
   height: 100%;
   background: white;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 80px;
   backface-visibility: hidden;
-  border-radius: 20px;
+}
+
+/* FRONT */
+.quizlet-card .front {
+  font-size: 100px;
+  font-weight: bold;
 }
 
 /* BACK */
 .quizlet-card .back {
   transform: rotateY(180deg);
+}
+
+.back-content {
+  text-align: center;
+}
+
+.back-content h1 {
   font-size: 40px;
+}
+
+.back-content p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #666;
 }
 
 /* HINT */
@@ -96,10 +90,9 @@
   color: white;
   text-align: center;
   padding: 10px;
-  font-size: 14px;
 }
 
-/* CONTROLS */
+/* NAV BUTTONS */
 .nav-controls {
   margin-top: 20px;
   display: flex;
@@ -122,314 +115,6 @@ body.dark .quizlet-card .back {
   color: white;
 }
 
-body.dark .nav-controls button {
-  background: #333;
-  color: white;
-}
-/* ========================= */
-/* BODY */
-/* ========================= */
-body {
-  background: #f7f7f8;
-  color: #111;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  overflow-x: hidden;
-}
-
-/* ========================= */
-/* NAV */
-/* ========================= */
-.nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 40px;
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #eee;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 600;
-}
-
-.logo-box {
-  background: black;
-  color: white;
-  padding: 4px 10px;
-  border-radius: 6px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 20px;
-  color: #666;
-}
-
-.nav-links p {
-  cursor: pointer;
-}
-
-.nav-links p:hover {
-  color: #111;
-}
-
-/* ========================= */
-/* HERO */
-/* ========================= */
-.hero {
-  min-height: 75vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  text-align: center;
-  padding: 80px 20px;
-}
-
-.hero h1 {
-  font-size: 64px;
-  font-weight: 600;
-}
-
-.hero span {
-  color: #666;
-}
-
-.desc {
-  color: #555;
-  font-size: 18px;
-}
-
-/* ========================= */
-/* BUTTONS */
-/* ========================= */
-.hero-buttons {
-  margin-top: 20px;
-  display: flex;
-  gap: 10px;
-}
-
-.primary {
-  padding: 14px 28px;
-  background: black;
-  color: white;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-}
-
-.secondary {
-  padding: 14px 28px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background: white;
-  color: #111;
-}
-
-/* ========================= */
-/* GRID */
-/* ========================= */
-.features {
-  padding: 100px 20px;
-  text-align: center;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 25px;
-  margin-top: 40px;
-}
-
-.card {
-  padding: 25px;
-  background: white;
-  border-radius: 16px;
-  border: 1px solid #eee;
-  transition: 0.3s;
-  cursor: pointer;
-}
-
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-
-/* ========================= */
-/* LESSON PAGE */
-/* ========================= */
-.lesson-container {
-  max-width: 900px;
-  margin: auto;
-  padding: 40px 20px;
-  text-align: center;
-}
-
-.lesson-container h1 {
-  font-size: 40px;
-}
-
-/* ========================= */
-/* FLASHCARD */
-/* ========================= */
-.flashcard {
-  margin: 40px auto;
-  width: 260px;
-  height: 200px;
-  perspective: 1000px;
-  cursor: pointer;
-}
-
-.flashcard .inner {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-}
-
-.flashcard.flip .inner {
-  transform: rotateY(180deg);
-}
-
-.flashcard .front,
-.flashcard .back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  backface-visibility: hidden;
-  border: 1px solid #eee;
-  background: white;
-}
-
-/* FRONT (JP) */
-.flashcard .front {
-  font-size: 80px;
-  font-weight: bold;
-}
-
-/* BACK (EN + SOUND) */
-.flashcard .back {
-  transform: rotateY(180deg);
-}
-
-.flashcard .back h2 {
-  font-size: 28px;
-}
-
-.flashcard .back p {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #666;
-}
-
-/* ========================= */
-/* CONTROLS */
-/* ========================= */
-.controls {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-.controls button {
-  padding: 10px 20px;
-  border-radius: 10px;
-  border: none;
-  background: black;
-  color: white;
-  cursor: pointer;
-}
-
-/* ========================= */
-/* STATS */
-/* ========================= */
-.stats {
-  text-align: center;
-  padding: 100px 20px;
-}
-
-.stats-grid {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-}
-
-.stats-grid h1 {
-  font-size: 36px;
-}
-
-/* ========================= */
-/* DARK MODE */
-/* ========================= */
-body.dark {
-  background: #0f0f0f;
-  color: white;
-}
-
-body.dark .nav {
-  background: rgba(0,0,0,0.6);
-  border-bottom: 1px solid #222;
-}
-
-body.dark .logo-box {
-  background: white;
-  color: black;
-}
-
-body.dark .card {
-  background: #1a1a1a;
-  border: none;
-}
-
-body.dark .flashcard .front,
-body.dark .flashcard .back {
-  background: #1a1a1a;
-  color: white;
-  border: none;
-}
-
-body.dark .flashcard .back p {
+body.dark .back-content p {
   color: #aaa;
-}
-
-/* ========================= */
-/* MOBILE */
-/* ========================= */
-@media (max-width: 768px) {
-
-  .nav {
-    padding: 15px 20px;
-  }
-
-  .nav-links {
-    display: none;
-  }
-
-  .hero h1 {
-    font-size: 36px;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .stats-grid {
-    flex-direction: column;
-  }
-
-  .flashcard {
-    width: 220px;
-    height: 180px;
-  }
-
 }
