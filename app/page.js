@@ -7,7 +7,7 @@ export default function Home() {
 
   const courses = [
     { key: "hiragana", kana: "あ", title: "Hiragana Complete", desc: "Master all 46 hiragana characters with AI voice.", lessons: 21, level: "Beginner", bg: "#fff0f0", live: true },
-    { key: "katakana", kana: "ア", title: "Katakana Complete", desc: "Learn katakana for loanwords and modern Japanese.", lessons: 21, level: "Beginner", bg: "#f0f4ff", live: true },
+    { key: "katakana", kana: "ア", title: "Katakana Complete", desc: "Learn katakana for loanwords with AI voice.", lessons: 21, level: "Beginner", bg: "#f0f4ff", live: true },
     { key: "vocab",    kana: "言", title: "Daily Vocabulary",  desc: "500+ essential words organized by topic.", lessons: 30, level: "Intermediate", bg: "#f0fff4", live: false },
     { key: "convo",    kana: "話", title: "Basic Conversation", desc: "Greetings, shopping, travel phrases.", lessons: 15, level: "Beginner", bg: "#fffaf0", live: false },
   ];
