@@ -2,6 +2,33 @@ import "./globals.css";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import { Suspense } from "react";
 
+
+import Script from "next/script";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-TX9MPZFMDT');
+          `}
+        </Script>
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+
+
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
 
 export const metadata = {
