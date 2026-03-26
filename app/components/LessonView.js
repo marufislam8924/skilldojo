@@ -165,7 +165,7 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
           )}
 
           <div className={`${styles.fcKana} ${isVocabulary ? styles.fcWord : ""}`}>{current.k}</div>
-          <div className={styles.fcHint}>{isVocabulary ? current.reading : current.r}</div>
+          <div className={`${styles.fcHint} ${isVocabulary ? styles.fcHintVisible : ""}`}>{isVocabulary ? current.reading : current.r}</div>
           {revealed && isVocabulary && (
             <>
               <div className={styles.fcRoman}>{current.r}</div>
@@ -173,6 +173,7 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
               <div className={styles.fcExampleBox}>
                 <div className={styles.fcExampleLabel}>Example</div>
                 <div className={styles.fcExampleJa}>{current.exampleJa}</div>
+                <div className={styles.fcExampleKana}>{current.exampleJaHiragana}</div>
                 <div className={styles.fcExampleEn}>{current.exampleEn}</div>
               </div>
             </>
@@ -225,6 +226,7 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
                 <div className={`${styles.charKana} ${isVocabulary ? styles.wordPrimary : ""}`}>{c.k}</div>
                 <div className={styles.charRom}>{isVocabulary ? c.reading : c.r}</div>
                 {isVocabulary && <div className={styles.charMeaning}>{c.meaning}</div>}
+                {isVocabulary && <div className={styles.charReading}>[{c.reading}]</div>}
                 {isVocabulary && <div className={styles.charExample}>{c.exampleJa}</div>}
                 <div className={styles.charSpeakIcon}>🔈</div>
               </div>

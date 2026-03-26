@@ -1,22 +1,27 @@
 const exampleBuilders = [
-  ({ k, meaning }) => ({
+  ({ k, reading, meaning }) => ({
     exampleJa: `きょうは「${k}」を勉強します。`,
+    exampleJaHiragana: `きょうは「${reading}」をべんきょうします。`,
     exampleEn: `Today I am studying the word "${meaning}."`,
   }),
-  ({ k, meaning }) => ({
+  ({ k, reading, meaning }) => ({
     exampleJa: `先生は「${k}」をもう一度言いました。`,
+    exampleJaHiragana: `せんせいは「${reading}」をもういちどいいました。`,
     exampleEn: `The teacher said "${meaning}" one more time.`,
   }),
-  ({ k, meaning }) => ({
+  ({ k, reading, meaning }) => ({
     exampleJa: `会話で「${k}」を使ってみましょう。`,
+    exampleJaHiragana: `かいわで「${reading}」をつかってみましょう。`,
     exampleEn: `Let's try using "${meaning}" in conversation.`,
   }),
-  ({ k, meaning }) => ({
+  ({ k, reading, meaning }) => ({
     exampleJa: `ノートに「${k}」を書きました。`,
+    exampleJaHiragana: `のーとに「${reading}」をかきました。`,
     exampleEn: `I wrote "${meaning}" in my notebook.`,
   }),
-  ({ k, meaning }) => ({
+  ({ k, reading, meaning }) => ({
     exampleJa: `友達と「${k}」について話しました。`,
+    exampleJaHiragana: `ともだちと「${reading}」についてはなしました。`,
     exampleEn: `I talked with a friend about "${meaning}."`,
   }),
 ];
@@ -37,7 +42,7 @@ function createLesson(id, kana, name, words) {
       r,
       meaning,
       voice: reading || k,
-      ...buildExamples({ k, meaning }, id, index),
+      ...buildExamples({ k, reading, meaning }, id, index),
     })),
   };
 }

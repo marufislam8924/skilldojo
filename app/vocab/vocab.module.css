@@ -159,6 +159,14 @@
   margin-bottom: 4px;
 }
 
+.dailyReading {
+  display: block;
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
 .dailyMeaning {
   font-family: 'DM Mono', monospace;
   font-size: 0.68rem;

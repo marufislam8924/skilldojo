@@ -51,6 +51,7 @@ export default function VocabularyPage() {
           {dailyLesson.chars.slice(0, 6).map((item) => (
             <div key={item.k} className={styles.dailyWordChip}>
               <span className={styles.dailyWord}>{item.k}</span>
+              <span className={styles.dailyReading}>{item.reading}</span>
               <span className={styles.dailyMeaning}>{item.meaning}</span>
             </div>
           ))}
@@ -71,7 +72,10 @@ export default function VocabularyPage() {
             <div className={styles.lessonKana}>{lesson.kana}</div>
             <div className={styles.lessonName}>{lesson.name}</div>
             <div className={styles.lessonChars}>
-              {lesson.chars.slice(0, 4).map((item) => item.k).join(" · ")}
+              {lesson.chars
+                .slice(0, 3)
+                .map((item) => (item.k === item.reading ? item.k : `${item.k} (${item.reading})`))
+                .join(" · ")}
             </div>
           </div>
         ))}
