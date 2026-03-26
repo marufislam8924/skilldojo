@@ -1,5 +1,5 @@
 /* RESET */
-*  {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,7 +9,6 @@ body {
   font-family: Arial, sans-serif;
   background: radial-gradient(circle at top, #1a1a1a, #0f0f0f);
   color: white;
-  scroll-behavior: smooth;
 }
 
 /* NAV */
@@ -48,6 +47,7 @@ body {
 
 .hero h1 {
   font-size: 64px;
+  font-weight: 600;
 }
 
 .hero span {
@@ -81,16 +81,20 @@ body {
   color: black;
   border-radius: 12px;
   border: none;
+  cursor: pointer;
 }
 
 .secondary {
   padding: 14px 30px;
   border: 1px solid rgba(255,255,255,0.2);
   margin-left: 10px;
+  background: transparent;
+  color: white;
   border-radius: 12px;
+  cursor: pointer;
 }
 
-/* HOVER */
+/* MAGNETIC */
 .magnetic:hover {
   transform: scale(1.1);
 }
@@ -112,18 +116,16 @@ body {
   background: linear-gradient(145deg, #1a1a1a, #111);
   padding: 30px;
   border-radius: 20px;
-  animation: float 6s ease-in-out infinite;
+  transition: 0.3s;
 }
 
 .card:hover {
-  transform: rotateX(8deg) rotateY(-8deg) scale(1.05);
+  transform: translateY(-10px);
 }
 
-/* FLOAT */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
-  100% { transform: translateY(0px); }
+/* 3D TILT */
+.tilt:hover {
+  transform: rotateX(8deg) rotateY(-8deg) scale(1.05);
 }
 
 /* STATS */
@@ -139,6 +141,18 @@ body {
   margin-top: 40px;
 }
 
+/* SCROLL */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 0.8s ease;
+}
+
+.reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* CURSOR */
 #cursor {
   width: 8px;
@@ -150,12 +164,6 @@ body {
   z-index: 999;
 }
 
-#ring {
-  width: 40px;
-  height: 40px;
-  border: 1px solid rgba(255,255,255,0.5);
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
+button {
+  font-family: inherit;
 }

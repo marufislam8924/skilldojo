@@ -1,3 +1,9 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
+  "/flashcards/page": "app/flashcards/page.js",
+  "/hiragana/[lesson]/page": "app/hiragana/[lesson]/page.js",
+  "/hiragana/page": "app/hiragana/page.js",
+  "/katakana/[lesson]/page": "app/katakana/[lesson]/page.js",
+  "/katakana/page": "app/katakana/page.js",
   "/page": "app/page.js"
 }

@@ -1,0 +1,322 @@
+.main {
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(250, 247, 242, 0.93);
+  backdrop-filter: blur(10px);
+  border-bottom: 1.5px solid var(--border);
+}
+
+.logo {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.15s;
+}
+
+.backBtn:hover { color: var(--red); }
+
+/* CONTENT */
+.content {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 52px 28px 80px;
+}
+
+.lessonHeader {
+  margin-bottom: 32px;
+}
+
+.lessonTag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+
+.lessonTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+
+.lessonSubtitle {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* PROGRESS */
+.progressWrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.progressBar {
+  flex: 1;
+  height: 8px;
+  background: var(--soft);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--red);
+  border-radius: 99px;
+  transition: width 0.3s ease;
+}
+
+.progressLabel {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* FLASHCARD */
+.flashcard {
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 20px;
+  padding: 64px 40px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 6px 6px 0 var(--ink);
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.1s;
+  margin-bottom: 20px;
+}
+
+.flashcard:active {
+  transform: scale(0.98);
+}
+
+.flashcard.revealed {
+  border-color: var(--red);
+  box-shadow: 6px 6px 0 var(--red);
+}
+
+.fcKana {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 7rem;
+  font-weight: 900;
+  color: var(--red);
+  line-height: 1;
+}
+
+.fcHint {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.2rem;
+  color: var(--muted);
+  margin-top: 16px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.revealed .fcHint {
+  opacity: 1;
+}
+
+.fcTap {
+  position: absolute;
+  bottom: 18px;
+  right: 22px;
+  font-size: 0.72rem;
+  color: var(--border);
+}
+
+/* BUTTONS */
+.fcBtns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 48px;
+}
+
+.fcBtnsPlaceholder {
+  height: 50px;
+  margin-bottom: 48px;
+}
+
+.btnAgain {
+  padding: 12px 32px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.btnAgain:hover { background: #ffe0de; border-color: var(--red); }
+
+.btnGood {
+  padding: 12px 32px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btnGood:hover { background: var(--red); border-color: var(--red); }
+
+/* ALL CHARS */
+.allChars {
+  margin-top: 8px;
+}
+
+.allCharsTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  margin-bottom: 16px;
+}
+
+.allCharsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: 10px;
+}
+
+.charCell {
+  background: var(--soft);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 6px;
+  text-align: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.charDone {
+  background: #d4edda;
+  border-color: #28a745;
+}
+
+.charActive {
+  background: #fff0f0;
+  border-color: var(--red);
+  border-width: 2px;
+}
+
+.charKana {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.charRom {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* DONE SCREEN */
+.doneScreen {
+  max-width: 460px;
+  margin: 80px auto;
+  text-align: center;
+  padding: 0 28px;
+}
+
+.doneEmoji {
+  font-size: 5rem;
+  margin-bottom: 20px;
+}
+
+.doneTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.doneDesc {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 36px;
+  line-height: 1.6;
+}
+
+.doneBtns {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btnPrimary {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 13px 28px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--red);
+  transition: transform 0.15s, box-shadow 0.15s;
+  font-family: inherit;
+}
+
+.btnPrimary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--red);
+}
+
+.btnSecondary {
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  padding: 13px 28px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btnSecondary:hover {
+  background: var(--ink);
+  color: var(--paper);
+}

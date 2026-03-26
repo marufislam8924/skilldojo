@@ -1,18 +1,14 @@
 import "./globals.css";
-import Cursor from "./components/Cursor";
 
 export const metadata = {
-  title: "Skilldojo",
-  description: "Learn Japanese",
+  title: "SkillDojo - Learn Japanese",
+  description: "Master JLPT N5 with structured lessons, flashcards, and AI practice.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
-        <Cursor />
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
