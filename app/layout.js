@@ -1,4 +1,6 @@
 import "./globals.css";
+import GoogleAnalytics from "./components/GoogleAnalytics";
+import { Suspense } from "react";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
 
@@ -62,7 +64,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Suspense fallback={null}>
+          <GoogleAnalytics />
+        </Suspense>
+        {children}
+      </body>
     </html>
   );
 }
