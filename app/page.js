@@ -9,7 +9,7 @@ export default function Home() {
   const courses = [
     { key: "hiragana", kana: "あ", title: "Hiragana Complete", desc: "Master all 46 hiragana characters with AI voice.", lessons: 21, level: "Beginner", bg: "#fff0f0", live: true },
     { key: "katakana", kana: "ア", title: "Katakana Complete", desc: "Learn katakana for loanwords and modern Japanese.", lessons: 21, level: "Beginner", bg: "#f0f4ff", live: true },
-    { key: "vocab",    kana: "言", title: "Daily Vocabulary",  desc: "500+ essential words organized by topic.", lessons: 30, level: "Intermediate", bg: "#f0fff4", live: false },
+    { key: "vocab",    kana: "言", title: "Daily Vocabulary",  desc: "500+ JLPT N5 words organized into interactive lessons.", lessons: 25, level: "JLPT N5", bg: "#f0fff4", live: true },
     { key: "convo",    kana: "話", title: "Basic Conversation", desc: "Greetings, shopping, travel phrases.", lessons: 15, level: "Beginner", bg: "#fffaf0", live: false },
   ];
 
@@ -20,6 +20,9 @@ export default function Home() {
       <nav className={styles.nav}>
         <span className={styles.logo}>Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場</span>
         <div className={styles.navActions}>
+          <Link href="/vocab" className={styles.navLink}>
+            Vocabulary
+          </Link>
           <Link href="/katakana" className={styles.navLink}>
             Katakana
           </Link>

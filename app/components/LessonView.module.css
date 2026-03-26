@@ -164,6 +164,11 @@
   overflow: hidden;
 }
 
+.wordFlashcard {
+  min-height: 340px;
+  padding: 48px 34px 44px;
+}
+
 .flashcard:active { transform: scale(0.98); }
 
 .flashcard.revealed {
@@ -220,6 +225,10 @@
   line-height: 1;
 }
 
+.fcWord {
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+}
+
 .fcHint {
   font-family: 'DM Mono', monospace;
   font-size: 1.2rem;
@@ -230,6 +239,57 @@
 }
 
 .revealed .fcHint { opacity: 1; }
+
+.fcRoman {
+  margin-top: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.fcMeaning {
+  margin-top: 16px;
+  max-width: 420px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.fcExampleBox {
+  width: 100%;
+  max-width: 440px;
+  margin-top: 18px;
+  padding: 16px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  background: var(--soft);
+  text-align: left;
+}
+
+.fcExampleLabel {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.fcExampleJa {
+  margin-top: 8px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+.fcExampleEn {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
 
 .fcTap {
   position: absolute;
@@ -316,6 +376,10 @@
   gap: 10px;
 }
 
+.wordGrid {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
 .charCell {
   background: var(--soft);
   border: 1.5px solid var(--border);
@@ -325,6 +389,11 @@
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s, transform 0.1s;
   position: relative;
+}
+
+.wordCell {
+  padding: 14px 12px 12px;
+  text-align: left;
 }
 
 .charCell:hover {
@@ -351,11 +420,40 @@
   line-height: 1;
 }
 
+.wordPrimary {
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
 .charRom {
   font-family: 'DM Mono', monospace;
   font-size: 0.68rem;
   color: var(--muted);
   margin-top: 3px;
+}
+
+.charMeaning {
+  margin-top: 8px;
+  padding-right: 16px;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.charExample {
+  margin-top: 8px;
+  padding-right: 16px;
+  font-size: 0.67rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.charSpeakIcon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 0.75rem;
+  color: var(--muted);
 }
 
 .charSpeakIcon {

@@ -1,0 +1,268 @@
+.main {
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(250, 247, 242, 0.93);
+  backdrop-filter: blur(10px);
+  border-bottom: 1.5px solid var(--border);
+}
+
+.logo {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.15s;
+}
+
+.backBtn:hover {
+  color: var(--red);
+}
+
+.header {
+  padding: 60px 80px 28px;
+}
+
+.headerTag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 10px;
+}
+
+.headerTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.headerDesc {
+  color: var(--muted);
+  font-size: 1rem;
+  max-width: 720px;
+}
+
+.dailyCard {
+  margin: 0 80px 32px;
+  padding: 28px;
+  background: linear-gradient(135deg, #fff8e4 0%, #fff 100%);
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  box-shadow: 8px 8px 0 #f5a623;
+}
+
+.dailyMeta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(245, 166, 35, 0.16);
+  color: #8c5a00;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dailyTop {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 18px 0 20px;
+}
+
+.dailyLessonNum {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+
+.dailyTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.dailyDesc {
+  max-width: 560px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.dailyBtn {
+  border: 2px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 14px 22px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 0 var(--red);
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.dailyBtn:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 var(--red);
+}
+
+.dailyWords {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.dailyWordChip {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 14px 12px;
+}
+
+.dailyWord {
+  display: block;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.dailyMeaning {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+  padding: 0 80px 80px;
+}
+
+.lessonCard {
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  padding: 22px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+
+.lessonCard:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 var(--red);
+  border-color: var(--red);
+}
+
+.lessonTopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.lessonNum {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.lessonCount {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #8c5a00;
+  background: #fff2c9;
+  border-radius: 999px;
+  padding: 6px 10px;
+}
+
+.lessonKana {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 900;
+  line-height: 1;
+  margin: 16px 0 10px;
+}
+
+.lessonName {
+  font-size: 0.94rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.lessonChars {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .dailyTop {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dailyBtn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 40px 28px 24px;
+  }
+
+  .dailyCard {
+    margin: 0 28px 24px;
+    padding: 22px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    padding: 0 28px 60px;
+    gap: 14px;
+  }
+
+  .nav {
+    padding: 16px 24px;
+  }
+}

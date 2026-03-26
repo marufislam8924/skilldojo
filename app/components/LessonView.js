@@ -13,8 +13,16 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
   const [autoVoice, setAutoVoice] = useState(true);
   const synthRef = useRef(null);
 
+  const isVocabulary = courseSlug === "vocab";
   const current = data.chars[cardIndex];
   const progress = Math.round((cardIndex / data.chars.length) * 100);
+  const currentVoice = current.voice || current.reading || current.k;
+  const courseLabel =
+    courseSlug === "hiragana"
+      ? "Hiragana"
+      : courseSlug === "katakana"
+        ? "Katakana"
+        : "JLPT N5 Vocabulary";
 
   // ── AI VOICE via Web Speech API (Japanese) ──
   const speak = useCallback((text) => {
@@ -42,7 +50,7 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
   function reveal() {
     if (!revealed) {
       setRevealed(true);
-      if (autoVoice) speak(current.k);
+      if (autoVoice) speak(currentVoice);
     }
   }
 
@@ -113,11 +121,11 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
         {/* Header */}
         <div className={styles.lessonHeader}>
           <div className={styles.lessonTag}>
-            {courseSlug === "hiragana" ? "Hiragana" : "Katakana"} · Lesson {lessonId}
+            {courseLabel} · Lesson {lessonId}
           </div>
           <h1 className={styles.lessonTitle}>{data.name}</h1>
           <p className={styles.lessonSubtitle}>
-            {data.chars.length} characters · Tap the card to reveal
+            {data.chars.length} {isVocabulary ? "words" : "characters"} · Tap the card to reveal
           </p>
         </div>
 
@@ -146,7 +154,7 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
 
         {/* Flashcard */}
         <div
-          className={`${styles.flashcard} ${revealed ? styles.revealed : ""} ${speaking ? styles.speaking : ""}`}
+          className={`${styles.flashcard} ${revealed ? styles.revealed : ""} ${speaking ? styles.speaking : ""} ${isVocabulary ? styles.wordFlashcard : ""}`}
           onClick={reveal}
         >
           {/* Sound waves when speaking */}
@@ -156,8 +164,19 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
             </div>
           )}
 
-          <div className={styles.fcKana}>{current.k}</div>
-          <div className={styles.fcHint}>{current.r}</div>
+          <div className={`${styles.fcKana} ${isVocabulary ? styles.fcWord : ""}`}>{current.k}</div>
+          <div className={styles.fcHint}>{isVocabulary ? current.reading : current.r}</div>
+          {revealed && isVocabulary && (
+            <>
+              <div className={styles.fcRoman}>{current.r}</div>
+              <div className={styles.fcMeaning}>{current.meaning}</div>
+              <div className={styles.fcExampleBox}>
+                <div className={styles.fcExampleLabel}>Example</div>
+                <div className={styles.fcExampleJa}>{current.exampleJa}</div>
+                <div className={styles.fcExampleEn}>{current.exampleEn}</div>
+              </div>
+            </>
+          )}
 
           {!revealed && (
             <div className={styles.fcTap}>tap to reveal &amp; hear</div>
@@ -167,7 +186,7 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
           {revealed && (
             <button
               className={`${styles.speakBtn} ${speaking ? styles.speakBtnActive : ""}`}
-              onClick={(e) => { e.stopPropagation(); speak(current.k); }}
+              onClick={(e) => { e.stopPropagation(); speak(currentVoice); }}
               title="Hear pronunciation"
             >
               {speaking ? "🔊" : "🔈"} {speaking ? "Speaking..." : "Hear again"}
@@ -191,19 +210,22 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
 
         {/* All chars grid */}
         <div className={styles.allChars}>
-          <h3 className={styles.allCharsTitle}>All characters — Lesson {lessonId}</h3>
-          <div className={styles.allCharsGrid}>
+          <h3 className={styles.allCharsTitle}>All {isVocabulary ? "words" : "characters"} — Lesson {lessonId}</h3>
+          <div className={`${styles.allCharsGrid} ${isVocabulary ? styles.wordGrid : ""}`}>
             {data.chars.map((c, i) => (
               <div
-                key={c.k}
+                key={`${c.k}-${i}`}
                 className={`${styles.charCell}
+                  ${isVocabulary ? styles.wordCell : ""}
                   ${i < cardIndex ? styles.charDone : ""}
                   ${i === cardIndex ? styles.charActive : ""}`}
-                onClick={() => speak(c.k)}
-                title={`Hear: ${c.r}`}
+                onClick={() => speak(c.voice || c.reading || c.k)}
+                title={isVocabulary ? `Hear: ${c.meaning}` : `Hear: ${c.r}`}
               >
-                <div className={styles.charKana}>{c.k}</div>
-                <div className={styles.charRom}>{c.r}</div>
+                <div className={`${styles.charKana} ${isVocabulary ? styles.wordPrimary : ""}`}>{c.k}</div>
+                <div className={styles.charRom}>{isVocabulary ? c.reading : c.r}</div>
+                {isVocabulary && <div className={styles.charMeaning}>{c.meaning}</div>}
+                {isVocabulary && <div className={styles.charExample}>{c.exampleJa}</div>}
                 <div className={styles.charSpeakIcon}>🔈</div>
               </div>
             ))}
