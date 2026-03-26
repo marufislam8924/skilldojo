@@ -1,3 +1,90 @@
+export const katakanaLessons = [
+  {
+    id: 1, kana: "ア", name: "Row A",
+    chars: [{ k: "ア", r: "a" }, { k: "イ", r: "i" }, { k: "ウ", r: "u" }, { k: "エ", r: "e" }, { k: "オ", r: "o" }],
+  },
+  {
+    id: 2, kana: "カ", name: "Row KA",
+    chars: [{ k: "カ", r: "ka" }, { k: "キ", r: "ki" }, { k: "ク", r: "ku" }, { k: "ケ", r: "ke" }, { k: "コ", r: "ko" }],
+  },
+  {
+    id: 3, kana: "サ", name: "Row SA",
+    chars: [{ k: "サ", r: "sa" }, { k: "シ", r: "shi" }, { k: "ス", r: "su" }, { k: "セ", r: "se" }, { k: "ソ", r: "so" }],
+  },
+  {
+    id: 4, kana: "タ", name: "Row TA",
+    chars: [{ k: "タ", r: "ta" }, { k: "チ", r: "chi" }, { k: "ツ", r: "tsu" }, { k: "テ", r: "te" }, { k: "ト", r: "to" }],
+  },
+  {
+    id: 5, kana: "ナ", name: "Row NA",
+    chars: [{ k: "ナ", r: "na" }, { k: "ニ", r: "ni" }, { k: "ヌ", r: "nu" }, { k: "ネ", r: "ne" }, { k: "ノ", r: "no" }],
+  },
+  {
+    id: 6, kana: "ハ", name: "Row HA",
+    chars: [{ k: "ハ", r: "ha" }, { k: "ヒ", r: "hi" }, { k: "フ", r: "fu" }, { k: "ヘ", r: "he" }, { k: "ホ", r: "ho" }],
+  },
+  {
+    id: 7, kana: "マ", name: "Row MA",
+    chars: [{ k: "マ", r: "ma" }, { k: "ミ", r: "mi" }, { k: "ム", r: "mu" }, { k: "メ", r: "me" }, { k: "モ", r: "mo" }],
+  },
+  {
+    id: 8, kana: "ヤ", name: "Row YA",
+    chars: [{ k: "ヤ", r: "ya" }, { k: "ユ", r: "yu" }, { k: "ヨ", r: "yo" }],
+  },
+  {
+    id: 9, kana: "ラ", name: "Row RA",
+    chars: [{ k: "ラ", r: "ra" }, { k: "リ", r: "ri" }, { k: "ル", r: "ru" }, { k: "レ", r: "re" }, { k: "ロ", r: "ro" }],
+  },
+  {
+    id: 10, kana: "ワ", name: "Row WA",
+    chars: [{ k: "ワ", r: "wa" }, { k: "ヲ", r: "wo" }, { k: "ン", r: "n" }],
+  },
+  {
+    id: 11, kana: "ガ", name: "Row GA",
+    chars: [{ k: "ガ", r: "ga" }, { k: "ギ", r: "gi" }, { k: "グ", r: "gu" }, { k: "ゲ", r: "ge" }, { k: "ゴ", r: "go" }],
+  },
+  {
+    id: 12, kana: "ザ", name: "Row ZA",
+    chars: [{ k: "ザ", r: "za" }, { k: "ジ", r: "ji" }, { k: "ズ", r: "zu" }, { k: "ゼ", r: "ze" }, { k: "ゾ", r: "zo" }],
+  },
+  {
+    id: 13, kana: "ダ", name: "Row DA",
+    chars: [{ k: "ダ", r: "da" }, { k: "ヂ", r: "di" }, { k: "ヅ", r: "du" }, { k: "デ", r: "de" }, { k: "ド", r: "do" }],
+  },
+  {
+    id: 14, kana: "バ", name: "Row BA",
+    chars: [{ k: "バ", r: "ba" }, { k: "ビ", r: "bi" }, { k: "ブ", r: "bu" }, { k: "ベ", r: "be" }, { k: "ボ", r: "bo" }],
+  },
+  {
+    id: 15, kana: "パ", name: "Row PA",
+    chars: [{ k: "パ", r: "pa" }, { k: "ピ", r: "pi" }, { k: "プ", r: "pu" }, { k: "ペ", r: "pe" }, { k: "ポ", r: "po" }],
+  },
+  {
+    id: 16, kana: "キャ", name: "Compound KYA",
+    chars: [{ k: "キャ", r: "kya" }, { k: "キュ", r: "kyu" }, { k: "キョ", r: "kyo" }],
+  },
+  {
+    id: 17, kana: "シャ", name: "Compound SHA",
+    chars: [{ k: "シャ", r: "sha" }, { k: "シュ", r: "shu" }, { k: "ショ", r: "sho" }],
+  },
+  {
+    id: 18, kana: "チャ", name: "Compound CHA",
+    chars: [{ k: "チャ", r: "cha" }, { k: "チュ", r: "chu" }, { k: "チョ", r: "cho" }],
+  },
+  {
+    id: 19, kana: "ニャ", name: "Compound NYA",
+    chars: [{ k: "ニャ", r: "nya" }, { k: "ニュ", r: "nyu" }, { k: "ニョ", r: "nyo" }],
+  },
+  {
+    id: 20, kana: "ヒャ", name: "Compound HYA",
+    chars: [{ k: "ヒャ", r: "hya" }, { k: "ヒュ", r: "hyu" }, { k: "ヒョ", r: "hyo" }],
+  },
+  {
+    id: 21, kana: "ミャ", name: "Compound MYA",
+    chars: [{ k: "ミャ", r: "mya" }, { k: "ミュ", r: "myu" }, { k: "ミョ", r: "myo" }],
+  },
+];
+
 export const hiraganaLessons = [
   {
     id: 1, kana: "あ", name: "Row A",
