@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
@@ -18,9 +19,14 @@ export default function Home() {
       {/* NAV */}
       <nav className={styles.nav}>
         <span className={styles.logo}>Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場</span>
-        <a href="https://youtube.com/@skilldojo-b2t" target="_blank" className={styles.ytLink}>
-          ▶ YouTube
-        </a>
+        <div className={styles.navActions}>
+          <Link href="/katakana" className={styles.navLink}>
+            Katakana
+          </Link>
+          <a href="https://youtube.com/@skilldojo-b2t" target="_blank" className={styles.ytLink}>
+            ▶ YouTube
+          </a>
+        </div>
       </nav>
 
       {/* HERO */}
@@ -40,6 +46,9 @@ export default function Home() {
             >
               Start for Free →
             </button>
+            <Link href="/katakana" className={styles.btnSecondary}>
+              Explore Katakana
+            </Link>
             <a
               href="https://youtube.com/@skilldojo-b2t"
               target="_blank"
@@ -66,6 +75,22 @@ export default function Home() {
             </div>
             <span className={styles.progLabel}>Lesson 1 / 21</span>
           </div>
+          <div className={styles.previewDivider} />
+
+          <div className={styles.previewHeader}>
+            <div className={styles.cardLabel}>Katakana Spotlight</div>
+            <Link href="/katakana" className={styles.previewLink}>
+              Open Katakana →
+            </Link>
+          </div>
+          <div className={styles.kanaGrid}>
+            {[ ["ア","a"],["イ","i"],["ウ","u"],["エ","e"],["オ","o"] ].map(([k, r]) => (
+              <div key={k} className={styles.kanaCellAlt}>
+                <span className={styles.kanaBig}>{k}</span>
+                <span className={styles.kanaRom}>{r}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -76,37 +101,48 @@ export default function Home() {
           <h2 className={styles.sectionTitle}>Choose Your Path</h2>
         </div>
         <div className={styles.coursesGrid}>
-          {courses.map((c) => (
-            <div
-              key={c.key}
-              className={styles.courseCard}
-              onClick={() => c.live ? router.push(`/${c.key}`) : null}
-              style={{ cursor: c.live ? "pointer" : "default" }}
-            >
-              <div className={styles.courseThumb} style={{ background: c.bg }}>
-                {c.kana}
-              </div>
-              <div className={styles.courseBody}>
-                <div className={styles.courseTitle}>{c.title}</div>
-                <div className={styles.courseDesc}>{c.desc}</div>
-                <div className={styles.courseMeta}>
-                  <span className={styles.lessonsCount}>{c.lessons} lessons</span>
-                  <span
-                    className={styles.levelBadge}
-                    style={{
-                      background: c.level === "Beginner" ? "#d4edda" : "#fff3cd",
-                      color: c.level === "Beginner" ? "#155724" : "#856404",
-                    }}
-                  >
-                    {c.level}
-                  </span>
+          {courses.map((c) => {
+            const cardContent = (
+              <>
+                <div className={styles.courseThumb} style={{ background: c.bg }}>
+                  {c.kana}
                 </div>
-                {!c.live && (
-                  <div className={styles.comingSoon}>Coming Soon</div>
-                )}
+                <div className={styles.courseBody}>
+                  <div className={styles.courseTitle}>{c.title}</div>
+                  <div className={styles.courseDesc}>{c.desc}</div>
+                  <div className={styles.courseMeta}>
+                    <span className={styles.lessonsCount}>{c.lessons} lessons</span>
+                    <span
+                      className={styles.levelBadge}
+                      style={{
+                        background: c.level === "Beginner" ? "#d4edda" : "#fff3cd",
+                        color: c.level === "Beginner" ? "#155724" : "#856404",
+                      }}
+                    >
+                      {c.level}
+                    </span>
+                  </div>
+                  {!c.live && (
+                    <div className={styles.comingSoon}>Coming Soon</div>
+                  )}
+                </div>
+              </>
+            );
+
+            if (c.live) {
+              return (
+                <Link key={c.key} href={`/${c.key}`} className={styles.courseCard}>
+                  {cardContent}
+                </Link>
+              );
+            }
+
+            return (
+              <div key={c.key} className={styles.courseCard}>
+                {cardContent}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
