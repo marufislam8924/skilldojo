@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
-import { katakanaLessons } from "../../../data";
-import LessonView from "../../../components/LessonView";
+import { katakanaLessons } from "../../data";
+import LessonView from "../../components/LessonView";
 
 export default function KatakanaLessonPage() {
   const { lesson } = useParams();

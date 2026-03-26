@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
-import { hiraganaLessons } from "../../../data";
-import LessonView from "../../../components/LessonView";
+import { hiraganaLessons } from "../../data";
+import LessonView from "../../components/LessonView";
 
 export default function HiraganaLessonPage() {
   const { lesson } = useParams();
