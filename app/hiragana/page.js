@@ -19,9 +19,9 @@ export default function HiraganaPage() {
 
       <div className={styles.header}>
         <div className={styles.headerTag}>Course</div>
-        <h1 className={styles.headerTitle}>Hiragana Complete</h1>
+        <h1 className={styles.headerTitle}>Hiragana and Katakana Full Course</h1>
         <p className={styles.headerDesc}>
-          21 lessons · Master all 46 hiragana characters with flashcards
+          Start Japanese language basics with 21 hiragana lessons and interactive flashcards.
         </p>
       </div>
 

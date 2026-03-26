@@ -310,6 +310,36 @@
   background: var(--soft);
 }
 
+.seoSection {
+  padding: 90px 80px;
+  background: #fff;
+}
+
+.seoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.seoCard {
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  background: #fffdf9;
+}
+
+.seoCard h3 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.seoCard p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
 .sectionHeader {
   text-align: center;
   margin-bottom: 56px;
@@ -455,6 +485,9 @@
   }
   .courses {
     padding: 60px 28px;
+  }
+  .seoSection {
+    padding: 56px 28px;
   }
   .footer {
     padding: 40px 28px;

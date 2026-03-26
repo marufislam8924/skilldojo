@@ -24,9 +24,9 @@ export default function VocabularyPage() {
 
       <div className={styles.header}>
         <div className={styles.headerTag}>JLPT N5 Course</div>
-        <h1 className={styles.headerTitle}>Daily Vocabulary</h1>
+        <h1 className={styles.headerTitle}>Japanese N5 Vocabulary List with Meaning</h1>
         <p className={styles.headerDesc}>
-          {totalVocabularyWords}+ essential N5 words across {vocabularyLessons.length} lessons with AI voice flashcards.
+          {totalVocabularyWords}+ essential words across {vocabularyLessons.length} lessons with reading, meaning, and AI voice flashcards for JLPT N5.
         </p>
       </div>
 

@@ -19,9 +19,9 @@ export default function KatakanaPage() {
 
       <div className={styles.header}>
         <div className={styles.headerTag}>Course</div>
-        <h1 className={styles.headerTitle}>Katakana Complete</h1>
+        <h1 className={styles.headerTitle}>Katakana Complete for JLPT N5</h1>
         <p className={styles.headerDesc}>
-          21 lessons · Master all 46 katakana characters with AI voice
+          Build Japanese beginner course confidence with 21 katakana lessons and AI voice.
         </p>
       </div>
 

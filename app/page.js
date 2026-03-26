@@ -1,10 +1,59 @@
-"use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
+export const metadata = {
+  title: "Japanese N5 and JLPT N5 Beginner Course",
+  description:
+    "Learn Japanese N5 from scratch with vocabulary lists, easy grammar explanations, listening practice, and a practical 30-day JLPT N5 study plan.",
+  keywords: [
+    "Japanese N5",
+    "JLPT N5",
+    "Learn Japanese N5",
+    "Japanese beginner course",
+    "Japanese language basics",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+};
+
 export default function Home() {
-  const router = useRouter();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        name: "SkillDojo",
+        url: siteUrl,
+        inLanguage: "en",
+        description:
+          "Free Japanese learning website with Hiragana, Katakana, and JLPT N5 vocabulary lessons.",
+      },
+      {
+        "@type": "EducationalOrganization",
+        name: "SkillDojo",
+        url: siteUrl,
+        sameAs: ["https://youtube.com/@skilldojo-b2t"],
+      },
+      {
+        "@type": "Course",
+        name: "Learn Japanese N5 from Scratch",
+        provider: {
+          "@type": "EducationalOrganization",
+          name: "SkillDojo",
+          url: siteUrl,
+        },
+        educationalLevel: "Beginner",
+        about: [
+          "Japanese N5 vocabulary list with meaning",
+          "JLPT N5 grammar explained easy",
+          "Japanese N5 listening practice with answers",
+          "Japanese N5 conversation practice",
+        ],
+      },
+    ],
+  };
 
   const courses = [
     { key: "hiragana", kana: "あ", title: "Hiragana Complete", desc: "Master all 46 hiragana characters with AI voice.", lessons: 21, level: "Beginner", bg: "#fff0f0", live: true },
@@ -15,6 +64,10 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
 
       {/* NAV */}
       <nav className={styles.nav}>
@@ -43,12 +96,9 @@ export default function Home() {
             SkillDojo teaches real Japanese — Hiragana, Katakana, vocabulary, and conversation — step by step. No fluff.
           </p>
           <div className={styles.heroBtns}>
-            <button
-              className={styles.btnPrimary}
-              onClick={() => router.push("/hiragana")}
-            >
+            <Link className={styles.btnPrimary} href="/hiragana">
               Start for Free →
-            </button>
+            </Link>
             <Link href="/katakana" className={styles.btnSecondary}>
               Explore Katakana
             </Link>
@@ -146,6 +196,71 @@ export default function Home() {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      <section className={styles.seoSection}>
+        <div className={styles.sectionHeader}>
+          <div className={styles.sectionTag}>Beginner SEO Guide</div>
+          <h2 className={styles.sectionTitle}>Japanese N5 Learning Roadmap</h2>
+        </div>
+        <div className={styles.seoGrid}>
+          <article className={styles.seoCard}>
+            <h3>Learn Japanese N5 from scratch</h3>
+            <p>
+              Follow a clear Japanese beginner course covering Japanese language basics,
+              daily drills, and step-by-step progress tracking.
+            </p>
+          </article>
+          <article className={styles.seoCard}>
+            <h3>Japanese N5 vocabulary list with meaning</h3>
+            <p>
+              Practice 500+ words lesson-wise with readings, English meaning, and
+              interactive flashcards for fast recall.
+            </p>
+          </article>
+          <article className={styles.seoCard}>
+            <h3>JLPT N5 grammar explained easy</h3>
+            <p>
+              Grammar support is written for beginners so you can understand core
+              patterns and use them in real conversation.
+            </p>
+          </article>
+          <article className={styles.seoCard}>
+            <h3>Japanese N5 listening practice with answers</h3>
+            <p>
+              Use pronunciation-focused practice with quick checks to build listening
+              confidence before the test.
+            </p>
+          </article>
+          <article className={styles.seoCard}>
+            <h3>How to pass JLPT N5 in 30 days</h3>
+            <p>
+              Use a daily study sequence that mixes kana, vocabulary, review, and
+              timed self-check sessions.
+            </p>
+          </article>
+          <article className={styles.seoCard}>
+            <h3>Japanese N5 study plan for beginners</h3>
+            <p>
+              Start with Hiragana and Katakana full course, then move into vocabulary,
+              Japanese N5 verbs list with examples, and conversation drills.
+            </p>
+          </article>
+          <article className={styles.seoCard}>
+            <h3>Japanese N5 conversation practice</h3>
+            <p>
+              Build practical speaking confidence through greetings, shopping phrases,
+              and daily life expressions.
+            </p>
+          </article>
+          <article className={styles.seoCard}>
+            <h3>JLPT N5 mock test free</h3>
+            <p>
+              Track your readiness with repeated review sessions and mock-style
+              practice from your completed lessons.
+            </p>
+          </article>
         </div>
       </section>
 
