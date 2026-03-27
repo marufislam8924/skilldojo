@@ -188,7 +188,11 @@
   }
 
   .content {
-    padding: 44px 18px 64px;
+    padding: 44px 16px 64px;
+  }
+
+  .lessonTitle {
+    font-size: 1.8rem;
   }
 
   .footer {
@@ -200,5 +204,40 @@
   .btnBack {
     width: 100%;
     text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    padding: 12px 16px;
+  }
+
+  .logo {
+    font-size: 1.1rem;
+  }
+
+  .backBtn {
+    font-size: 0.78rem;
+  }
+
+  .content {
+    padding: 40px 12px 56px;
+  }
+
+  .lessonTitle {
+    font-size: 1.5rem;
+  }
+
+  .lessonSubtitle {
+    font-size: 0.82rem;
+  }
+
+  .cards {
+    gap: 12px;
+  }
+
+  .footer {
+    margin-top: 36px;
+    padding-top: 20px;
   }
 }
