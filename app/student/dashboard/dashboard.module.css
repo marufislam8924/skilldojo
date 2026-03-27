@@ -1,0 +1,213 @@
+.main {
+  min-height: 100vh;
+  padding: 24px 28px 70px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 26px;
+}
+
+.backLink {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.backLink:hover {
+  color: var(--red);
+}
+
+.signOutBtn {
+  border: 1.5px solid var(--ink);
+  background: #fff;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hero {
+  margin-bottom: 26px;
+}
+
+.heroTag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 10px;
+}
+
+.title {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: var(--muted);
+  max-width: 620px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.syncLabel {
+  display: inline-block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8c5a00;
+  background: #fff2c9;
+  border-radius: 999px;
+  padding: 6px 10px;
+  margin-bottom: 18px;
+}
+
+.overallBox {
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.overallHead {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.progressBar,
+.progressBarSmall {
+  width: 100%;
+  height: 9px;
+  background: var(--soft);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressBarSmall {
+  height: 8px;
+  margin: 10px 0;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #e63329 0%, #f5a623 100%);
+}
+
+.overallMeta,
+.courseMeta {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.courseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 34px;
+}
+
+.courseCard {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.courseTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.courseTop h2 {
+  font-size: 1.05rem;
+}
+
+.cardActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.actionLink,
+.actionLinkAlt {
+  border-radius: 8px;
+  padding: 8px 12px;
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.actionLink {
+  background: #fff;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+}
+
+.actionLinkAlt {
+  background: var(--ink);
+  border: 1.5px solid var(--ink);
+  color: #fff;
+}
+
+.recentTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.3rem;
+  margin-bottom: 14px;
+}
+
+.emptyText {
+  color: var(--muted);
+}
+
+.activityList {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.activityItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.activityTime {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-top: 3px;
+}
+
+.activityScore {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--red);
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding: 20px 16px 40px;
+  }
+}

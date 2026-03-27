@@ -6,6 +6,7 @@ import {
   vocabularyLessons,
 } from "../vocabData";
 import styles from "./vocab.module.css";
+import StudentNavAction from "../components/StudentNavAction";
 
 export default function VocabularyPage() {
   const router = useRouter();
@@ -17,9 +18,12 @@ export default function VocabularyPage() {
         <span className={styles.logo}>
           Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場
         </span>
-        <button className={styles.backBtn} onClick={() => router.push("/")}>
-          ← Back
-        </button>
+        <div className={styles.navActions}>
+          <StudentNavAction className={styles.navLink} dashboardLabel="My Progress" />
+          <button className={styles.backBtn} onClick={() => router.push("/")}>
+            ← Back
+          </button>
+        </div>
       </nav>
 
       <div className={styles.header}>

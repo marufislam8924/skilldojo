@@ -22,6 +22,25 @@
   font-weight: 900;
 }
 
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.navLink {
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+.navLink:hover {
+  color: var(--red);
+}
+
 .backBtn {
   background: none;
   border: none;
@@ -126,5 +145,9 @@
   }
   .nav {
     padding: 16px 24px;
+  }
+
+  .navActions {
+    gap: 10px;
   }
 }

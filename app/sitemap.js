@@ -1,12 +1,13 @@
 import { hiraganaLessons, katakanaLessons } from "./data";
 import { vocabularyLessons } from "./vocabData";
+import { conversationLessons } from "../data/conversationLessons";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
 
 export default function sitemap() {
   const now = new Date();
 
-  const staticPages = ["", "/hiragana", "/katakana", "/vocab"].map((path) => ({
+  const staticPages = ["", "/hiragana", "/katakana", "/vocab", "/conversation"].map((path) => ({
     url: `${siteUrl}${path}`,
     lastModified: now,
     changeFrequency: "weekly",
@@ -34,5 +35,12 @@ export default function sitemap() {
     priority: 0.75,
   }));
 
-  return [...staticPages, ...hiraganaPages, ...katakanaPages, ...vocabPages];
+  const conversationPages = conversationLessons.map((lesson) => ({
+    url: `${siteUrl}/conversation/${lesson.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly",
+    priority: 0.75,
+  }));
+
+  return [...staticPages, ...hiraganaPages, ...katakanaPages, ...vocabPages, ...conversationPages];
 }

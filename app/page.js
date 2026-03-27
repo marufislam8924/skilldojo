@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./page.module.css";
+import StudentNavAction from "./components/StudentNavAction";
 
 export const metadata = {
   title: "Japanese N5 and JLPT N5 Beginner Course",
@@ -59,7 +60,7 @@ export default function Home() {
     { key: "hiragana", kana: "あ", title: "Hiragana Complete", desc: "Master all 46 hiragana characters with AI voice.", lessons: 21, level: "Beginner", bg: "#fff0f0", live: true },
     { key: "katakana", kana: "ア", title: "Katakana Complete", desc: "Learn katakana for loanwords and modern Japanese.", lessons: 21, level: "Beginner", bg: "#f0f4ff", live: true },
     { key: "vocab",    kana: "言", title: "Daily Vocabulary",  desc: "500+ JLPT N5 words organized into interactive lessons.", lessons: 25, level: "JLPT N5", bg: "#f0fff4", live: true },
-    { key: "convo",    kana: "話", title: "Basic Conversation", desc: "Greetings, shopping, travel phrases.", lessons: 15, level: "Beginner", bg: "#fffaf0", live: false },
+    { key: "conversation", kana: "話", title: "Basic Conversation", desc: "Greetings, shopping, travel phrases.", lessons: 15, level: "Beginner", bg: "#fffaf0", live: true },
   ];
 
   return (
@@ -73,6 +74,7 @@ export default function Home() {
       <nav className={styles.nav}>
         <span className={styles.logo}>Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場</span>
         <div className={styles.navActions}>
+          <StudentNavAction className={styles.navLink} dashboardLabel="Progress" />
           <Link href="/vocab" className={styles.navLink}>
             Vocabulary
           </Link>

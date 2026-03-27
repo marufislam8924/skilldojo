@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { katakanaLessons } from "../data";
 import styles from "../hiragana/hiragana.module.css";
+import StudentNavAction from "../components/StudentNavAction";
 
 export default function KatakanaPage() {
   const router = useRouter();
@@ -12,9 +13,12 @@ export default function KatakanaPage() {
         <span className={styles.logo}>
           Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場
         </span>
-        <button className={styles.backBtn} onClick={() => router.push("/")}>
-          ← Back
-        </button>
+        <div className={styles.navActions}>
+          <StudentNavAction className={styles.navLink} dashboardLabel="My Progress" />
+          <button className={styles.backBtn} onClick={() => router.push("/")}>
+            ← Back
+          </button>
+        </div>
       </nav>
 
       <div className={styles.header}>

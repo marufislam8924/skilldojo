@@ -2,6 +2,8 @@
 import { useRouter } from "next/navigation";
 import { useState, useCallback, useRef } from "react";
 import styles from "./LessonView.module.css";
+import StudentNavAction from "./StudentNavAction";
+import { markLessonComplete } from "../lib/studentProgress";
 
 export default function LessonView({ lessonId, data, courseSlug, totalLessons }) {
   const router = useRouter();
@@ -55,11 +57,15 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
   }
 
   function next(result) {
-    if (result === "good") setScore((s) => s + 1);
+    const earned = result === "good" ? 1 : 0;
     const nextIndex = cardIndex + 1;
     if (nextIndex >= data.chars.length) {
+      const finalScore = score + earned;
+      setScore(finalScore);
+      markLessonComplete(courseSlug, lessonId, finalScore, data.chars.length);
       setDone(true);
     } else {
+      if (earned) setScore((s) => s + 1);
       setCardIndex(nextIndex);
       setRevealed(false);
     }
@@ -244,12 +250,15 @@ function NavBar({ courseSlug, router }) {
       <span className={styles.logo}>
         Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場
       </span>
-      <button
-        className={styles.backBtn}
-        onClick={() => router.push(`/${courseSlug}`)}
-      >
-        ← All Lessons
-      </button>
+      <div className={styles.navActions}>
+        <StudentNavAction className={styles.navLink} dashboardLabel="My Dashboard" />
+        <button
+          className={styles.backBtn}
+          onClick={() => router.push(`/${courseSlug}`)}
+        >
+          ← All Lessons
+        </button>
+      </div>
     </nav>
   );
 }
