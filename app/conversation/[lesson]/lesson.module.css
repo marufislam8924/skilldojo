@@ -1,0 +1,204 @@
+.main {
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+/* ── NAV ── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(250, 247, 242, 0.93);
+  backdrop-filter: blur(10px);
+  border-bottom: 1.5px solid var(--border);
+}
+
+.logo {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.backBtn:hover {
+  color: var(--red);
+}
+
+/* ── CONTENT ── */
+.content {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 52px 28px 80px;
+}
+
+/* ── LESSON HEADER ── */
+.lessonHeader {
+  margin-bottom: 28px;
+}
+
+.lessonTag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+
+.lessonTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+
+.lessonSubtitle {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ── PROGRESS ── */
+.progressWrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.progressBar {
+  flex: 1;
+  height: 8px;
+  background: var(--soft);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--red);
+  border-radius: 99px;
+}
+
+.progressLabel {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ── CARDS LIST ── */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── FOOTER NAV ── */
+.footer {
+  margin-top: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1.5px solid var(--border);
+  padding-top: 28px;
+  gap: 20px;
+}
+
+.footerLabel {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.footerText {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.btnNext {
+  border: 2px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 12px 22px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 0 var(--red);
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btnNext:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 var(--red);
+}
+
+.btnBack {
+  border: 2px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  padding: 12px 22px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 0 var(--ink);
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btnBack:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 var(--red);
+  border-color: var(--red);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav {
+    padding: 14px 20px;
+  }
+
+  .content {
+    padding: 44px 18px 64px;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btnNext,
+  .btnBack {
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import styles from "./AudioButton.module.css";
 
 function speakFallback(text, onEnd) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) {
@@ -76,19 +77,17 @@ export default function AudioButton({ audio, text }) {
   };
 
   return (
-    <div className="flex flex-col items-end gap-2">
+    <div className={styles.wrap}>
       <button
         type="button"
         onClick={handlePlay}
-        className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-stone-300 bg-white text-lg shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-amber-500 hover:bg-amber-50 active:scale-95"
+        className={styles.btn}
         aria-label={isPlaying ? "Stop audio" : "Play audio"}
       >
         {isPlaying ? "■" : "▶"}
       </button>
       {message ? (
-        <span className="max-w-28 text-right text-[11px] font-medium leading-tight text-stone-500">
-          {message}
-        </span>
+        <span className={styles.message}>{message}</span>
       ) : null}
     </div>
   );

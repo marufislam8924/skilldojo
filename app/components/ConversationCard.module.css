@@ -1,0 +1,59 @@
+.card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  padding: 22px 22px 20px;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+
+.card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--red);
+  border-color: var(--red);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.lineTag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--soft);
+  border-radius: 999px;
+  padding: 4px 10px;
+  margin-bottom: 10px;
+}
+
+.japanese {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.9rem;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 6px;
+  word-break: break-word;
+}
+
+.romaji {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #8c5a00;
+  margin-bottom: 4px;
+}
+
+.meaning {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
