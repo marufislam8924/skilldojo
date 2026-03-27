@@ -14,13 +14,29 @@
   --border: #d9d0c3;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+  max-width: 100%;
+}
 
 body {
   background: var(--paper);
   color: var(--ink);
   font-family: 'Sora', 'Segoe UI', sans-serif;
   overflow-x: hidden;
+}
+
+a,
+button,
+input,
+select,
+textarea {
+  touch-action: manipulation;
 }
 
 button { font-family: inherit; }

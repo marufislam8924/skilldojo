@@ -561,7 +561,82 @@
 }
 
 @media (max-width: 600px) {
-  .nav { padding: 16px 20px; }
-  .navActions { gap: 10px; }
-  .fcKana { font-size: 5rem; }
+  .main {
+    padding-top: 118px;
+  }
+
+  .nav {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 16px 14px;
+  }
+
+  .logo {
+    font-size: 1.1rem;
+  }
+
+  .navActions {
+    width: 100%;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+
+  .navActions::-webkit-scrollbar {
+    display: none;
+  }
+
+  .navLink,
+  .backBtn {
+    min-height: 36px;
+    white-space: nowrap;
+  }
+
+  .content {
+    padding: 26px 16px 56px;
+  }
+
+  .lessonTitle {
+    font-size: 1.8rem;
+  }
+
+  .flashcard {
+    min-height: 250px;
+    padding: 42px 20px 42px;
+  }
+
+  .wordFlashcard {
+    min-height: 300px;
+    padding: 42px 18px 38px;
+  }
+
+  .fcKana {
+    font-size: 4.4rem;
+  }
+
+  .fcMeaning {
+    font-size: 0.93rem;
+    line-height: 1.5;
+  }
+
+  .fcBtns {
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
+
+  .btnAgain,
+  .btnGood {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .allCharsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(82px, 1fr));
+  }
+
+  .wordGrid {
+    grid-template-columns: 1fr;
+  }
 }
