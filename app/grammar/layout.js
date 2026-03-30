@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Japanese N5 Grammar Course - SkillDojo",
+  title: "Japanese N5 Grammar Course",
   description:
     "Learn core JLPT N5 grammar with interactive flashcards, AI voice playback, and practical example sentences.",
   keywords: [

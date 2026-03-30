@@ -208,7 +208,7 @@ export default function Home() {
 
       <section className={styles.seoSection}>
         <div className={styles.sectionHeader}>
-          <div className={styles.sectionTag}>Beginner SEO Guide</div>
+          <div className={styles.sectionTag}>Beginner Study Plan</div>
           <h2 className={styles.sectionTitle}>Japanese N5 Learning Roadmap</h2>
         </div>
         <div className={styles.seoGrid}>

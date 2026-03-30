@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Basic Japanese Conversation Lessons - SkillDojo",
+  title: "Basic Japanese Conversation Lessons",
   description:
     "15 beginner Japanese conversation lessons covering greetings, travel phrases, shopping, cafes, and daily life with romaji and audio support.",
   keywords: [
