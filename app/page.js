@@ -72,7 +72,7 @@ export default function Home() {
 
       {/* NAV */}
       <nav className={styles.nav}>
-        <span className={styles.logo}>Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場</span>
+        <Link href="/" className={styles.logo}>Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場</Link>
         <div className={styles.navActions}>
           <StudentNavAction className={styles.navLink} dashboardLabel="Progress" />
           <Link href="/vocab" className={styles.navLink}>
