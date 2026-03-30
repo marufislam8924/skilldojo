@@ -25,7 +25,7 @@ export default function ConversationPage() {
         <h1 className={styles.headerTitle}>Basic Japanese Conversation</h1>
         <p className={styles.headerDesc}>
           {totalConversationLessons} lessons covering greetings, travel, shopping, and daily life
-          with Japanese phrases, romaji support, and tap-to-hear audio.
+          with Japanese phrases, romaji support, interactive flashcards, and AI voice playback.
         </p>
       </div>
 
@@ -36,7 +36,7 @@ export default function ConversationPage() {
             <div className={styles.featuredLessonNum}>Lesson {firstLesson.id}</div>
             <h2 className={styles.featuredTitle}>{firstLesson.title}</h2>
             <p className={styles.featuredDesc}>
-              Begin with the most common greetings and introductions used every day in Japan.
+              Begin with the most common greetings and introductions used every day in Japan, then train with reveal-and-score flashcards.
             </p>
           </div>
           <Link

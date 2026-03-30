@@ -13,12 +13,16 @@ export const COURSE_TOTALS = {
   hiragana: 21,
   katakana: 21,
   vocab: 25,
+  grammar: 8,
+  conversation: 15,
 };
 
 export const COURSE_LABELS = {
   hiragana: "Hiragana",
   katakana: "Katakana",
   vocab: "Vocabulary",
+  grammar: "Grammar",
+  conversation: "Conversation",
 };
 
 function hasWindow() {

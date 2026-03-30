@@ -5,7 +5,14 @@ import styles from "./LessonView.module.css";
 import StudentNavAction from "./StudentNavAction";
 import { markLessonComplete } from "../lib/studentProgress";
 
-export default function LessonView({ lessonId, data, courseSlug, totalLessons }) {
+export default function LessonView({
+  lessonId,
+  data,
+  courseSlug,
+  totalLessons,
+  nextLessonHref,
+  allLessonsHref,
+}) {
   const router = useRouter();
   const [cardIndex, setCardIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
@@ -15,7 +22,9 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
   const [autoVoice, setAutoVoice] = useState(true);
   const synthRef = useRef(null);
 
-  const isVocabulary = courseSlug === "vocab";
+  const isWordStyle =
+    courseSlug === "vocab" || courseSlug === "grammar" || courseSlug === "conversation";
+  const isConversation = courseSlug === "conversation";
   const current = data.chars[cardIndex];
   const progress = Math.round((cardIndex / data.chars.length) * 100);
   const currentVoice = current.voice || current.reading || current.k;
@@ -24,7 +33,12 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
       ? "Hiragana"
       : courseSlug === "katakana"
         ? "Katakana"
-        : "JLPT N5 Vocabulary";
+        : courseSlug === "vocab"
+          ? "JLPT N5 Vocabulary"
+          : courseSlug === "grammar"
+            ? "JLPT N5 Grammar"
+            : "Basic Conversation";
+  const itemLabel = isConversation ? "lines" : isWordStyle ? "cards" : "characters";
 
   // ── AI VOICE via Web Speech API (Japanese) ──
   const speak = useCallback((text) => {
@@ -83,7 +97,11 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
     const perfect = score === data.chars.length;
     return (
       <main className={styles.main}>
-        <NavBar courseSlug={courseSlug} router={router} />
+        <NavBar
+          courseSlug={courseSlug}
+          router={router}
+          allLessonsHref={allLessonsHref}
+        />
         <div className={styles.doneScreen}>
           <div className={styles.doneEmoji}>{perfect ? "🏆" : "🎉"}</div>
           <h2 className={styles.doneTitle}>
@@ -97,17 +115,19 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
             <button className={styles.btnPrimary} onClick={restart}>
               Practice Again
             </button>
-            {lessonId < totalLessons ? (
+            {nextLessonHref || lessonId < totalLessons ? (
               <button
                 className={styles.btnSecondary}
-                onClick={() => router.push(`/${courseSlug}/${lessonId + 1}`)}
+                onClick={() =>
+                  router.push(nextLessonHref || `/${courseSlug}/${lessonId + 1}`)
+                }
               >
                 Next Lesson →
               </button>
             ) : (
               <button
                 className={styles.btnSecondary}
-                onClick={() => router.push(`/${courseSlug}`)}
+                onClick={() => router.push(allLessonsHref || `/${courseSlug}`)}
               >
                 All Lessons
               </button>
@@ -121,7 +141,11 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
   // ── FLASHCARD SCREEN ──
   return (
     <main className={styles.main}>
-      <NavBar courseSlug={courseSlug} router={router} />
+      <NavBar
+        courseSlug={courseSlug}
+        router={router}
+        allLessonsHref={allLessonsHref}
+      />
 
       <div className={styles.content}>
         {/* Header */}
@@ -131,7 +155,7 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
           </div>
           <h1 className={styles.lessonTitle}>{data.name}</h1>
           <p className={styles.lessonSubtitle}>
-            {data.chars.length} {isVocabulary ? "words" : "characters"} · Tap the card to reveal
+            {data.chars.length} {itemLabel} · Tap the card to reveal
           </p>
         </div>
 
@@ -160,7 +184,7 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
 
         {/* Flashcard */}
         <div
-          className={`${styles.flashcard} ${revealed ? styles.revealed : ""} ${speaking ? styles.speaking : ""} ${isVocabulary ? styles.wordFlashcard : ""}`}
+          className={`${styles.flashcard} ${revealed ? styles.revealed : ""} ${speaking ? styles.speaking : ""} ${isWordStyle ? styles.wordFlashcard : ""}`}
           onClick={reveal}
         >
           {/* Sound waves when speaking */}
@@ -170,18 +194,22 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
             </div>
           )}
 
-          <div className={`${styles.fcKana} ${isVocabulary ? styles.fcWord : ""}`}>{current.k}</div>
-          <div className={`${styles.fcHint} ${isVocabulary ? styles.fcHintVisible : ""}`}>{isVocabulary ? current.reading : current.r}</div>
-          {revealed && isVocabulary && (
+          <div className={`${styles.fcKana} ${isWordStyle ? styles.fcWord : ""}`}>{current.k}</div>
+          <div className={`${styles.fcHint} ${isWordStyle ? styles.fcHintVisible : ""}`}>
+            {isWordStyle ? current.reading : current.r}
+          </div>
+          {revealed && isWordStyle && (
             <>
               <div className={styles.fcRoman}>{current.r}</div>
               <div className={styles.fcMeaning}>{current.meaning}</div>
-              <div className={styles.fcExampleBox}>
-                <div className={styles.fcExampleLabel}>Example</div>
-                <div className={styles.fcExampleJa}>{current.exampleJa}</div>
-                <div className={styles.fcExampleKana}>{current.exampleJaHiragana}</div>
-                <div className={styles.fcExampleEn}>{current.exampleEn}</div>
-              </div>
+              {current.exampleJa ? (
+                <div className={styles.fcExampleBox}>
+                  <div className={styles.fcExampleLabel}>Example</div>
+                  <div className={styles.fcExampleJa}>{current.exampleJa}</div>
+                  <div className={styles.fcExampleKana}>{current.exampleJaHiragana}</div>
+                  <div className={styles.fcExampleEn}>{current.exampleEn}</div>
+                </div>
+              ) : null}
             </>
           )}
 
@@ -217,23 +245,23 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
 
         {/* All chars grid */}
         <div className={styles.allChars}>
-          <h3 className={styles.allCharsTitle}>All {isVocabulary ? "words" : "characters"} — Lesson {lessonId}</h3>
-          <div className={`${styles.allCharsGrid} ${isVocabulary ? styles.wordGrid : ""}`}>
+          <h3 className={styles.allCharsTitle}>All {itemLabel} — Lesson {lessonId}</h3>
+          <div className={`${styles.allCharsGrid} ${isWordStyle ? styles.wordGrid : ""}`}>
             {data.chars.map((c, i) => (
               <div
                 key={`${c.k}-${i}`}
                 className={`${styles.charCell}
-                  ${isVocabulary ? styles.wordCell : ""}
+                  ${isWordStyle ? styles.wordCell : ""}
                   ${i < cardIndex ? styles.charDone : ""}
                   ${i === cardIndex ? styles.charActive : ""}`}
                 onClick={() => speak(c.voice || c.reading || c.k)}
-                title={isVocabulary ? `Hear: ${c.meaning}` : `Hear: ${c.r}`}
+                title={isWordStyle ? `Hear: ${c.meaning}` : `Hear: ${c.r}`}
               >
-                <div className={`${styles.charKana} ${isVocabulary ? styles.wordPrimary : ""}`}>{c.k}</div>
-                <div className={styles.charRom}>{isVocabulary ? c.reading : c.r}</div>
-                {isVocabulary && <div className={styles.charMeaning}>{c.meaning}</div>}
-                {isVocabulary && <div className={styles.charReading}>[{c.reading}]</div>}
-                {isVocabulary && <div className={styles.charExample}>{c.exampleJa}</div>}
+                <div className={`${styles.charKana} ${isWordStyle ? styles.wordPrimary : ""}`}>{c.k}</div>
+                <div className={styles.charRom}>{isWordStyle ? c.reading : c.r}</div>
+                {isWordStyle && <div className={styles.charMeaning}>{c.meaning}</div>}
+                {isWordStyle && <div className={styles.charReading}>[{c.reading}]</div>}
+                {isWordStyle && c.exampleJa ? <div className={styles.charExample}>{c.exampleJa}</div> : null}
                 <div className={styles.charSpeakIcon}>🔈</div>
               </div>
             ))}
@@ -244,7 +272,7 @@ export default function LessonView({ lessonId, data, courseSlug, totalLessons })
   );
 }
 
-function NavBar({ courseSlug, router }) {
+function NavBar({ courseSlug, router, allLessonsHref }) {
   return (
     <nav className={styles.nav}>
       <span className={styles.logo}>
@@ -254,7 +282,7 @@ function NavBar({ courseSlug, router }) {
         <StudentNavAction className={styles.navLink} dashboardLabel="My Dashboard" />
         <button
           className={styles.backBtn}
-          onClick={() => router.push(`/${courseSlug}`)}
+          onClick={() => router.push(allLessonsHref || `/${courseSlug}`)}
         >
           ← All Lessons
         </button>

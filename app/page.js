@@ -51,6 +51,7 @@ export default function Home() {
           "JLPT N5 grammar explained easy",
           "Japanese N5 listening practice with answers",
           "Japanese N5 conversation practice",
+          "interactive Japanese grammar flashcards",
         ],
       },
     ],
@@ -60,7 +61,8 @@ export default function Home() {
     { key: "hiragana", kana: "あ", title: "Hiragana Complete", desc: "Master all 46 hiragana characters with AI voice.", lessons: 21, level: "Beginner", bg: "#fff0f0", live: true },
     { key: "katakana", kana: "ア", title: "Katakana Complete", desc: "Learn katakana for loanwords and modern Japanese.", lessons: 21, level: "Beginner", bg: "#f0f4ff", live: true },
     { key: "vocab",    kana: "言", title: "Daily Vocabulary",  desc: "500+ JLPT N5 words organized into interactive lessons.", lessons: 25, level: "JLPT N5", bg: "#f0fff4", live: true },
-    { key: "conversation", kana: "話", title: "Basic Conversation", desc: "Greetings, shopping, travel phrases.", lessons: 15, level: "Beginner", bg: "#fffaf0", live: true },
+    { key: "grammar", kana: "文", title: "N5 Grammar", desc: "Essential beginner grammar patterns with example sentences and AI voice.", lessons: 8, level: "JLPT N5", bg: "#f6f5ff", live: true },
+    { key: "conversation", kana: "話", title: "Basic Conversation", desc: "Real-life phrases with interactive AI voice flashcards.", lessons: 15, level: "Beginner", bg: "#fffaf0", live: true },
   ];
 
   return (
@@ -77,6 +79,9 @@ export default function Home() {
           <StudentNavAction className={styles.navLink} dashboardLabel="Progress" />
           <Link href="/vocab" className={styles.navLink}>
             Vocabulary
+          </Link>
+          <Link href="/grammar" className={styles.navLink}>
+            Grammar
           </Link>
           <Link href="/katakana" className={styles.navLink}>
             Katakana
@@ -95,7 +100,7 @@ export default function Home() {
             Learn Japanese<br />the <em>Right</em> Way.
           </h1>
           <p className={styles.heroDesc}>
-            SkillDojo teaches real Japanese — Hiragana, Katakana, vocabulary, and conversation — step by step. No fluff.
+            SkillDojo teaches real Japanese — Hiragana, Katakana, vocabulary, grammar, and conversation — step by step. No fluff.
           </p>
           <div className={styles.heroBtns}>
             <Link className={styles.btnPrimary} href="/hiragana">
