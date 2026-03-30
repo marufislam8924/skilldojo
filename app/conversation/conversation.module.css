@@ -22,6 +22,8 @@
   font-family: 'Zen Maru Gothic', sans-serif;
   font-size: 1.3rem;
   font-weight: 900;
+  text-decoration: none;
+  color: var(--ink);
 }
 
 .navActions {
@@ -53,6 +55,7 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: color 0.15s;
+  text-decoration: none;
 }
 
 .backBtn:hover {
@@ -153,6 +156,9 @@
   cursor: pointer;
   white-space: nowrap;
   transition: transform 0.15s, box-shadow 0.15s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 }
 
 .featuredBtn:hover {
@@ -213,6 +219,9 @@
   cursor: pointer;
   box-shadow: 4px 4px 0 var(--ink);
   transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  text-decoration: none;
+  color: var(--ink);
+  display: block;
 }
 
 .lessonCard:hover {

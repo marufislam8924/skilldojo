@@ -1,0 +1,284 @@
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* NAV */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(250, 247, 242, 0.93);
+  backdrop-filter: blur(10px);
+  border-bottom: 1.5px solid var(--border);
+}
+
+.logo {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.navLink {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+.navLink:hover { color: var(--red); }
+
+/* HERO */
+.hero {
+  padding: 160px 80px 80px;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.heroTag {
+  display: inline-block;
+  background: #f5a623;
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 3px;
+  margin-bottom: 24px;
+}
+
+.heroTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.heroDesc {
+  font-size: 1.1rem;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* BODY */
+.bodySection {
+  padding: 80px 80px;
+  background: var(--soft);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.card {
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.cardIcon {
+  font-size: 2rem;
+  margin-bottom: 14px;
+}
+
+.cardTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.cardText {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* STATS */
+.stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+  border-top: 2px solid var(--border);
+  border-bottom: 2px solid var(--border);
+  background: #fff;
+}
+
+.stat {
+  flex: 1;
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 24px;
+  border-right: 2px solid var(--border);
+}
+
+.stat:last-child { border-right: none; }
+
+.statNum {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: var(--red);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.statLabel {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* CTA */
+.cta {
+  padding: 100px 80px;
+  text-align: center;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.ctaTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  margin-bottom: 16px;
+}
+
+.ctaDesc {
+  font-size: 1rem;
+  color: #c5bfb5;
+  margin-bottom: 36px;
+}
+
+.ctaBtns {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btnPrimary {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 4px 4px 0 var(--red);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btnPrimary:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 var(--red);
+}
+
+.btnSecondary {
+  border: 2px solid var(--paper);
+  color: var(--paper);
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btnSecondary:hover {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* FOOTER */
+.footer {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 48px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.footerLogo {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 24px;
+}
+
+.footerLinks a {
+  font-size: 0.85rem;
+  color: #7a7a7a;
+  text-decoration: none;
+}
+
+.footerLinks a:hover { color: var(--paper); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .hero { padding: 120px 28px 60px; }
+  .bodySection { padding: 56px 28px; }
+  .cta { padding: 70px 28px; }
+  .footer { padding: 40px 28px; flex-direction: column; text-align: center; }
+  .nav { padding: 16px 24px; }
+}
+
+@media (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px 14px;
+  }
+  .navActions {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 10px;
+    padding-bottom: 2px;
+  }
+  .navActions::-webkit-scrollbar { display: none; }
+  .stat { padding: 32px 16px; }
+  .stats { flex-direction: column; }
+  .stat { border-right: none; border-bottom: 2px solid var(--border); }
+  .stat:last-child { border-bottom: none; }
+}

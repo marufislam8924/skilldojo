@@ -1,24 +1,22 @@
-"use client";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { conversationLessons, totalConversationLessons } from "../../data/conversationLessons";
 import styles from "./conversation.module.css";
 import StudentNavAction from "../components/StudentNavAction";
 
 export default function ConversationPage() {
-  const router = useRouter();
   const firstLesson = conversationLessons[0];
 
   return (
     <main className={styles.main}>
       <nav className={styles.nav}>
-        <span className={styles.logo}>
+        <Link href="/" className={styles.logo}>
           Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場
-        </span>
+        </Link>
         <div className={styles.navActions}>
           <StudentNavAction className={styles.navLink} dashboardLabel="My Progress" />
-          <button className={styles.backBtn} onClick={() => router.push("/")}>
+          <Link href="/" className={styles.backBtn}>
             ← Back
-          </button>
+          </Link>
         </div>
       </nav>
 
@@ -41,12 +39,12 @@ export default function ConversationPage() {
               Begin with the most common greetings and introductions used every day in Japan.
             </p>
           </div>
-          <button
+          <Link
+            href={`/conversation/${firstLesson.slug}`}
             className={styles.featuredBtn}
-            onClick={() => router.push(`/conversation/${firstLesson.slug}`)}
           >
             Start Here →
-          </button>
+          </Link>
         </div>
         <div className={styles.featuredPhrases}>
           {firstLesson.conversations.slice(0, 6).map((item) => (
@@ -61,10 +59,10 @@ export default function ConversationPage() {
 
       <div className={styles.grid}>
         {conversationLessons.map((lesson) => (
-          <div
+          <Link
             key={lesson.id}
+            href={`/conversation/${lesson.slug}`}
             className={styles.lessonCard}
-            onClick={() => router.push(`/conversation/${lesson.slug}`)}
           >
             <div className={styles.lessonTopRow}>
               <div className={styles.lessonNum}>Lesson {lesson.id}</div>
@@ -78,7 +76,7 @@ export default function ConversationPage() {
                 .map((c) => c.romaji)
                 .join(" · ")}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </main>

@@ -318,8 +318,8 @@ export default function Home() {
         </div>
         <div className={styles.footerLinks}>
           <a href="https://youtube.com/@skilldojo-b2t" target="_blank">YouTube</a>
-          <a href="#">About</a>
-          <a href="#">Contact</a>
+          <Link href="/about">About</Link>
+          <Link href="/contact">Contact</Link>
         </div>
         <p style={{ color: "#7a7a7a", fontSize: "0.85rem" }}>
           © 2026 SkillDojo
