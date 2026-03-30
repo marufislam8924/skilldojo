@@ -266,6 +266,46 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ABOUT */}
+      <section className={styles.about} id="about">
+        <div className={styles.aboutInner}>
+          <div className={styles.aboutText}>
+            <div className={styles.sectionTag}>About SkillDojo</div>
+            <h2 className={styles.aboutTitle}>Built for Real Learners</h2>
+            <p className={styles.aboutDesc}>
+              SkillDojo is a free Japanese learning platform focused on helping beginners
+              reach JLPT N5 and beyond. Every lesson is designed to be direct, practical,
+              and actually enjoyable — no bloated courses, no paywalls.
+            </p>
+            <p className={styles.aboutDesc}>
+              We cover Hiragana, Katakana, 500+ N5 vocabulary words, and real-life
+              conversation phrases — all with audio, flashcards, and progress tracking.
+            </p>
+            <a
+              href="https://youtube.com/@skilldojo-b2t"
+              target="_blank"
+              className={styles.btnPrimary}
+              style={{ display: "inline-block", marginTop: "12px" }}
+            >
+              ▶ Watch on YouTube
+            </a>
+          </div>
+          <div className={styles.aboutStats}>
+            {[
+              { num: "46",   label: "Hiragana Characters" },
+              { num: "46",   label: "Katakana Characters" },
+              { num: "500+", label: "N5 Vocabulary Words" },
+              { num: "Free", label: "Always Free" },
+            ].map(({ num, label }) => (
+              <div key={label} className={styles.statCard}>
+                <span className={styles.statNum}>{num}</span>
+                <span className={styles.statLabel}>{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* FOOTER */}
       <footer className={styles.footer}>
         <div>
