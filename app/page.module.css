@@ -112,6 +112,11 @@
   font-style: normal;
 }
 
+.typingWord {
+  color: var(--red);
+  display: inline;
+}
+
 .heroDesc {
   font-size: 1.05rem;
   color: var(--muted);
@@ -203,13 +208,26 @@
   flex-direction: column;
   align-items: center;
   padding: 12px 6px;
-  transition: background 0.15s, transform 0.15s;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
   cursor: default;
+  animation: kanaPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 .kanaCell:hover {
   background: var(--red);
-  transform: scale(1.06);
+  transform: scale(1.12) rotate(-2deg);
+  box-shadow: 0 6px 18px rgba(230, 51, 41, 0.25);
+}
+
+@keyframes kanaPop {
+  from {
+    opacity: 0;
+    transform: scale(0.6) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .kanaCell:hover .kanaRom {
@@ -297,12 +315,14 @@
   flex-direction: column;
   align-items: center;
   padding: 12px 6px;
-  transition: background 0.15s, transform 0.15s;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  animation: kanaPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 .kanaCellAlt:hover {
   background: #dce7ff;
-  transform: scale(1.06);
+  transform: scale(1.12) rotate(2deg);
+  box-shadow: 0 6px 18px rgba(66, 133, 244, 0.2);
 }
 
 /* COURSES */
@@ -327,6 +347,13 @@
   border-radius: 12px;
   padding: 18px;
   background: #fffdf9;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s, border-color 0.25s;
+}
+
+.seoCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-color: var(--red);
 }
 
 .seoCard h3 {
@@ -373,12 +400,16 @@
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 5px 5px 0 var(--ink);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .courseCard:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: 9px 9px 0 var(--ink);
+  transform: translate(-4px, -6px) rotate(-0.5deg);
+  box-shadow: 9px 11px 0 var(--ink);
+}
+
+.courseCard:hover .courseThumb {
+  transform: scale(1.05);
 }
 
 .courseThumb {
@@ -389,6 +420,7 @@
   font-family: 'Zen Maru Gothic', sans-serif;
   font-size: 5rem;
   font-weight: 900;
+  transition: transform 0.3s ease;
 }
 
 .courseBody {
@@ -492,11 +524,13 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  transition: background 0.2s;
+  transition: background 0.25s, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s;
 }
 
 .statCard:hover {
-  background: rgba(255, 255, 255, 0.11);
+  background: rgba(255, 255, 255, 0.14);
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
 .statNum {
