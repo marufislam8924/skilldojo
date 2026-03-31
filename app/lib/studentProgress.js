@@ -12,6 +12,9 @@ import {
   signInWithGooglePopup,
   signOutFirebase,
   writeRemoteProgress,
+  hasPendingRedirect,
+  clearPendingRedirect,
+  waitForRedirectUser,
 } from "./firebaseClient";
 
 export const COURSE_TOTALS = {
@@ -282,8 +285,22 @@ export async function signInStudentWithGoogle() {
 
 export async function finishGoogleRedirectSignIn() {
   const result = await getGoogleRedirectSignInResult();
-  if (!result?.user) return null;
-  return applyGoogleUserSession(result.user);
+  if (result?.user) {
+    clearPendingRedirect();
+    return applyGoogleUserSession(result.user);
+  }
+
+  // Fallback: on some mobile browsers getRedirectResult returns null
+  // even after a successful redirect. Use onAuthStateChanged instead.
+  if (hasPendingRedirect()) {
+    clearPendingRedirect();
+    const user = await waitForRedirectUser();
+    if (user) {
+      return applyGoogleUserSession(user);
+    }
+  }
+
+  return null;
 }
 
 export function signOutStudent() {

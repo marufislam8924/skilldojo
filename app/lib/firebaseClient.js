@@ -3,6 +3,7 @@ import {
   GoogleAuthProvider,
   getRedirectResult,
   getAuth,
+  onAuthStateChanged,
   signInWithPopup,
   signInWithRedirect,
   signOut,
@@ -80,7 +81,31 @@ export async function signInWithGooglePopup() {
 export async function signInWithGoogleRedirectStart() {
   const auth = getFirebaseAuth();
   const provider = getGoogleProvider();
+  if (typeof window !== "undefined") {
+    window.sessionStorage.setItem("skilldojo.pendingRedirect", "1");
+  }
   await signInWithRedirect(auth, provider);
+}
+
+export function hasPendingRedirect() {
+  if (typeof window === "undefined") return false;
+  return window.sessionStorage.getItem("skilldojo.pendingRedirect") === "1";
+}
+
+export function clearPendingRedirect() {
+  if (typeof window === "undefined") return;
+  window.sessionStorage.removeItem("skilldojo.pendingRedirect");
+}
+
+export function waitForRedirectUser() {
+  if (!isFirebaseConfigured()) return Promise.resolve(null);
+  const auth = getFirebaseAuth();
+  return new Promise((resolve) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      unsubscribe();
+      resolve(user);
+    });
+  });
 }
 
 export async function getGoogleRedirectSignInResult() {
