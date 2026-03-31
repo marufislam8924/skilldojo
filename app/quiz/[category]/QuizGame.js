@@ -1,12 +1,16 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { quizCategories } from "../../../data/quizData";
 import { hiraganaLessons, katakanaLessons } from "../../data";
 import { vocabularyLessons } from "../../vocabData";
 import { grammarLessons } from "../../grammarData";
 import { updateStreakAndXP, getStudentSession } from "../../lib/studentProgress";
+import StudentNavAction from "../../components/StudentNavAction";
+import Confetti from "../../components/Confetti";
+import styles from "./quizgame.module.css";
 
 /* ─── Helpers ─── */
 
@@ -99,6 +103,7 @@ const MAX_HEARTS = 3;
 /* ─── Component ─── */
 
 export default function QuizGame({ categoryId }) {
+  const router = useRouter();
   const category = quizCategories.find((c) => c.id === categoryId);
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState(0);
@@ -164,12 +169,31 @@ export default function QuizGame({ categoryId }) {
     }
   }
 
+  /* ─── Nav Bar ─── */
+  function NavBar() {
+    return (
+      <nav className={styles.nav}>
+        <span className={styles.logo}>
+          Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場
+        </span>
+        <div className={styles.navActions}>
+          <StudentNavAction className={styles.navLink} dashboardLabel="My Progress" />
+          <button className={styles.backBtn} onClick={() => router.push("/quiz")}>
+            ← Back
+          </button>
+        </div>
+      </nav>
+    );
+  }
+
+  /* ─── Not found ─── */
   if (!category) {
     return (
-      <main className="min-h-screen bg-[#131f24] flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-lg text-[#7b9ba6]">Quiz not found</p>
-          <Link href="/quiz" className="text-[#58cc02] font-bold mt-4 inline-block no-underline">
+      <main className={styles.main}>
+        <NavBar />
+        <div className={styles.notFound}>
+          <p className={styles.notFoundText}>Quiz not found</p>
+          <Link href="/quiz" className={styles.notFoundLink}>
             ← Back to Quizzes
           </Link>
         </div>
@@ -177,10 +201,12 @@ export default function QuizGame({ categoryId }) {
     );
   }
 
+  /* ─── Loading ─── */
   if (questions.length === 0) {
     return (
-      <main className="min-h-screen bg-[#131f24] flex items-center justify-center">
-        <div className="w-10 h-10 border-4 border-[#58cc02] border-t-transparent rounded-full animate-spin" />
+      <main className={`${styles.main} ${styles.loading}`}>
+        <NavBar />
+        <div className={styles.spinner} />
       </main>
     );
   }
@@ -188,41 +214,21 @@ export default function QuizGame({ categoryId }) {
   /* ─── GAME OVER (lost all hearts) ─── */
   if (gameOver) {
     return (
-      <main className="min-h-screen bg-[#131f24] flex items-center justify-center px-4">
-        <div className="w-full max-w-sm text-center">
-          <div className="text-7xl mb-6 animate-bounce">💔</div>
-          <h1 className="text-3xl font-extrabold text-white mb-2">
-            Out of Hearts!
-          </h1>
-          <p className="text-[#7b9ba6] mb-2">
-            You got <span className="text-white font-bold">{score}</span> out of {questions.length} correct
+      <main className={styles.main}>
+        <NavBar />
+        <div className={styles.doneScreen}>
+          <div className={styles.doneEmoji}>💔</div>
+          <h2 className={styles.doneTitle}>Out of Hearts!</h2>
+          <p className={styles.doneDesc}>
+            You got <strong>{score}</strong> out of <strong>{questions.length}</strong> correct.
+            Practice your lessons and try again.
           </p>
-          <p className="text-sm text-[#4b6b78] mb-8">
-            Practice your lessons and try again
-          </p>
-
-          <div className="space-y-3">
-            <button
-              onClick={startQuiz}
-              className="w-full py-4 font-extrabold text-base rounded-2xl text-white uppercase tracking-wider transition-all active:scale-95"
-              style={{
-                background: "#58cc02",
-                border: "none",
-                borderBottom: "4px solid #46a302",
-              }}
-            >
+          <div className={styles.doneBtns}>
+            <button className={styles.btnPrimary} onClick={startQuiz}>
               Try Again
             </button>
-            <Link
-              href="/quiz"
-              className="block w-full py-4 font-extrabold text-base rounded-2xl text-[#7b9ba6] uppercase tracking-wider text-center no-underline transition-all active:scale-95"
-              style={{
-                background: "#1a2e35",
-                border: "2px solid #2b3d45",
-                borderBottom: "4px solid #2b3d45",
-              }}
-            >
-              Quit
+            <Link href="/quiz" className={styles.btnSecondary}>
+              All Quizzes
             </Link>
           </div>
         </div>
@@ -233,87 +239,53 @@ export default function QuizGame({ categoryId }) {
   /* ─── DONE SCREEN (completed quiz) ─── */
   if (done) {
     const percent = Math.round((score / questions.length) * 100);
-    const isGreat = percent >= 80;
-    const isGood = percent >= 50;
+    const perfect = percent === 100;
 
     return (
-      <main className="min-h-screen bg-[#131f24] flex items-center justify-center px-4">
-        <div className="w-full max-w-sm text-center">
-          {/* Trophy animation */}
-          <div className="relative inline-block mb-6">
-            <div className="text-7xl animate-bounce">
-              {isGreat ? "🏆" : isGood ? "⭐" : "📚"}
-            </div>
-            {isGreat && (
-              <div className="absolute -top-2 -right-2 text-2xl animate-ping">✨</div>
-            )}
-          </div>
+      <main className={styles.main}>
+        <Confetti show={perfect} />
+        <NavBar />
+        <div className={styles.doneScreen}>
+          <div className={styles.doneEmoji}>{perfect ? "🏆" : percent >= 80 ? "⭐" : "🎉"}</div>
+          <h2 className={styles.doneTitle}>
+            {perfect ? "Perfect Score!" : percent >= 80 ? "Great Work!" : "Quiz Complete!"}
+          </h2>
+          <p className={styles.doneDesc}>
+            You completed the <strong>{category.title}</strong>.
+          </p>
 
-          <h1 className="text-3xl font-extrabold text-white mb-1">
-            {isGreat ? "Amazing!" : isGood ? "Nice work!" : "Keep going!"}
-          </h1>
-          <p className="text-[#7b9ba6] text-sm mb-6">{category.title} complete</p>
-
-          {/* Stats Row */}
-          <div className="flex items-center justify-center gap-6 mb-8">
-            {/* Score */}
-            <div className="text-center">
-              <div className="text-4xl font-extrabold" style={{ color: category.accent }}>
-                {percent}%
-              </div>
-              <div className="text-[10px] text-[#7b9ba6] font-bold uppercase tracking-wider mt-1">
-                Score
-              </div>
+          <div className={styles.statsRow}>
+            <div className={styles.stat}>
+              <div className={styles.statValue} style={{ color: "var(--red)" }}>{percent}%</div>
+              <div className={styles.statLabel}>Score</div>
             </div>
-            {/* Correct */}
-            <div className="text-center">
-              <div className="text-4xl font-extrabold text-[#58cc02]">
-                {score}
-              </div>
-              <div className="text-[10px] text-[#7b9ba6] font-bold uppercase tracking-wider mt-1">
-                Correct
-              </div>
+            <div className={styles.stat}>
+              <div className={styles.statValue} style={{ color: "#28a745" }}>{score}</div>
+              <div className={styles.statLabel}>Correct</div>
             </div>
-            {/* Hearts remaining */}
-            <div className="text-center">
-              <div className="text-4xl font-extrabold text-[#ff4b4b]">
-                {hearts}
-              </div>
-              <div className="text-[10px] text-[#7b9ba6] font-bold uppercase tracking-wider mt-1">
-                Hearts
-              </div>
+            <div className={styles.stat}>
+              <div className={styles.statValue} style={{ color: "#dc3545" }}>{hearts}</div>
+              <div className={styles.statLabel}>Hearts</div>
             </div>
           </div>
 
-          {/* XP reward */}
           {xpResult && (
-            <div className="rounded-2xl p-3 mb-6 text-sm font-bold text-[#fbbf24]"
-              style={{ background: "rgba(251,191,36,0.1)", border: "2px solid rgba(251,191,36,0.2)" }}>
-              ⚡ {xpResult.message}
+            <div className={styles.xpReward}>
+              <span className={styles.xpIcon}>✨</span>
+              <span className={styles.xpText}>+{score * 10} XP</span>
+              {xpResult.currentStreak > 0 && (
+                <span className={styles.streakText}>
+                  🔥 {xpResult.currentStreak}-day streak!
+                </span>
+              )}
             </div>
           )}
 
-          <div className="space-y-3">
-            <button
-              onClick={startQuiz}
-              className="w-full py-4 font-extrabold text-base rounded-2xl text-white uppercase tracking-wider transition-all active:scale-95"
-              style={{
-                background: "#58cc02",
-                border: "none",
-                borderBottom: "4px solid #46a302",
-              }}
-            >
+          <div className={styles.doneBtns}>
+            <button className={styles.btnPrimary} onClick={startQuiz}>
               Play Again
             </button>
-            <Link
-              href="/quiz"
-              className="block w-full py-4 font-extrabold text-base rounded-2xl text-[#7b9ba6] uppercase tracking-wider text-center no-underline transition-all active:scale-95"
-              style={{
-                background: "#1a2e35",
-                border: "2px solid #2b3d45",
-                borderBottom: "4px solid #2b3d45",
-              }}
-            >
+            <Link href="/quiz" className={styles.btnSecondary}>
               All Quizzes
             </Link>
           </div>
@@ -324,181 +296,87 @@ export default function QuizGame({ categoryId }) {
 
   /* ─── QUESTION SCREEN ─── */
   const q = questions[current];
-  const progress = ((current) / questions.length) * 100;
+  const progress = Math.round((current / questions.length) * 100);
   const isCorrect = selected === q.correctIndex;
 
   return (
-    <main className="min-h-screen bg-[#131f24] flex flex-col">
-      {/* ── Top Bar: progress + hearts ── */}
-      <div className="px-4 pt-4 pb-2">
-        <div className="max-w-xl mx-auto flex items-center gap-3">
-          <Link href="/quiz" className="text-[#4b6b78] hover:text-white text-lg no-underline shrink-0">
-            ✕
-          </Link>
-          {/* Progress bar */}
-          <div className="flex-1 h-4 bg-[#2b3d45] rounded-full overflow-hidden">
-            <div
-              className="h-full rounded-full transition-all duration-500 ease-out"
-              style={{ width: `${progress}%`, background: "#58cc02" }}
-            />
+    <main className={styles.main}>
+      <NavBar />
+      <div className={styles.content}>
+        {/* Progress */}
+        <div className={styles.progressWrap}>
+          <div className={styles.progressBar}>
+            <div className={styles.progressFill} style={{ width: `${progress}%` }} />
           </div>
-          {/* Hearts */}
-          <div className={`flex items-center gap-0.5 shrink-0 ${shake ? "animate-shake" : ""}`}>
-            {Array.from({ length: MAX_HEARTS }).map((_, i) => (
-              <span key={i} className="text-lg" style={{ opacity: i < hearts ? 1 : 0.25 }}>
-                ❤️
-              </span>
-            ))}
+          <div className={styles.progressLabel}>
+            {current + 1} / {questions.length}
           </div>
         </div>
-      </div>
 
-      {/* ── Question Area ── */}
-      <div className="flex-1 flex flex-col items-center px-4 pt-8 pb-4 max-w-xl mx-auto w-full">
-        {/* Question text */}
-        <h2 className="text-[#7b9ba6] text-sm font-bold mb-6 text-center">
-          {q.question}
-        </h2>
+        {/* Hearts */}
+        <div className={`${styles.hearts} ${shake ? styles.heartsShake : ""}`}>
+          {Array.from({ length: MAX_HEARTS }).map((_, i) => (
+            <span key={i} className={i >= hearts ? styles.heartLost : ""}>❤️</span>
+          ))}
+        </div>
 
-        {/* Big character display */}
-        <div
-          className="w-32 h-32 md:w-40 md:h-40 rounded-2xl flex flex-col items-center justify-center mb-2 transition-transform"
-          style={{
-            background: "#1a2e35",
-            border: "2px solid #2b3d45",
-            fontFamily: "'Zen Maru Gothic', sans-serif",
-          }}
-        >
-          <span className="text-5xl md:text-6xl font-black text-white">{q.display}</span>
+        {/* Question Card */}
+        <div className={styles.questionCard}>
+          <div className={styles.questionText}>{q.question}</div>
+          <div className={styles.questionDisplay}>{q.display}</div>
           {q.subtitle && (
-            <span className="text-sm text-[#7b9ba6] mt-1">{q.subtitle}</span>
+            <div className={styles.questionSubtitle}>{q.subtitle}</div>
           )}
         </div>
 
-        {/* Spacer */}
-        <div className="flex-1" />
-
-        {/* Options Grid (2×2) */}
-        <div className="w-full grid grid-cols-2 gap-3 mb-4">
+        {/* Options */}
+        <div className={styles.optionsGrid}>
           {q.options.map((option, i) => {
-            let bg = "#1a2e35";
-            let borderColor = "#2b3d45";
-            let bottomBorder = "#2b3d45";
-            let textColor = "#e8e8e8";
-
+            let className = styles.optionBtn;
             if (answered) {
               if (i === q.correctIndex) {
-                bg = "#1b3a2a";
-                borderColor = "#58cc02";
-                bottomBorder = "#46a302";
-                textColor = "#58cc02";
+                className += ` ${styles.optionCorrect}`;
               } else if (i === selected && !isCorrect) {
-                bg = "#3a1b1b";
-                borderColor = "#ff4b4b";
-                bottomBorder = "#cc3b3b";
-                textColor = "#ff4b4b";
+                className += ` ${styles.optionWrong}`;
+              } else {
+                className += ` ${styles.optionDisabled}`;
               }
-            } else {
-              bg = "#1a2e35";
-              borderColor = "#2b3d45";
-              bottomBorder = "#2b3d45";
             }
-
             return (
               <button
                 key={i}
                 onClick={() => handleSelect(i)}
                 disabled={answered}
-                className="w-full text-center px-3 py-4 rounded-xl font-bold text-sm transition-all disabled:cursor-default active:scale-95"
-                style={{
-                  background: bg,
-                  border: `2px solid ${borderColor}`,
-                  borderBottom: `4px solid ${bottomBorder}`,
-                  color: textColor,
-                }}
+                className={className}
               >
                 {option}
               </button>
             );
           })}
         </div>
-      </div>
 
-      {/* ── Bottom Feedback Bar ── */}
-      {answered && (
-        <div
-          className="px-4 py-5 animate-slideUp"
-          style={{
-            background: isCorrect ? "#1b3a2a" : selected === null ? "#2b3300" : "#3a1b1b",
-            borderTop: `2px solid ${isCorrect ? "#58cc02" : selected === null ? "#fbbf24" : "#ff4b4b"}`,
-          }}
-        >
-          <div className="max-w-xl mx-auto flex flex-col gap-3">
-            <div className="flex items-center gap-3">
-              {isCorrect ? (
-                <>
-                  <span className="text-2xl">✅</span>
-                  <div>
-                    <div className="font-extrabold text-[#58cc02]">Correct!</div>
-                    <div className="text-xs text-[#58cc02] opacity-70">+10 XP</div>
-                  </div>
-                </>
-              ) : selected === null ? (
-                <>
-                  <span className="text-2xl">⏰</span>
-                  <div>
-                    <div className="font-extrabold text-[#fbbf24]">Time&apos;s up!</div>
-                    <div className="text-xs text-[#fbbf24] opacity-70">
-                      Answer: {q.options[q.correctIndex]}
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <span className="text-2xl">❌</span>
-                  <div>
-                    <div className="font-extrabold text-[#ff4b4b]">Incorrect</div>
-                    <div className="text-xs text-[#ff4b4b] opacity-70">
-                      Correct answer: {q.options[q.correctIndex]}
-                    </div>
-                  </div>
-                </>
-              )}
+        {/* Feedback */}
+        {answered && (
+          <div className={`${styles.feedbackBar} ${isCorrect ? styles.feedbackCorrect : styles.feedbackWrong}`}>
+            <div className={styles.feedbackIcon}>{isCorrect ? "✅" : "❌"}</div>
+            <div className={styles.feedbackTextWrap}>
+              <div className={styles.feedbackTitle}>
+                {isCorrect ? "Correct!" : "Incorrect"}
+              </div>
+              <div className={styles.feedbackDetail}>
+                {isCorrect ? "+10 XP" : `Correct answer: ${q.options[q.correctIndex]}`}
+              </div>
             </div>
-            <button
-              onClick={handleContinue}
-              className="w-full py-3.5 font-extrabold text-sm rounded-2xl text-white uppercase tracking-wider transition-all active:scale-95"
-              style={{
-                background: isCorrect ? "#58cc02" : "#ff4b4b",
-                border: "none",
-                borderBottom: `4px solid ${isCorrect ? "#46a302" : "#cc3b3b"}`,
-              }}
-            >
-              {current + 1 >= questions.length ? "See Results" : "Continue"}
-            </button>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Inline animations */}
-      <style jsx>{`
-        @keyframes slideUp {
-          from { transform: translateY(100%); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-        .animate-slideUp {
-          animation: slideUp 0.3s ease-out;
-        }
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-6px); }
-          50% { transform: translateX(6px); }
-          75% { transform: translateX(-4px); }
-        }
-        .animate-shake {
-          animation: shake 0.4s ease-in-out;
-        }
-      `}</style>
+        {/* Continue */}
+        {answered && (
+          <button onClick={handleContinue} className={styles.continueBtn}>
+            {current + 1 >= questions.length ? "See Results" : "Continue →"}
+          </button>
+        )}
+      </div>
     </main>
   );
 }
