@@ -82,29 +82,41 @@ export async function signInWithGoogleRedirectStart() {
   const auth = getFirebaseAuth();
   const provider = getGoogleProvider();
   if (typeof window !== "undefined") {
-    window.sessionStorage.setItem("skilldojo.pendingRedirect", "1");
+    window.localStorage.setItem("skilldojo.pendingRedirect", "1");
   }
   await signInWithRedirect(auth, provider);
 }
 
 export function hasPendingRedirect() {
   if (typeof window === "undefined") return false;
-  return window.sessionStorage.getItem("skilldojo.pendingRedirect") === "1";
+  return window.localStorage.getItem("skilldojo.pendingRedirect") === "1";
 }
 
 export function clearPendingRedirect() {
   if (typeof window === "undefined") return;
-  window.sessionStorage.removeItem("skilldojo.pendingRedirect");
+  window.localStorage.removeItem("skilldojo.pendingRedirect");
 }
 
 export function waitForRedirectUser() {
   if (!isFirebaseConfigured()) return Promise.resolve(null);
   const auth = getFirebaseAuth();
+  const TIMEOUT_MS = 5000;
   return new Promise((resolve) => {
+    let settled = false;
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      unsubscribe();
-      resolve(user);
+      if (settled) return;
+      if (user) {
+        settled = true;
+        unsubscribe();
+        resolve(user);
+      }
     });
+    setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      unsubscribe();
+      resolve(null);
+    }, TIMEOUT_MS);
   });
 }
 
