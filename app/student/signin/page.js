@@ -23,6 +23,10 @@ export default function StudentSignInPage() {
   function getFriendlyAuthError(error) {
     const code = error?.code || "";
 
+    if (code === "permission-denied" || code === "firestore/permission-denied") {
+      return "Signed in, but cloud sync is blocked by Firestore rules. Update Firebase Firestore rules to allow this user document.";
+    }
+
     if (code === "auth/unauthorized-domain") {
       return "This domain is not authorized in Firebase. Add it under Firebase Auth > Settings > Authorized domains.";
     }

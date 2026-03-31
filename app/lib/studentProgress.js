@@ -34,6 +34,11 @@ function hasWindow() {
   return typeof window !== "undefined";
 }
 
+function isPermissionDeniedError(error) {
+  const code = error?.code || "";
+  return code === "permission-denied" || code === "firestore/permission-denied";
+}
+
 function readJson(key, fallback) {
   if (!hasWindow()) return fallback;
   try {
@@ -246,7 +251,14 @@ async function applyGoogleUserSession(user) {
     window.dispatchEvent(new Event("skilldojo-auth-changed"));
   }
 
-  await syncProgressFromCloud(user.uid);
+  try {
+    await syncProgressFromCloud(user.uid);
+  } catch (error) {
+    // Keep sign-in successful even if Firestore rules block cloud sync.
+    if (!isPermissionDeniedError(error)) {
+      throw error;
+    }
+  }
   return student;
 }
 
