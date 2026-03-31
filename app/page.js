@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styles from "./page.module.css";
 import StudentNavAction from "./components/StudentNavAction";
+import UserProgressBanner from "./components/UserProgressBanner";
 
 export const metadata = {
   title: "Japanese N5 and JLPT N5 Beginner Course",
@@ -91,6 +92,9 @@ export default function Home() {
           </a>
         </div>
       </nav>
+
+      {/* USER PROGRESS BANNER */}
+      <UserProgressBanner />
 
       {/* HERO */}
       <section className={styles.hero}>

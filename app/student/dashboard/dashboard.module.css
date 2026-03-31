@@ -74,6 +74,14 @@
   margin-bottom: 18px;
 }
 
+.gamifRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
 .overallBox {
   background: #fff;
   border: 2px solid var(--ink);

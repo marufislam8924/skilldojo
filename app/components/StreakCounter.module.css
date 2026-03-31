@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.streakBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid #f59e0b;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+}
+
+.flame {
+  font-size: 20px;
+  display: block;
+}
+
+.streakContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #78350f;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.count {
+  font-size: 18px;
+  font-weight: 800;
+  color: #92400e;
+  line-height: 1;
+}
+
+.maxBox {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.maxLabel {
+  font-weight: 600;
+  color: #666;
+}
+
+.maxCount {
+  font-weight: 800;
+  color: #f59e0b;
+  font-size: 14px;
+}

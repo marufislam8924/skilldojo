@@ -1,5 +1,6 @@
 export const AUTH_KEY = "skilldojo.student";
 export const PROGRESS_KEY = "skilldojo.progress";
+export const GAMIFICATION_KEY = "skilldojo.gamification";
 
 import {
   isFirebaseConfigured,
@@ -52,6 +53,106 @@ export function getStudentSession() {
 
 export function isCloudSyncEnabled() {
   return isFirebaseConfigured();
+}
+
+// Gamification: XP, streaks, levels
+function getGamification() {
+  return readJson(GAMIFICATION_KEY, {
+    totalXP: 0,
+    currentStreak: 0,
+    longestStreak: 0,
+    lastActivityDate: null,
+    lessonsCompletedToday: 0,
+  });
+}
+
+function saveGamification(data) {
+  writeJson(GAMIFICATION_KEY, data);
+}
+
+function calculateLevel(totalXP) {
+  // Level = 1 + floor(XP / 100), max level 50
+  return Math.min(50, 1 + Math.floor(totalXP / 100));
+}
+
+function calculateXPForNextLevel(level) {
+  return level * 100;
+}
+
+export function updateStreakAndXP(lessonsCompleted = 0) {
+  if (!hasWindow() || lessonsCompleted <= 0) return {};
+
+  const today = new Date().toDateString();
+  const gamif = getGamification();
+  const lastDate = gamif.lastActivityDate ? new Date(gamif.lastActivityDate).toDateString() : null;
+  
+  let currentStreak = gamif.currentStreak || 0;
+  let longestStreak = gamif.longestStreak || 0;
+  let lessonsToday = gamif.lessonsCompletedToday || 0;
+
+  // Update streak: if activity across days
+  if (lastDate !== today) {
+    const lastDateObj = lastDate ? new Date(lastDate) : null;
+    const todayObj = new Date(today);
+    
+    if (lastDateObj) {
+      const diffMs = todayObj - lastDateObj;
+      const diffDays = diffMs / (1000 * 60 * 60 * 24);
+      
+      if (diffDays === 1) {
+        // Consecutive day: extend streak
+        currentStreak += 1;
+      } else if (diffDays > 1) {
+        // Streak broken: reset to 1
+        currentStreak = 1;
+      }
+    } else {
+      // First activity ever
+      currentStreak = 1;
+    }
+
+    longestStreak = Math.max(longestStreak, currentStreak);
+    lessonsToday = 0;
+  }
+
+  // XP: 10 points per lesson
+  const xpGained = lessonsCompleted * 10;
+  const newTotal = (gamif.totalXP || 0) + xpGained;
+
+  lessonsToday += lessonsCompleted;
+
+  const newData = {
+    totalXP: newTotal,
+    currentStreak,
+    longestStreak,
+    lastActivityDate: new Date().toISOString(),
+    lessonsCompletedToday: lessonsToday,
+  };
+
+  saveGamification(newData);
+  return {
+    xpGained,
+    newLevel: calculateLevel(newTotal),
+    currentStreak,
+    message: `+${xpGained} XP • Streak: ${currentStreak} days`,
+  };
+}
+
+export function getGamificationStats() {
+  const gamif = getGamification();
+  const level = calculateLevel(gamif.totalXP || 0);
+  const xpForNextLevel = calculateXPForNextLevel(level);
+  const currentLevelXP = (level - 1) * 100;
+  const progressToNext = Math.min(100, Math.round(((gamif.totalXP - currentLevelXP) / xpForNextLevel) * 100));
+
+  return {
+    totalXP: gamif.totalXP || 0,
+    level,
+    progressToNext,
+    currentStreak: gamif.currentStreak || 0,
+    longestStreak: gamif.longestStreak || 0,
+    lessonsCompletedToday: gamif.lessonsCompletedToday || 0,
+  };
 }
 
 function isBetterScore(nextScore, prevScore) {
@@ -201,7 +302,9 @@ export function markLessonComplete(courseSlug, lessonId, score, totalCards) {
     lastUpdated: null,
   };
 
-  if (!courseState.completedLessons.includes(lessonId)) {
+  const isNewLesson = !courseState.completedLessons.includes(lessonId);
+
+  if (isNewLesson) {
     courseState.completedLessons.push(lessonId);
     courseState.completedLessons.sort((a, b) => a - b);
   }
@@ -227,12 +330,17 @@ export function markLessonComplete(courseSlug, lessonId, score, totalCards) {
 
   saveStudentProgress(progress);
 
+  // Track XP and streak only for new lessons
+  const gamifResult = isNewLesson ? updateStreakAndXP(1) : {};
+
   const student = getStudentSession();
   if (student?.uid && student.provider === "google") {
     syncProgressToCloud(student.uid).catch(() => {
       // Do not block lesson flow if cloud sync fails.
     });
   }
+
+  return gamifResult;
 }
 
 export function getDashboardData() {

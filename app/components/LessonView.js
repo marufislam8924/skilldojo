@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState, useCallback, useRef } from "react";
 import styles from "./LessonView.module.css";
 import StudentNavAction from "./StudentNavAction";
+import Confetti from "./Confetti";
 import { markLessonComplete } from "../lib/studentProgress";
 
 export default function LessonView({
@@ -20,6 +21,8 @@ export default function LessonView({
   const [score, setScore] = useState(0);
   const [speaking, setSpeaking] = useState(false);
   const [autoVoice, setAutoVoice] = useState(true);
+  const [xpGained, setXPGained] = useState(0);
+  const [gamifStats, setGamifStats] = useState(null);
   const synthRef = useRef(null);
 
   const isWordStyle =
@@ -76,7 +79,9 @@ export default function LessonView({
     if (nextIndex >= data.chars.length) {
       const finalScore = score + earned;
       setScore(finalScore);
-      markLessonComplete(courseSlug, lessonId, finalScore, data.chars.length);
+      const gamifResult = markLessonComplete(courseSlug, lessonId, finalScore, data.chars.length);
+      setXPGained(gamifResult?.xpGained || 0);
+      setGamifStats(gamifResult);
       setDone(true);
     } else {
       if (earned) setScore((s) => s + 1);
@@ -97,6 +102,7 @@ export default function LessonView({
     const perfect = score === data.chars.length;
     return (
       <main className={styles.main}>
+        <Confetti show={true} />
         <NavBar
           courseSlug={courseSlug}
           router={router}
@@ -111,6 +117,17 @@ export default function LessonView({
             You got <strong>{score}</strong> out of{" "}
             <strong>{data.chars.length}</strong> correct.
           </p>
+          {xpGained > 0 && (
+            <div className={styles.xpReward}>
+              <span className={styles.xpIcon}>✨</span>
+              <span className={styles.xpText}>+{xpGained} XP</span>
+              {gamifStats?.currentStreak > 0 && (
+                <span className={styles.streakText}>
+                  🔥 {gamifStats.currentStreak}-day streak!
+                </span>
+              )}
+            </div>
+          )}
           <div className={styles.doneBtns}>
             <button className={styles.btnPrimary} onClick={restart}>
               Practice Again

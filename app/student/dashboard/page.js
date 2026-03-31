@@ -9,13 +9,17 @@ import {
   getStudentSession,
   signOutStudent,
   syncProgressFromCloud,
+  getGamificationStats,
 } from "../../lib/studentProgress";
 import styles from "./dashboard.module.css";
+import XPBadge from "../../components/XPBadge";
+import StreakCounter from "../../components/StreakCounter";
 
 export default function StudentDashboardPage() {
   const router = useRouter();
   const cloudReady = isCloudSyncEnabled();
   const [student, setStudent] = useState(null);
+  const [gamifStats, setGamifStats] = useState(null);
   const [dashboardData, setDashboardData] = useState(() => ({
     courses: [],
     overall: { completedLessons: 0, totalLessons: 0, completedPercent: 0 },
@@ -32,6 +36,7 @@ export default function StudentDashboardPage() {
     const refresh = () => {
       setStudent(getStudentSession());
       setDashboardData(getDashboardData());
+      setGamifStats(getGamificationStats());
     };
 
     refresh();
@@ -85,6 +90,16 @@ export default function StudentDashboardPage() {
         <p className={styles.syncLabel}>
           Sync: {student.provider === "google" && cloudReady ? "Cloud" : "Local device"}
         </p>
+
+        {gamifStats && (
+          <div className={styles.gamifRow}>
+            <XPBadge xp={gamifStats.totalXP} level={gamifStats.level} />
+            <StreakCounter
+              currentStreak={gamifStats.currentStreak}
+              longestStreak={gamifStats.longestStreak}
+            />
+          </div>
+        )}
 
         <div className={styles.overallBox}>
           <div className={styles.overallHead}>
