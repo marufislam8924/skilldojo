@@ -26,7 +26,7 @@ export default function LessonView({
   const synthRef = useRef(null);
 
   const isWordStyle =
-    courseSlug === "vocab" || courseSlug === "grammar" || courseSlug === "conversation";
+    courseSlug === "vocab" || courseSlug === "vocabulary" || courseSlug === "grammar" || courseSlug === "conversation";
   const isConversation = courseSlug === "conversation";
   const current = data.chars[cardIndex];
   const progress = Math.round((cardIndex / data.chars.length) * 100);
@@ -38,9 +38,11 @@ export default function LessonView({
         ? "Katakana"
         : courseSlug === "vocab"
           ? "JLPT N5 Vocabulary"
-          : courseSlug === "grammar"
-            ? "JLPT N5 Grammar"
-            : "Basic Conversation";
+          : courseSlug === "vocabulary"
+            ? "Vocabulary"
+            : courseSlug === "grammar"
+              ? "JLPT N5 Grammar"
+              : "Basic Conversation";
   const itemLabel = isConversation ? "lines" : isWordStyle ? "cards" : "characters";
 
   // ── AI VOICE via Web Speech API (Japanese) ──
