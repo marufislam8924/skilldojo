@@ -65,6 +65,7 @@ export default function Home() {
     { key: "vocab",    kana: "言", title: "Daily Vocabulary",  desc: "500+ JLPT N5 words organized into interactive lessons.", lessons: 25, level: "JLPT N5", bg: "#f0fff4", live: true },
     { key: "grammar", kana: "文", title: "N5 Grammar", desc: "Essential beginner grammar patterns with example sentences and AI voice.", lessons: 8, level: "JLPT N5", bg: "#f6f5ff", live: true },
     { key: "conversation", kana: "話", title: "Basic Conversation", desc: "Real-life phrases with interactive AI voice flashcards.", lessons: 15, level: "Beginner", bg: "#fffaf0", live: true },
+    { key: "quiz", kana: "試", title: "Quiz Mode", desc: "Test your knowledge with timed multiple-choice quizzes.", lessons: 5, level: "All Levels", bg: "#fef3c7", live: true },
   ];
 
   return (
@@ -79,6 +80,9 @@ export default function Home() {
         <Link href="/" className={styles.logo}>Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場</Link>
         <div className={styles.navActions}>
           <StudentNavAction className={styles.navLink} dashboardLabel="Progress" />
+          <Link href="/quiz" className={styles.navLink}>
+            Quiz
+          </Link>
           <Link href="/vocab" className={styles.navLink}>
             Vocabulary
           </Link>

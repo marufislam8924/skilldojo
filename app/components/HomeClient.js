@@ -96,6 +96,7 @@ export function CoursesSection({ courses }) {
     vocab: "語",
     grammar: "文",
     conversation: "会",
+    quiz: "試",
   };
 
   return (

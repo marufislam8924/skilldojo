@@ -17,6 +17,7 @@ export default function sitemap() {
     "/vocab",
     "/grammar",
     "/conversation",
+    "/quiz",
   ].map((path) => ({
     url: `${siteUrl}${path}`,
     lastModified: now,
