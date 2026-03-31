@@ -80,23 +80,21 @@ export default function Home() {
         <Link href="/" className={styles.logo}>Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場</Link>
         <div className={styles.navActions}>
           <StudentNavAction className={styles.navLink} dashboardLabel="Progress" />
-          <Link href="/quiz" className={styles.navLink}>
-            Quiz
-          </Link>
-          <Link href="/vocab" className={styles.navLink}>
-            Vocabulary
-          </Link>
-          <Link href="/grammar" className={styles.navLink}>
-            Grammar
-          </Link>
-          <Link href="/katakana" className={styles.navLink}>
-            Katakana
-          </Link>
           <a href="https://youtube.com/@skilldojo-b2t" target="_blank" className={styles.ytLink}>
             ▶ YouTube
           </a>
         </div>
       </nav>
+
+      {/* MENU BAR */}
+      <div className={styles.menuBar}>
+        <Link href="/hiragana" className={styles.menuLink}>Hiragana</Link>
+        <Link href="/katakana" className={styles.menuLink}>Katakana</Link>
+        <Link href="/vocab" className={styles.menuLink}>Vocabulary</Link>
+        <Link href="/grammar" className={styles.menuLink}>Grammar</Link>
+        <Link href="/conversation" className={styles.menuLink}>Conversation</Link>
+        <Link href="/quiz" className={styles.menuLink}>Quiz</Link>
+      </div>
 
       {/* USER PROGRESS BANNER */}
       <UserProgressBanner />
