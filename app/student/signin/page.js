@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
+  finishGoogleRedirectSignIn,
   getStudentSession,
   isCloudSyncEnabled,
   signInStudent,
@@ -19,9 +20,53 @@ export default function StudentSignInPage() {
   const [authError, setAuthError] = useState("");
   const cloudReady = isCloudSyncEnabled();
 
+  function getFriendlyAuthError(error) {
+    const code = error?.code || "";
+
+    if (code === "auth/unauthorized-domain") {
+      return "This domain is not authorized in Firebase. Add it under Firebase Auth > Settings > Authorized domains.";
+    }
+
+    if (code === "auth/operation-not-allowed") {
+      return "Google sign-in is disabled in Firebase. Enable Google under Firebase Auth > Sign-in method.";
+    }
+
+    if (code === "auth/popup-blocked") {
+      return "Popup was blocked by the browser. Allow popups for this site and try again.";
+    }
+
+    if (code === "auth/network-request-failed") {
+      return "Network issue while connecting to Google. Check your internet and try again.";
+    }
+
+    return error?.message || "Google sign-in failed. Please try again.";
+  }
+
   useEffect(() => {
-    setExistingStudent(getStudentSession());
-  }, []);
+    let active = true;
+
+    async function bootstrapAuth() {
+      try {
+        await finishGoogleRedirectSignIn();
+        if (!active) return;
+        const session = getStudentSession();
+        setExistingStudent(session);
+        if (session?.provider === "google") {
+          router.replace("/student/dashboard");
+        }
+      } catch (error) {
+        if (!active) return;
+        setExistingStudent(getStudentSession());
+        setAuthError(getFriendlyAuthError(error));
+      }
+    }
+
+    bootstrapAuth();
+
+    return () => {
+      active = false;
+    };
+  }, [router]);
 
   function handleSignIn(event) {
     event.preventDefault();
@@ -33,10 +78,12 @@ export default function StudentSignInPage() {
   async function handleGoogleSignIn() {
     setAuthError("");
     try {
-      await signInStudentWithGoogle();
-      router.push("/student/dashboard");
+      const student = await signInStudentWithGoogle();
+      if (student) {
+        router.push("/student/dashboard");
+      }
     } catch (error) {
-      setAuthError(error?.message || "Google sign-in failed. Please try again.");
+      setAuthError(getFriendlyAuthError(error));
     }
   }
 

@@ -1,8 +1,10 @@
 import { initializeApp, getApps } from "firebase/app";
 import {
   GoogleAuthProvider,
+  getRedirectResult,
   getAuth,
   signInWithPopup,
+  signInWithRedirect,
   signOut,
 } from "firebase/auth";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
@@ -42,6 +44,28 @@ function getFirebaseAuth() {
   return getAuth(app);
 }
 
+function getGoogleProvider() {
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: "select_account" });
+  return provider;
+}
+
+export function preferRedirectAuthFlow() {
+  if (typeof window === "undefined") return false;
+  const ua = window.navigator.userAgent || "";
+  return /Android|iPhone|iPad|iPod|Mobile/i.test(ua);
+}
+
+export function shouldFallbackToRedirect(error) {
+  const code = error?.code || "";
+  return [
+    "auth/popup-blocked",
+    "auth/popup-closed-by-user",
+    "auth/cancelled-popup-request",
+    "auth/operation-not-supported-in-this-environment",
+  ].includes(code);
+}
+
 function getFirebaseDb() {
   const app = getFirebaseApp();
   return getFirestore(app);
@@ -49,9 +73,19 @@ function getFirebaseDb() {
 
 export async function signInWithGooglePopup() {
   const auth = getFirebaseAuth();
-  const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({ prompt: "select_account" });
+  const provider = getGoogleProvider();
   return signInWithPopup(auth, provider);
+}
+
+export async function signInWithGoogleRedirectStart() {
+  const auth = getFirebaseAuth();
+  const provider = getGoogleProvider();
+  await signInWithRedirect(auth, provider);
+}
+
+export async function getGoogleRedirectSignInResult() {
+  const auth = getFirebaseAuth();
+  return getRedirectResult(auth);
 }
 
 export async function signOutFirebase() {

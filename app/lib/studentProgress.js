@@ -3,8 +3,12 @@ export const PROGRESS_KEY = "skilldojo.progress";
 export const GAMIFICATION_KEY = "skilldojo.gamification";
 
 import {
+  getGoogleRedirectSignInResult,
   isFirebaseConfigured,
+  preferRedirectAuthFlow,
   readRemoteProgress,
+  shouldFallbackToRedirect,
+  signInWithGoogleRedirectStart,
   signInWithGooglePopup,
   signOutFirebase,
   writeRemoteProgress,
@@ -224,17 +228,18 @@ export function signInStudent(name) {
   return student;
 }
 
-export async function signInStudentWithGoogle() {
-  const result = await signInWithGooglePopup();
-  const user = result.user;
-
-  const student = {
+function createStudentFromUser(user) {
+  return {
     name: user.displayName || user.email || "Student",
     signedInAt: new Date().toISOString(),
     provider: "google",
     uid: user.uid,
     email: user.email || null,
   };
+}
+
+async function applyGoogleUserSession(user) {
+  const student = createStudentFromUser(user);
 
   writeJson(AUTH_KEY, student);
   if (hasWindow()) {
@@ -243,6 +248,30 @@ export async function signInStudentWithGoogle() {
 
   await syncProgressFromCloud(user.uid);
   return student;
+}
+
+export async function signInStudentWithGoogle() {
+  if (preferRedirectAuthFlow()) {
+    await signInWithGoogleRedirectStart();
+    return null;
+  }
+
+  try {
+    const result = await signInWithGooglePopup();
+    return applyGoogleUserSession(result.user);
+  } catch (error) {
+    if (shouldFallbackToRedirect(error)) {
+      await signInWithGoogleRedirectStart();
+      return null;
+    }
+    throw error;
+  }
+}
+
+export async function finishGoogleRedirectSignIn() {
+  const result = await getGoogleRedirectSignInResult();
+  if (!result?.user) return null;
+  return applyGoogleUserSession(result.user);
 }
 
 export function signOutStudent() {
