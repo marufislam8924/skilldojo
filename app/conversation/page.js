@@ -25,7 +25,7 @@ export default function ConversationPage() {
         <h1 className={styles.headerTitle}>Basic Japanese Conversation</h1>
         <p className={styles.headerDesc}>
           {totalConversationLessons} lessons covering greetings, travel, shopping, and daily life
-          with Japanese phrases, romaji support, interactive flashcards, and AI voice playback.
+          with full dialogues, romaji support, English meaning, and Japanese voice playback.
         </p>
       </div>
 
@@ -36,22 +36,24 @@ export default function ConversationPage() {
             <div className={styles.featuredLessonNum}>Lesson {firstLesson.id}</div>
             <h2 className={styles.featuredTitle}>{firstLesson.title}</h2>
             <p className={styles.featuredDesc}>
-              Begin with the most common greetings and introductions used every day in Japan, then train with reveal-and-score flashcards.
+              Begin with realistic beginner dialogue lines and practice line by line with chat-style conversation bubbles.
             </p>
           </div>
           <Link
-            href={`/conversation/${firstLesson.slug}`}
+            href={`/conversation/${firstLesson.id}`}
             className={styles.featuredBtn}
           >
             Start Here →
           </Link>
         </div>
         <div className={styles.featuredPhrases}>
-          {firstLesson.conversations.slice(0, 6).map((item) => (
+          {firstLesson.dialogue.slice(0, 6).map((item, index) => (
             <div key={item.romaji} className={styles.phraseChip}>
               <span className={styles.phraseJapanese}>{item.japanese}</span>
               <span className={styles.phraseRomaji}>{item.romaji}</span>
-              <span className={styles.phraseMeaning}>{item.meaning}</span>
+              <span className={styles.phraseMeaning}>
+                {item.speaker} · {item.english}
+              </span>
             </div>
           ))}
         </div>
@@ -61,17 +63,17 @@ export default function ConversationPage() {
         {conversationLessons.map((lesson) => (
           <Link
             key={lesson.id}
-            href={`/conversation/${lesson.slug}`}
+            href={`/conversation/${lesson.id}`}
             className={styles.lessonCard}
           >
             <div className={styles.lessonTopRow}>
               <div className={styles.lessonNum}>Lesson {lesson.id}</div>
-              <div className={styles.lessonCount}>{lesson.conversations.length} phrases</div>
+              <div className={styles.lessonCount}>{lesson.phraseCount} phrases</div>
             </div>
-            <div className={styles.lessonKana}>{lesson.conversations[0].japanese}</div>
+            <div className={styles.lessonKana}>{lesson.dialogue[0].japanese}</div>
             <div className={styles.lessonName}>{lesson.title}</div>
             <div className={styles.lessonChars}>
-              {lesson.conversations
+              {lesson.dialogue
                 .slice(0, 3)
                 .map((c) => c.romaji)
                 .join(" · ")}

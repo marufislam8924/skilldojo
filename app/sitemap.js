@@ -53,7 +53,7 @@ export default function sitemap() {
   }));
 
   const conversationPages = conversationLessons.map((lesson) => ({
-    url: `${siteUrl}/conversation/${lesson.slug}`,
+    url: `${siteUrl}/conversation/${lesson.id}`,
     lastModified: now,
     changeFrequency: "weekly",
     priority: 0.75,

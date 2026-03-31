@@ -1,51 +1,64 @@
-import LessonView from "../../components/LessonView";
+import Link from "next/link";
+import ConversationLesson from "../../components/ConversationLesson";
 import {
   conversationLessons,
-  getConversationLessonBySlug,
+  getConversationLessonById,
 } from "../../../data/conversationLessons";
+import styles from "./lesson.module.css";
 
 export function generateStaticParams() {
-  return conversationLessons.map((lesson) => ({ lesson: lesson.slug }));
+  return conversationLessons.map((lesson) => ({ lesson: String(lesson.id) }));
 }
 
 export function generateMetadata({ params }) {
-  const lesson = getConversationLessonBySlug(params.lesson) || conversationLessons[0];
+  const lesson = getConversationLessonById(params.lesson) || conversationLessons[0];
 
   return {
     title: `Lesson ${lesson.id} - Basic Japanese Conversation`,
-    description: `${lesson.description} Practice ${lesson.conversations.length} beginner Japanese conversation lines with romaji, English meaning, and audio support.`,
+    description: `Practice ${lesson.phraseCount} beginner Japanese dialogue lines with romaji, English meaning, speaker turns, and voice playback.`,
     alternates: {
-      canonical: `/conversation/${lesson.slug}`,
+      canonical: `/conversation/${lesson.id}`,
     },
   };
 }
 
 export default function ConversationLessonPage({ params }) {
-  const lesson = getConversationLessonBySlug(params.lesson) || conversationLessons[0];
+  const lesson = getConversationLessonById(params.lesson) || conversationLessons[0];
   const nextLesson = conversationLessons.find((item) => item.id === lesson.id + 1);
-  const transformedLesson = {
-    id: lesson.id,
-    name: lesson.title,
-    chars: lesson.conversations.map((item) => ({
-      k: item.japanese,
-      reading: item.romaji,
-      r: item.romaji,
-      meaning: item.meaning,
-      voice: item.japanese,
-      exampleJa: item.japanese,
-      exampleJaHiragana: item.romaji,
-      exampleEn: item.meaning,
-    })),
-  };
 
   return (
-    <LessonView
-      lessonId={lesson.id}
-      data={transformedLesson}
-      courseSlug="conversation"
-      totalLessons={conversationLessons.length}
-      nextLessonHref={nextLesson ? `/conversation/${nextLesson.slug}` : null}
-      allLessonsHref="/conversation"
-    />
+    <main className={styles.main}>
+      <nav className={styles.nav}>
+        <Link href="/" className={styles.logo}>
+          Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場
+        </Link>
+        <Link href="/conversation" className={styles.backBtn}>
+          ← All Lessons
+        </Link>
+      </nav>
+
+      <div className={styles.content}>
+        <ConversationLesson lesson={lesson} />
+
+        <div className={styles.footer}>
+          <div>
+            <div className={styles.footerLabel}>Progress</div>
+            <div className={styles.footerText}>
+              Lesson {lesson.id} of {conversationLessons.length}
+            </div>
+          </div>
+
+          {nextLesson ? (
+            <Link href={`/conversation/${nextLesson.id}`} className={styles.btnNext}>
+              Next Lesson →
+            </Link>
+          ) : (
+            <Link href="/conversation" className={styles.btnBack}>
+              Back to Lessons
+            </Link>
+          )}
+        </div>
+      </div>
+    </main>
   );
 }
