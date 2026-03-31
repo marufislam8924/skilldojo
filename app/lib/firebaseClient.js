@@ -101,9 +101,16 @@ export function waitForRedirectUser() {
   if (!isFirebaseConfigured()) return Promise.resolve(null);
   const auth = getFirebaseAuth();
   return new Promise((resolve) => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const timeout = setTimeout(() => {
       unsubscribe();
-      resolve(user);
+      resolve(null);
+    }, 5000);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        clearTimeout(timeout);
+        unsubscribe();
+        resolve(user);
+      }
     });
   });
 }

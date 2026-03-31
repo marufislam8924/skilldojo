@@ -5,7 +5,6 @@ export const GAMIFICATION_KEY = "skilldojo.gamification";
 import {
   getGoogleRedirectSignInResult,
   isFirebaseConfigured,
-  preferRedirectAuthFlow,
   readRemoteProgress,
   shouldFallbackToRedirect,
   signInWithGoogleRedirectStart,
@@ -266,11 +265,6 @@ async function applyGoogleUserSession(user) {
 }
 
 export async function signInStudentWithGoogle() {
-  if (preferRedirectAuthFlow()) {
-    await signInWithGoogleRedirectStart();
-    return null;
-  }
-
   try {
     const result = await signInWithGooglePopup();
     return applyGoogleUserSession(result.user);
