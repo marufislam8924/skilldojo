@@ -3,6 +3,7 @@ import ConversationLesson from "../../components/ConversationLesson";
 import {
   conversationLessons,
   getConversationLessonById,
+  totalConversationLessons,
 } from "../../../data/conversationLessons";
 import styles from "./lesson.module.css";
 
@@ -24,7 +25,6 @@ export function generateMetadata({ params }) {
 
 export default function ConversationLessonPage({ params }) {
   const lesson = getConversationLessonById(params.lesson) || conversationLessons[0];
-  const nextLesson = conversationLessons.find((item) => item.id === lesson.id + 1);
 
   return (
     <main className={styles.main}>
@@ -38,26 +38,7 @@ export default function ConversationLessonPage({ params }) {
       </nav>
 
       <div className={styles.content}>
-        <ConversationLesson lesson={lesson} />
-
-        <div className={styles.footer}>
-          <div>
-            <div className={styles.footerLabel}>Progress</div>
-            <div className={styles.footerText}>
-              Lesson {lesson.id} of {conversationLessons.length}
-            </div>
-          </div>
-
-          {nextLesson ? (
-            <Link href={`/conversation/${nextLesson.id}`} className={styles.btnNext}>
-              Next Lesson →
-            </Link>
-          ) : (
-            <Link href="/conversation" className={styles.btnBack}>
-              Back to Lessons
-            </Link>
-          )}
-        </div>
+        <ConversationLesson lesson={lesson} totalLessons={totalConversationLessons} />
       </div>
     </main>
   );

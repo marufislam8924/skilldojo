@@ -1,0 +1,434 @@
+/* ── LESSON WRAPPER ── */
+.lessonWrap {}
+
+/* ── HEADER ── */
+.lessonHeader { margin-bottom: 28px; }
+
+.lessonTag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+
+.lessonTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+
+.lessonSubtitle {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ── PROGRESS ── */
+.progressWrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.progressBar {
+  flex: 1;
+  height: 8px;
+  background: var(--soft);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--red);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+.progressLabel {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ── VOICE TOGGLE ── */
+.voiceToggle { margin-bottom: 24px; }
+
+.toggleLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggleSwitch {
+  width: 44px;
+  height: 24px;
+  background: var(--border);
+  border-radius: 99px;
+  position: relative;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.toggleOn { background: var(--red); }
+
+.toggleThumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+
+.toggleOn .toggleThumb { transform: translateX(20px); }
+
+/* ── FLASHCARD ── */
+.card {
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 20px;
+  padding: 56px 40px 48px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 6px 6px 0 var(--ink);
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.1s, border-color 0.2s, box-shadow 0.2s;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.card:active { transform: scale(0.98); }
+
+/* Speaker-coloured revealed state */
+.cardA.revealed { border-color: #1d4ed8; box-shadow: 6px 6px 0 #1d4ed8; }
+.cardB.revealed { border-color: #15803d; box-shadow: 6px 6px 0 #15803d; }
+
+/* Speaking pulse per speaker */
+.cardA.speaking { animation: pulseA 0.6s ease infinite alternate; }
+.cardB.speaking { animation: pulseB 0.6s ease infinite alternate; }
+
+@keyframes pulseA {
+  from { box-shadow: 6px 6px 0 #1d4ed8; }
+  to   { box-shadow: 6px 6px 0 #1d4ed8, 0 0 0 8px rgba(29,78,216,0.12); }
+}
+
+@keyframes pulseB {
+  from { box-shadow: 6px 6px 0 #15803d; }
+  to   { box-shadow: 6px 6px 0 #15803d, 0 0 0 8px rgba(21,128,61,0.12); }
+}
+
+/* ── SPEAKER BADGE ── */
+.speakerBadge {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+
+.badgeA { background: #dbeafe; color: #1e40af; }
+.badgeB { background: #dcfce7; color: #166534; }
+
+/* ── JAPANESE TEXT ── */
+.japanese {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: clamp(2.2rem, 7vw, 4rem);
+  font-weight: 900;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0;
+}
+
+/* ── REVEALED CONTENT ── */
+.romaji {
+  margin-top: 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.english {
+  margin-top: 10px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
+  max-width: 420px;
+}
+
+/* ── SPEAK BUTTON ── */
+.speakBtn {
+  margin-top: 16px;
+  background: var(--soft);
+  border: 1.5px solid var(--border);
+  border-radius: 99px;
+  padding: 6px 18px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--muted);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.speakBtn:hover,
+.speakBtnActive {
+  background: #fff0f0;
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* ── TAP HINT ── */
+.tapHint {
+  position: absolute;
+  bottom: 16px;
+  right: 20px;
+  font-size: 0.7rem;
+  color: var(--border);
+}
+
+/* ── SOUND WAVES ── */
+.waves {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  height: 20px;
+}
+
+.waves span {
+  display: block;
+  width: 3px;
+  border-radius: 99px;
+  background: var(--red);
+  animation: wave 0.6s ease-in-out infinite alternate;
+}
+
+.waves span:nth-child(1) { height: 6px;  animation-delay: 0s; }
+.waves span:nth-child(2) { height: 12px; animation-delay: 0.1s; }
+.waves span:nth-child(3) { height: 18px; animation-delay: 0.2s; }
+.waves span:nth-child(4) { height: 12px; animation-delay: 0.1s; }
+.waves span:nth-child(5) { height: 6px;  animation-delay: 0s; }
+
+@keyframes wave {
+  from { transform: scaleY(0.4); }
+  to   { transform: scaleY(1); }
+}
+
+/* ── ACTION BUTTONS ── */
+.fcBtns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 48px;
+}
+
+.fcBtnsPlaceholder {
+  height: 50px;
+  margin-bottom: 48px;
+}
+
+.btnAgain {
+  padding: 12px 32px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btnAgain:hover { background: #ffe0de; border-color: var(--red); }
+
+.btnGood {
+  padding: 12px 32px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btnGood:hover { background: var(--red); border-color: var(--red); }
+
+/* ── VIEW ALL TOGGLE ── */
+.viewAllBtn {
+  width: 100%;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+  transition: border-color 0.15s, color 0.15s;
+}
+.viewAllBtn:hover { border-color: var(--red); color: var(--red); }
+
+/* ── ALL LINES GRID ── */
+.allLines { margin-top: 8px; }
+
+.allLinesTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  margin-bottom: 16px;
+}
+
+.linesGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lineRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--soft);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.lineRow:hover { background: #fff0f0; border-color: var(--red); }
+
+.lineDone  { background: #f0fdf4; border-color: #86efac; }
+.lineActive { background: #fff0f0; border-color: var(--red); border-width: 2px; }
+
+.lineBadge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.lineContent { flex: 1; min-width: 0; }
+
+.lineJa {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.lineRomaji {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.lineEn {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.lineSpeakIcon {
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  opacity: 0.5;
+  margin-top: 2px;
+}
+
+/* ── DONE SCREEN ── */
+.doneScreen {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.doneEmoji { font-size: 4rem; margin-bottom: 20px; }
+
+.doneTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.doneDesc {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+
+.doneBtns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btnPrimary {
+  padding: 14px 32px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btnPrimary:hover { background: #ffe0de; border-color: var(--red); }
+
+.btnSecondary {
+  padding: 14px 32px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btnSecondary:hover { background: var(--red); border-color: var(--red); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .card { padding: 48px 20px 40px; min-height: 260px; }
+  .lessonTitle { font-size: 1.8rem; }
+  .btnAgain, .btnGood { padding: 12px 20px; font-size: 0.88rem; }
+  .btnPrimary, .btnSecondary { padding: 12px 20px; font-size: 0.88rem; }
+}

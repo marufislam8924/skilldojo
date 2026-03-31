@@ -1,7 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { markLessonComplete } from "../lib/studentProgress";
+import styles from "./ConversationLesson.module.css";
 
 type Speaker = "A" | "B";
 
@@ -19,23 +21,28 @@ export type ConversationLessonData = {
   dialogue: DialogueLine[];
 };
 
-type ConversationLessonProps = {
+type Props = {
   lesson: ConversationLessonData;
-  className?: string;
+  totalLessons: number;
 };
 
-export default function ConversationLesson({
-  lesson,
-  className = "",
-}: ConversationLessonProps) {
-  const [speakingIndex, setSpeakingIndex] = useState<number | null>(null);
-  const [speakerFilter, setSpeakerFilter] = useState<"ALL" | Speaker>("ALL");
-  const [supported, setSupported] = useState(false);
-  const [completed, setCompleted] = useState(false);
+export default function ConversationLesson({ lesson, totalLessons }: Props) {
+  const router = useRouter();
+  const [cardIndex, setCardIndex] = useState(0);
+  const [revealed, setRevealed] = useState(false);
+  const [done, setDone] = useState(false);
+  const [score, setScore] = useState(0);
+  const [speaking, setSpeaking] = useState(false);
+  const [autoVoice, setAutoVoice] = useState(true);
+  const [viewAll, setViewAll] = useState(false);
+  const synthRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+  const total = lesson.dialogue.length;
+  const current = lesson.dialogue[cardIndex];
+  const progress = Math.round((cardIndex / total) * 100);
+  const isA = current?.speaker === "A";
 
   useEffect(() => {
-    setSupported(typeof window !== "undefined" && "speechSynthesis" in window);
-
     return () => {
       if (typeof window !== "undefined" && "speechSynthesis" in window) {
         window.speechSynthesis.cancel();
@@ -43,181 +50,183 @@ export default function ConversationLesson({
     };
   }, []);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      const raw = localStorage.getItem("skilldojo.progress");
-      if (!raw) return;
-      const progress = JSON.parse(raw);
-      const ids: number[] = progress?.conversation?.completedLessons || [];
-      if (ids.includes(lesson.id)) setCompleted(true);
-    } catch {
-      // ignore malformed storage
-    }
-  }, [lesson.id]);
-
-  function handleMarkComplete() {
-    markLessonComplete("conversation", lesson.id, lesson.phraseCount, lesson.phraseCount);
-    setCompleted(true);
-  }
-
-  const speakerNames = useMemo(
-    () => ({
-      A: "Person A",
-      B: "Person B",
-    }),
-    []
-  );
-
-  const filteredDialogue = useMemo(() => {
-    if (speakerFilter === "ALL") {
-      return lesson.dialogue;
-    }
-
-    return lesson.dialogue.filter((line) => line.speaker === speakerFilter);
-  }, [lesson.dialogue, speakerFilter]);
-
-  const speakJapanese = useCallback((text: string, index: number) => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
-      return;
-    }
-
-    const synth = window.speechSynthesis;
-    synth.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "ja-JP";
-    utterance.rate = 0.9;
-    utterance.pitch = 1;
-
-    const voices = synth.getVoices();
-    const japaneseVoice = voices.find(
-      (voice) => voice.lang === "ja-JP" || voice.lang.startsWith("ja")
-    );
-
-    if (japaneseVoice) {
-      utterance.voice = japaneseVoice;
-    }
-
-    utterance.onstart = () => setSpeakingIndex(index);
-    utterance.onend = () => setSpeakingIndex((current) => (current === index ? null : current));
-    utterance.onerror = () => setSpeakingIndex((current) => (current === index ? null : current));
-
-    synth.speak(utterance);
+  const speak = useCallback((text: string) => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "ja-JP";
+    utter.rate = 0.85;
+    utter.pitch = 1.1;
+    const voices = window.speechSynthesis.getVoices();
+    const jaVoice = voices.find(v => v.lang === "ja-JP" || v.lang.startsWith("ja"));
+    if (jaVoice) utter.voice = jaVoice;
+    utter.onstart = () => setSpeaking(true);
+    utter.onend = () => setSpeaking(false);
+    utter.onerror = () => setSpeaking(false);
+    synthRef.current = utter;
+    window.speechSynthesis.speak(utter);
   }, []);
 
-  return (
-    <section className={`w-full rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:p-6 ${className}`}>
-      <header className="mb-6 border-b border-slate-100 pb-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-          Lesson {lesson.id}
+  function reveal() {
+    if (!revealed) {
+      setRevealed(true);
+      if (autoVoice) speak(current.japanese);
+    }
+  }
+
+  function next(result: "good" | "again") {
+    const earned = result === "good" ? 1 : 0;
+    const nextIndex = cardIndex + 1;
+    if (nextIndex >= total) {
+      const finalScore = score + earned;
+      markLessonComplete("conversation", lesson.id, finalScore, total);
+      setScore(finalScore);
+      setDone(true);
+    } else {
+      if (earned) setScore(s => s + 1);
+      setCardIndex(nextIndex);
+      setRevealed(false);
+    }
+  }
+
+  function restart() {
+    setCardIndex(0);
+    setRevealed(false);
+    setDone(false);
+    setScore(0);
+  }
+
+  // ── DONE SCREEN ──
+  if (done) {
+    const perfect = score === total;
+    return (
+      <div className={styles.doneScreen}>
+        <div className={styles.doneEmoji}>{perfect ? "🏆" : "🎉"}</div>
+        <h2 className={styles.doneTitle}>{perfect ? "Perfect Score!" : "Lesson Complete!"}</h2>
+        <p className={styles.doneDesc}>
+          You got <strong>{score}</strong> out of <strong>{total}</strong> correct.
         </p>
-        <h2 className="mt-1 text-2xl font-bold text-slate-900">{lesson.title}</h2>
-        <p className="mt-1 text-sm text-slate-600">{lesson.phraseCount} phrases</p>
-
-        <div className="mt-4 flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={() => setSpeakerFilter("ALL")}
-            className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${
-              speakerFilter === "ALL"
-                ? "border-slate-900 bg-slate-900 text-white"
-                : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
-            }`}
-          >
-            All
-          </button>
-          <button
-            type="button"
-            onClick={() => setSpeakerFilter("A")}
-            className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${
-              speakerFilter === "A"
-                ? "border-blue-700 bg-blue-700 text-white"
-                : "border-blue-300 bg-blue-50 text-blue-700 hover:bg-blue-100"
-            }`}
-          >
-            Person A
-          </button>
-          <button
-            type="button"
-            onClick={() => setSpeakerFilter("B")}
-            className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${
-              speakerFilter === "B"
-                ? "border-green-700 bg-green-700 text-white"
-                : "border-green-300 bg-green-50 text-green-700 hover:bg-green-100"
-            }`}
-          >
-            Person B
-          </button>
+        <div className={styles.doneBtns}>
+          <button className={styles.btnPrimary} onClick={restart}>Practice Again</button>
+          {lesson.id < totalLessons ? (
+            <button className={styles.btnSecondary} onClick={() => router.push(`/conversation/${lesson.id + 1}`)}>
+              Next Lesson →
+            </button>
+          ) : (
+            <button className={styles.btnSecondary} onClick={() => router.push("/conversation")}>
+              All Lessons
+            </button>
+          )}
         </div>
-      </header>
+      </div>
+    );
+  }
 
-      {completed && (
-        <div className="mb-4 flex items-center gap-2 rounded-xl bg-green-50 px-4 py-3 text-sm font-semibold text-green-800 border border-green-200">
-          <span className="text-base">✓</span> Lesson complete! Great work.
+  // ── FLASHCARD SCREEN ──
+  return (
+    <div className={styles.lessonWrap}>
+      {/* Header */}
+      <div className={styles.lessonHeader}>
+        <div className={styles.lessonTag}>Conversation · Lesson {lesson.id}</div>
+        <h1 className={styles.lessonTitle}>{lesson.title}</h1>
+        <p className={styles.lessonSubtitle}>{total} lines · Tap the card to reveal</p>
+      </div>
+
+      {/* Progress bar */}
+      <div className={styles.progressWrap}>
+        <div className={styles.progressBar}>
+          <div className={styles.progressFill} style={{ width: `${progress}%` }} />
         </div>
+        <span className={styles.progressLabel}>{cardIndex} / {total}</span>
+      </div>
+
+      {/* Auto-speak toggle */}
+      <div className={styles.voiceToggle}>
+        <label className={styles.toggleLabel}>
+          <span>🔊 Auto-speak on reveal</span>
+          <div
+            className={`${styles.toggleSwitch} ${autoVoice ? styles.toggleOn : ""}`}
+            onClick={() => setAutoVoice(v => !v)}
+          >
+            <div className={styles.toggleThumb} />
+          </div>
+        </label>
+      </div>
+
+      {/* Flashcard */}
+      <div
+        className={`${styles.card} ${revealed ? styles.revealed : ""} ${speaking ? styles.speaking : ""} ${isA ? styles.cardA : styles.cardB}`}
+        onClick={reveal}
+      >
+        {speaking && (
+          <div className={styles.waves}>
+            <span /><span /><span /><span /><span />
+          </div>
+        )}
+
+        <span className={`${styles.speakerBadge} ${isA ? styles.badgeA : styles.badgeB}`}>
+          Person {current.speaker}
+        </span>
+
+        <p className={styles.japanese}>{current.japanese}</p>
+
+        {revealed && (
+          <>
+            <p className={styles.romaji}>{current.romaji}</p>
+            <p className={styles.english}>{current.english}</p>
+            <button
+              className={`${styles.speakBtn} ${speaking ? styles.speakBtnActive : ""}`}
+              onClick={e => { e.stopPropagation(); speak(current.japanese); }}
+            >
+              {speaking ? "🔊 Speaking..." : "🔈 Hear again"}
+            </button>
+          </>
+        )}
+
+        {!revealed && <div className={styles.tapHint}>tap to reveal &amp; hear</div>}
+      </div>
+
+      {/* Action buttons */}
+      {revealed ? (
+        <div className={styles.fcBtns}>
+          <button className={styles.btnAgain} onClick={() => next("again")}>Again</button>
+          <button className={styles.btnGood} onClick={() => next("good")}>Good ✓</button>
+        </div>
+      ) : (
+        <div className={styles.fcBtnsPlaceholder} />
       )}
 
-      <div className="space-y-4">
-        {filteredDialogue.map((line, index) => {
-          const isSpeakerA = line.speaker === "A";
-          const isSpeaking = speakingIndex === index;
+      {/* View all dialogue */}
+      <button className={styles.viewAllBtn} onClick={() => setViewAll(v => !v)}>
+        {viewAll ? "▲ Hide all lines" : "▼ View all lines"}
+      </button>
 
-          return (
-            <article
-              key={`${lesson.id}-${index}-${line.japanese}`}
-              className={`flex ${isSpeakerA ? "justify-start" : "justify-end"}`}
-            >
+      {viewAll && (
+        <div className={styles.allLines}>
+          <h3 className={styles.allLinesTitle}>All lines — Lesson {lesson.id}</h3>
+          <div className={styles.linesGrid}>
+            {lesson.dialogue.map((line, i) => (
               <div
-                className={`max-w-[90%] rounded-2xl px-4 py-3 shadow-sm md:max-w-[75%] ${
-                  isSpeakerA
-                    ? "rounded-bl-md bg-blue-100 text-blue-950"
-                    : "rounded-br-md bg-green-100 text-green-950"
-                }`}
+                key={i}
+                className={`${styles.lineRow} ${i < cardIndex ? styles.lineDone : ""} ${i === cardIndex ? styles.lineActive : ""}`}
+                onClick={() => speak(line.japanese)}
+                title={`Hear: ${line.japanese}`}
               >
-                <div className="mb-2 flex items-center justify-between gap-3">
-                  <span className="text-xs font-semibold uppercase tracking-wide opacity-80">
-                    {speakerNames[line.speaker]}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => speakJapanese(line.japanese, index)}
-                    disabled={!supported}
-                    className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${
-                      isSpeakerA
-                        ? "border-blue-300 bg-white/80 text-blue-800 hover:bg-white"
-                        : "border-green-300 bg-white/80 text-green-800 hover:bg-white"
-                    } ${!supported ? "cursor-not-allowed opacity-60" : ""}`}
-                    aria-label={`Read line ${index + 1} in Japanese`}
-                  >
-                    {isSpeaking ? "Speaking" : "Speak"}
-                  </button>
+                <span className={`${styles.lineBadge} ${line.speaker === "A" ? styles.badgeA : styles.badgeB}`}>
+                  {line.speaker}
+                </span>
+                <div className={styles.lineContent}>
+                  <div className={styles.lineJa}>{line.japanese}</div>
+                  <div className={styles.lineRomaji}>{line.romaji}</div>
+                  <div className={styles.lineEn}>{line.english}</div>
                 </div>
-
-                <p className="text-2xl font-bold leading-relaxed md:text-3xl">{line.japanese}</p>
-                <p className="mt-2 text-sm leading-relaxed opacity-85">{line.romaji}</p>
-                <p className="mt-1 text-sm leading-relaxed opacity-80">{line.english}</p>
+                <span className={styles.lineSpeakIcon}>🔈</span>
               </div>
-            </article>
-          );
-        })}
-      </div>
-
-      <div className="mt-6 flex justify-center">
-        {completed ? (
-          <div className="flex items-center gap-2 rounded-full bg-green-700 px-6 py-3 text-sm font-bold text-white">
-            ✓ Completed
+            ))}
           </div>
-        ) : (
-          <button
-            type="button"
-            onClick={handleMarkComplete}
-            className="rounded-full border-2 border-green-700 bg-green-700 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-green-800"
-          >
-            Mark as Complete ✓
-          </button>
-        )}
-      </div>
-    </section>
+        </div>
+      )}
+    </div>
   );
 }
+
