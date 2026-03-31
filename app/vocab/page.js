@@ -24,7 +24,15 @@ export default function VocabularyPage() {
         </div>
       </nav>
 
-      <div className={styles.header}>
+      <div className={styles.menu}>
+        <div className={styles.menuLinks}>
+          <Link href="/hiragana" className={styles.menuLink}>Hiragana</Link>
+          <Link href="/katakana" className={styles.menuLink}>Katakana</Link>
+          <Link href="/vocab" className={`${styles.menuLink} ${styles.menuLinkActive}`}>Vocabulary</Link>
+          <Link href="/grammar" className={styles.menuLink}>Grammar</Link>
+          <Link href="/conversation" className={styles.menuLink}>Conversation</Link>
+          <Link href="/quiz" className={styles.menuLink}>Quiz</Link>
+        </div>
         <div className={styles.headerTag}>JLPT N5 Course</div>
         <h1 className={styles.headerTitle}>Japanese N5 Vocabulary Practice</h1>
         <p className={styles.headerDesc}>

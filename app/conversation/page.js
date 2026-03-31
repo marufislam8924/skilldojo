@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { conversationLessons, totalConversationLessons } from "../../data/conversationLessons";
 import { getStudentProgress } from "../lib/studentProgress";
 import styles from "./conversation.module.css";
@@ -39,7 +40,15 @@ export default function ConversationPage() {
         </div>
       </nav>
 
-      <div className={styles.header}>
+      <div className={styles.menu}>
+        <div className={styles.menuLinks}>
+          <Link href="/hiragana" className={styles.menuLink}>Hiragana</Link>
+          <Link href="/katakana" className={styles.menuLink}>Katakana</Link>
+          <Link href="/vocab" className={styles.menuLink}>Vocabulary</Link>
+          <Link href="/grammar" className={styles.menuLink}>Grammar</Link>
+          <Link href="/conversation" className={`${styles.menuLink} ${styles.menuLinkActive}`}>Conversation</Link>
+          <Link href="/quiz" className={styles.menuLink}>Quiz</Link>
+        </div>
         <div className={styles.headerTag}>Beginner Course</div>
         <h1 className={styles.headerTitle}>Basic Japanese Conversation</h1>
         <p className={styles.headerDesc}>

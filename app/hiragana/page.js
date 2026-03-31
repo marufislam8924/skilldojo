@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { hiraganaLessons } from "../data";
 import styles from "./hiragana.module.css";
 import StudentNavAction from "../components/StudentNavAction";
@@ -21,7 +22,15 @@ export default function HiraganaPage() {
         </div>
       </nav>
 
-      <div className={styles.header}>
+      <div className={styles.menu}>
+        <div className={styles.menuLinks}>
+          <Link href="/hiragana" className={`${styles.menuLink} ${styles.menuLinkActive}`}>Hiragana</Link>
+          <Link href="/katakana" className={styles.menuLink}>Katakana</Link>
+          <Link href="/vocab" className={styles.menuLink}>Vocabulary</Link>
+          <Link href="/grammar" className={styles.menuLink}>Grammar</Link>
+          <Link href="/conversation" className={styles.menuLink}>Conversation</Link>
+          <Link href="/quiz" className={styles.menuLink}>Quiz</Link>
+        </div>
         <div className={styles.headerTag}>Course</div>
         <h1 className={styles.headerTitle}>Hiragana and Katakana Full Course</h1>
         <p className={styles.headerDesc}>
