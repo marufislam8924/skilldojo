@@ -1,8 +1,8 @@
-import Link from "next/link";
 import styles from "./page.module.css";
-import StudentNavAction from "./components/StudentNavAction";
+import HomeNav from "./components/HomeNav";
 import UserProgressBanner from "./components/UserProgressBanner";
 import { HeroSection, CoursesSection, SeoSection, AboutSection } from "./components/HomeClient";
+import Link from "next/link";
 
 export const metadata = {
   title: "Japanese N5 and JLPT N5 Beginner Course",
@@ -75,24 +75,7 @@ export default function Home() {
       />
 
       {/* NAV */}
-      <nav className={styles.nav}>
-        <Link href="/" className={styles.logo}>Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場</Link>
-        <div className={styles.navActions}>
-          <StudentNavAction className={styles.navLink} dashboardLabel="Progress" />
-          <Link href="/vocab" className={styles.navLink}>
-            Vocabulary
-          </Link>
-          <Link href="/grammar" className={styles.navLink}>
-            Grammar
-          </Link>
-          <Link href="/katakana" className={styles.navLink}>
-            Katakana
-          </Link>
-          <a href="https://youtube.com/@skilldojo-b2t" target="_blank" className={styles.ytLink}>
-            ▶ YouTube
-          </a>
-        </div>
-      </nav>
+      <HomeNav />
 
       {/* USER PROGRESS BANNER */}
       <UserProgressBanner />

@@ -429,6 +429,7 @@
 @media (max-width: 600px) {
   .card { padding: 48px 20px 40px; min-height: 260px; }
   .lessonTitle { font-size: 1.8rem; }
-  .btnAgain, .btnGood { padding: 12px 20px; font-size: 0.88rem; }
-  .btnPrimary, .btnSecondary { padding: 12px 20px; font-size: 0.88rem; }
+  .btnAgain, .btnGood { padding: 12px 20px; font-size: 0.88rem; width: 100%; justify-content: center; }
+  .btnPrimary, .btnSecondary { padding: 12px 20px; font-size: 0.88rem; width: 100%; justify-content: center; }
+  .fcBtns { flex-direction: column; align-items: stretch; }
 }

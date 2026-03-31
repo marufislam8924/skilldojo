@@ -8,6 +8,7 @@ export default function StudentNavAction({
   className,
   signInLabel = "Student Sign In",
   dashboardLabel = "Dashboard",
+  onClick,
 }) {
   const [isSignedIn, setIsSignedIn] = useState(false);
 
@@ -27,11 +28,11 @@ export default function StudentNavAction({
   }, []);
 
   return isSignedIn ? (
-    <Link href="/student/dashboard" className={className}>
+    <Link href="/student/dashboard" className={className} onClick={onClick}>
       {dashboardLabel}
     </Link>
   ) : (
-    <Link href="/student/signin" className={className}>
+    <Link href="/student/signin" className={className} onClick={onClick}>
       {signInLabel}
     </Link>
   );
