@@ -18,7 +18,15 @@ export default function QuizPage() {
         </div>
       </nav>
 
-      <div className={styles.header}>
+      <div className={styles.menu}>
+        <div className={styles.menuLinks}>
+          <Link href="/hiragana" className={styles.menuLink}>Hiragana</Link>
+          <Link href="/katakana" className={styles.menuLink}>Katakana</Link>
+          <Link href="/vocab" className={styles.menuLink}>Vocabulary</Link>
+          <Link href="/grammar" className={styles.menuLink}>Grammar</Link>
+          <Link href="/conversation" className={styles.menuLink}>Conversation</Link>
+          <Link href="/quiz" className={`${styles.menuLink} ${styles.menuLinkActive}`}>Quiz</Link>
+        </div>
         <div className={styles.headerTag}>Quiz Mode</div>
         <h1 className={styles.headerTitle}>Test Your Japanese Knowledge</h1>
         <p className={styles.headerDesc}>
