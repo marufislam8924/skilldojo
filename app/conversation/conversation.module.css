@@ -230,6 +230,25 @@
   border-color: var(--red);
 }
 
+.lessonCardDone {
+  border-color: #16a34a;
+  box-shadow: 4px 4px 0 #16a34a;
+}
+
+.lessonCardDone:hover {
+  box-shadow: 7px 7px 0 #16a34a;
+  border-color: #16a34a;
+}
+
+.doneBadge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #166534;
+  background: #dcfce7;
+  border-radius: 999px;
+  padding: 6px 10px;
+}
+
 .lessonTopRow {
   display: flex;
   align-items: center;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { markLessonComplete } from "../lib/studentProgress";
 
 type Speaker = "A" | "B";
 
@@ -30,6 +31,7 @@ export default function ConversationLesson({
   const [speakingIndex, setSpeakingIndex] = useState<number | null>(null);
   const [speakerFilter, setSpeakerFilter] = useState<"ALL" | Speaker>("ALL");
   const [supported, setSupported] = useState(false);
+  const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
     setSupported(typeof window !== "undefined" && "speechSynthesis" in window);
@@ -40,6 +42,24 @@ export default function ConversationLesson({
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const raw = localStorage.getItem("skilldojo.progress");
+      if (!raw) return;
+      const progress = JSON.parse(raw);
+      const ids: number[] = progress?.conversation?.completedLessons || [];
+      if (ids.includes(lesson.id)) setCompleted(true);
+    } catch {
+      // ignore malformed storage
+    }
+  }, [lesson.id]);
+
+  function handleMarkComplete() {
+    markLessonComplete("conversation", lesson.id, lesson.phraseCount, lesson.phraseCount);
+    setCompleted(true);
+  }
 
   const speakerNames = useMemo(
     () => ({
@@ -132,6 +152,12 @@ export default function ConversationLesson({
         </div>
       </header>
 
+      {completed && (
+        <div className="mb-4 flex items-center gap-2 rounded-xl bg-green-50 px-4 py-3 text-sm font-semibold text-green-800 border border-green-200">
+          <span className="text-base">✓</span> Lesson complete! Great work.
+        </div>
+      )}
+
       <div className="space-y-4">
         {filteredDialogue.map((line, index) => {
           const isSpeakerA = line.speaker === "A";
@@ -175,6 +201,22 @@ export default function ConversationLesson({
             </article>
           );
         })}
+      </div>
+
+      <div className="mt-6 flex justify-center">
+        {completed ? (
+          <div className="flex items-center gap-2 rounded-full bg-green-700 px-6 py-3 text-sm font-bold text-white">
+            ✓ Completed
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={handleMarkComplete}
+            className="rounded-full border-2 border-green-700 bg-green-700 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-green-800"
+          >
+            Mark as Complete ✓
+          </button>
+        )}
       </div>
     </section>
   );

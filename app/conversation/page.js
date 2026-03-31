@@ -1,22 +1,41 @@
-import Link from "next/link";
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { conversationLessons, totalConversationLessons } from "../../data/conversationLessons";
+import { getStudentProgress } from "../lib/studentProgress";
 import styles from "./conversation.module.css";
 import StudentNavAction from "../components/StudentNavAction";
 
 export default function ConversationPage() {
-  const firstLesson = conversationLessons[0];
+  const router = useRouter();
+  const [completedLessons, setCompletedLessons] = useState([]);
+
+  useEffect(() => {
+    const load = () => {
+      const progress = getStudentProgress();
+      setCompletedLessons(progress?.conversation?.completedLessons || []);
+    };
+    load();
+    window.addEventListener("skilldojo-progress-changed", load);
+    return () => window.removeEventListener("skilldojo-progress-changed", load);
+  }, []);
+
+  const nextLesson =
+    conversationLessons.find((l) => !completedLessons.includes(l.id)) ||
+    conversationLessons[0];
+  const completedCount = completedLessons.length;
 
   return (
     <main className={styles.main}>
       <nav className={styles.nav}>
-        <Link href="/" className={styles.logo}>
+        <span className={styles.logo}>
           Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場
-        </Link>
+        </span>
         <div className={styles.navActions}>
           <StudentNavAction className={styles.navLink} dashboardLabel="My Progress" />
-          <Link href="/" className={styles.backBtn}>
+          <button className={styles.backBtn} onClick={() => router.push("/")}>
             ← Back
-          </Link>
+          </button>
         </div>
       </nav>
 
@@ -30,24 +49,30 @@ export default function ConversationPage() {
       </div>
 
       <section className={styles.featuredCard}>
-        <div className={styles.featuredMeta}>Start here</div>
+        <div className={styles.featuredMeta}>
+          {completedCount > 0
+            ? `${completedCount} / ${totalConversationLessons} done · Continue`
+            : "Start here"}
+        </div>
         <div className={styles.featuredTop}>
           <div>
-            <div className={styles.featuredLessonNum}>Lesson {firstLesson.id}</div>
-            <h2 className={styles.featuredTitle}>{firstLesson.title}</h2>
+            <div className={styles.featuredLessonNum}>Lesson {nextLesson.id}</div>
+            <h2 className={styles.featuredTitle}>{nextLesson.title}</h2>
             <p className={styles.featuredDesc}>
-              Begin with realistic beginner dialogue lines and practice line by line with chat-style conversation bubbles.
+              {completedCount > 0
+                ? "Pick up where you left off with realistic dialogue practice."
+                : "Begin with realistic beginner dialogue lines and practice line by line with chat-style conversation bubbles."}
             </p>
           </div>
-          <Link
-            href={`/conversation/${firstLesson.id}`}
+          <button
             className={styles.featuredBtn}
+            onClick={() => router.push(`/conversation/${nextLesson.id}`)}
           >
-            Start Here →
-          </Link>
+            {completedCount > 0 ? "Continue →" : "Start Here →"}
+          </button>
         </div>
         <div className={styles.featuredPhrases}>
-          {firstLesson.dialogue.slice(0, 6).map((item, index) => (
+          {nextLesson.dialogue.slice(0, 6).map((item) => (
             <div key={item.romaji} className={styles.phraseChip}>
               <span className={styles.phraseJapanese}>{item.japanese}</span>
               <span className={styles.phraseRomaji}>{item.romaji}</span>
@@ -60,26 +85,33 @@ export default function ConversationPage() {
       </section>
 
       <div className={styles.grid}>
-        {conversationLessons.map((lesson) => (
-          <Link
-            key={lesson.id}
-            href={`/conversation/${lesson.id}`}
-            className={styles.lessonCard}
-          >
-            <div className={styles.lessonTopRow}>
-              <div className={styles.lessonNum}>Lesson {lesson.id}</div>
-              <div className={styles.lessonCount}>{lesson.phraseCount} phrases</div>
+        {conversationLessons.map((lesson) => {
+          const isDone = completedLessons.includes(lesson.id);
+          return (
+            <div
+              key={lesson.id}
+              className={`${styles.lessonCard} ${isDone ? styles.lessonCardDone : ""}`}
+              onClick={() => router.push(`/conversation/${lesson.id}`)}
+            >
+              <div className={styles.lessonTopRow}>
+                <div className={styles.lessonNum}>Lesson {lesson.id}</div>
+                {isDone ? (
+                  <div className={styles.doneBadge}>✓ Done</div>
+                ) : (
+                  <div className={styles.lessonCount}>{lesson.phraseCount} phrases</div>
+                )}
+              </div>
+              <div className={styles.lessonKana}>{lesson.dialogue[0].japanese}</div>
+              <div className={styles.lessonName}>{lesson.title}</div>
+              <div className={styles.lessonChars}>
+                {lesson.dialogue
+                  .slice(0, 3)
+                  .map((c) => c.romaji)
+                  .join(" · ")}
+              </div>
             </div>
-            <div className={styles.lessonKana}>{lesson.dialogue[0].japanese}</div>
-            <div className={styles.lessonName}>{lesson.title}</div>
-            <div className={styles.lessonChars}>
-              {lesson.dialogue
-                .slice(0, 3)
-                .map((c) => c.romaji)
-                .join(" · ")}
-            </div>
-          </Link>
-        ))}
+          );
+        })}
       </div>
     </main>
   );
