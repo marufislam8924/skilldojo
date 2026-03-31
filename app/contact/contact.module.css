@@ -189,4 +189,12 @@
     padding-bottom: 2px;
   }
   .navActions::-webkit-scrollbar { display: none; }
+  .navLink {
+    display: inline-flex;
+    align-items: center;
+    min-height: 38px;
+    white-space: nowrap;
+  }
+  .hero { padding-top: 136px; }
+  .cards { padding: 0 18px 56px; }
 }
