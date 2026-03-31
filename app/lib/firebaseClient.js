@@ -97,14 +97,14 @@ export function clearPendingRedirect() {
   window.sessionStorage.removeItem("skilldojo.pendingRedirect");
 }
 
-export function waitForRedirectUser() {
+export function waitForRedirectUser(timeoutMs = 5000) {
   if (!isFirebaseConfigured()) return Promise.resolve(null);
   const auth = getFirebaseAuth();
   return new Promise((resolve) => {
     const timeout = setTimeout(() => {
       unsubscribe();
       resolve(null);
-    }, 5000);
+    }, timeoutMs);
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         clearTimeout(timeout);

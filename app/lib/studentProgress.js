@@ -282,13 +282,15 @@ export async function finishGoogleRedirectSignIn() {
   }
 
   // Fallback: on some mobile browsers getRedirectResult returns null
-  // even after a successful redirect. Use onAuthStateChanged instead.
-  if (hasPendingRedirect()) {
+  // even after a successful redirect. Check Firebase auth state directly.
+  const hadPendingRedirect = hasPendingRedirect();
+  if (hadPendingRedirect) {
     clearPendingRedirect();
-    const user = await waitForRedirectUser();
-    if (user) {
-      return applyGoogleUserSession(user);
-    }
+  }
+
+  const user = await waitForRedirectUser(hadPendingRedirect ? 8000 : 1200);
+  if (user) {
+    return applyGoogleUserSession(user);
   }
 
   return null;
