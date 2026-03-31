@@ -90,19 +90,37 @@ export function HeroSection() {
 }
 
 export function CoursesSection({ courses }) {
+  const courseIcons = {
+    hiragana: "✍",
+    katakana: "カ",
+    vocab: "語",
+    grammar: "文",
+    conversation: "会",
+  };
+
   return (
-    <section className={styles.courses}>
+    <section className={styles.courses} id="curriculum">
       <ScrollReveal>
-        <div className={styles.sectionHeader}>
-          <div className={styles.sectionTag}>Curriculum</div>
-          <h2 className={styles.sectionTitle}>Choose Your Path</h2>
+        <div className={styles.coursesHeader}>
+          <div className={styles.coursesKicker}>Curriculum</div>
+          <h2 className={styles.coursesTitle}>Choose Your Learning Path</h2>
+          <p className={styles.coursesLead}>
+            Structured tracks built for beginners, designed to take you from first character
+            to confident JLPT N5 foundations.
+          </p>
         </div>
       </ScrollReveal>
       <div className={styles.coursesGrid}>
         {courses.map((c, i) => {
+          const levelClass = c.level === "Beginner" ? styles.levelBeginner : styles.levelJlpt;
+
           const cardContent = (
             <>
               <div className={styles.courseThumb} style={{ background: c.bg }}>
+                <div className={styles.courseThumbTop}>
+                  <span className={styles.courseIconChip}>{courseIcons[c.key] || "学"}</span>
+                  <span className={styles.courseStatus}>{c.live ? "Live" : "Soon"}</span>
+                </div>
                 {c.kana}
               </div>
               <div className={styles.courseBody}>
@@ -110,16 +128,11 @@ export function CoursesSection({ courses }) {
                 <div className={styles.courseDesc}>{c.desc}</div>
                 <div className={styles.courseMeta}>
                   <span className={styles.lessonsCount}>{c.lessons} lessons</span>
-                  <span
-                    className={styles.levelBadge}
-                    style={{
-                      background: c.level === "Beginner" ? "#d4edda" : "#fff3cd",
-                      color: c.level === "Beginner" ? "#155724" : "#856404",
-                    }}
-                  >
+                  <span className={`${styles.levelBadge} ${levelClass}`}>
                     {c.level}
                   </span>
                 </div>
+                <div className={styles.courseCta}>Start Course →</div>
                 {!c.live && (
                   <div className={styles.comingSoon}>Coming Soon</div>
                 )}
