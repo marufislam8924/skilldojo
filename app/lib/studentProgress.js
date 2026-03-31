@@ -255,11 +255,8 @@ async function applyGoogleUserSession(user) {
 
   try {
     await syncProgressFromCloud(user.uid);
-  } catch (error) {
-    // Keep sign-in successful even if Firestore rules block cloud sync.
-    if (!isPermissionDeniedError(error)) {
-      throw error;
-    }
+  } catch {
+    // Keep sign-in successful even when cloud sync fails.
   }
   return student;
 }

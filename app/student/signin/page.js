@@ -60,7 +60,12 @@ export default function StudentSignInPage() {
         }
       } catch (error) {
         if (!active) return;
-        setExistingStudent(getStudentSession());
+        const session = getStudentSession();
+        setExistingStudent(session);
+        if (session?.provider === "google") {
+          router.replace("/student/dashboard");
+          return;
+        }
         setAuthError(getFriendlyAuthError(error));
       }
     }
