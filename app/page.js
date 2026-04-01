@@ -65,6 +65,7 @@ export default function Home() {
     { key: "grammar", kana: "文", title: "N5 Grammar", desc: "Essential beginner grammar patterns with example sentences and AI voice.", lessons: 8, level: "JLPT N5", bg: "#f6f5ff", live: true },
     { key: "conversation", kana: "話", title: "Basic Conversation", desc: "Real-life phrases with interactive AI voice flashcards.", lessons: 15, level: "Beginner", bg: "#fffaf0", live: true },
     { key: "quiz", kana: "試", title: "Quiz Mode", desc: "Test your knowledge with timed multiple-choice quizzes.", lessons: 5, level: "All Levels", bg: "#fef3c7", live: true },
+    { key: "courses/30-days", kana: "30", title: "Japanese in 30 Days", desc: "Structured daily plan from zero to JLPT N5 foundations in one month.", lessons: 30, level: "Beginner", bg: "#fef0f0", live: true },
   ];
 
   return (

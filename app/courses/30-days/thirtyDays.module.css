@@ -1,0 +1,245 @@
+.main {
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+/* HEADER */
+.header {
+  padding: 32px 80px 24px;
+}
+
+.headerTag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 10px;
+}
+
+.headerTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.headerDesc {
+  color: var(--muted);
+  font-size: 1rem;
+  max-width: 600px;
+}
+
+/* WEEK LABELS */
+.weekLabel {
+  padding: 0 80px;
+  margin-top: 32px;
+  margin-bottom: 12px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* PROGRESS BAR */
+.progressWrap {
+  padding: 0 80px;
+  margin-bottom: 24px;
+}
+
+.progressOuter {
+  background: #eee;
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+}
+
+.progressInner {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--red);
+  transition: width 0.5s ease;
+}
+
+.progressText {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin-top: 6px;
+  text-align: right;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  gap: 14px;
+  padding: 0 80px 16px;
+}
+
+/* DAY CARD */
+.dayCard {
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.dayCard:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 var(--red);
+  border-color: var(--red);
+}
+
+.dayCard.completed {
+  border-color: #22c55e;
+  box-shadow: 4px 4px 0 #22c55e;
+  opacity: 0.85;
+}
+
+/* DAY NUMBER CIRCLE */
+.dayNum {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 1rem;
+  font-weight: 900;
+  color: #fff;
+}
+
+.focusHiragana   { background: #ef4444; }
+.focusKatakana   { background: #3b82f6; }
+.focusVocabulary { background: #22c55e; }
+.focusGrammar    { background: #a855f7; }
+.focusN5         { background: #f59e0b; }
+.focusQuiz       { background: #ec4899; }
+.focusConversation { background: #14b8a6; }
+
+/* DAY INFO */
+.dayInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.dayTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+.daySubtitle {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.dayTasks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.taskBadge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.badgeHiragana     { background: #fee2e2; color: #991b1b; }
+.badgeKatakana     { background: #dbeafe; color: #1e40af; }
+.badgeVocabulary   { background: #d1fae5; color: #065f46; }
+.badgeGrammar      { background: #f3e8ff; color: #6b21a8; }
+.badgeConversation { background: #ccfbf1; color: #0f766e; }
+.badgeJLPTN5       { background: #fef3c7; color: #92400e; }
+.badgeQuiz         { background: #fce7f3; color: #9d174d; }
+
+/* DAY ARROW */
+.dayArrow {
+  flex-shrink: 0;
+  font-size: 1.2rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+/* FOOTER SECTION */
+.footer {
+  padding: 48px 80px;
+  text-align: center;
+}
+
+.footerText {
+  font-size: 0.9rem;
+  color: var(--muted);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .main {
+    padding-top: 70px;
+  }
+
+  .header {
+    padding: 24px 16px 20px;
+  }
+
+  .headerTitle {
+    font-size: 1.8rem;
+  }
+
+  .weekLabel {
+    padding: 0 16px;
+    margin-top: 24px;
+  }
+
+  .progressWrap {
+    padding: 0 16px;
+  }
+
+  .grid {
+    padding: 0 16px 12px;
+    gap: 10px;
+  }
+
+  .dayCard {
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .dayNum {
+    width: 40px;
+    height: 40px;
+    font-size: 0.85rem;
+  }
+
+  .dayTitle {
+    font-size: 0.95rem;
+  }
+
+  .footer {
+    padding: 32px 16px;
+  }
+}

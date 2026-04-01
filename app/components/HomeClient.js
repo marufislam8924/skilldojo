@@ -96,6 +96,7 @@ export function CoursesSection({ courses }) {
     grammar: "文",
     conversation: "会",
     quiz: "試",
+    "courses/30-days": "📅",
   };
 
   return (

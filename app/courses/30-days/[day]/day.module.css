@@ -1,0 +1,274 @@
+.main {
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+/* HEADER */
+.header {
+  padding: 32px 80px 24px;
+}
+
+.backLink {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+  transition: color 0.15s;
+}
+
+.backLink:hover {
+  color: var(--red);
+}
+
+.dayTag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+
+.dayTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+
+.daySubtitle {
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+/* TIP CARD */
+.tipCard {
+  margin: 0 80px 32px;
+  background: #fffbeb;
+  border: 1.5px solid #fbbf24;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.tipIcon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.tipText {
+  font-size: 0.88rem;
+  color: #92400e;
+  line-height: 1.5;
+}
+
+/* TASKS LIST */
+.tasksList {
+  padding: 0 80px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.taskCard {
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  padding: 20px 24px;
+  box-shadow: 4px 4px 0 var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+
+.taskCard:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--red);
+  border-color: var(--red);
+}
+
+.taskNum {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.taskBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.taskLabel {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.labelHiragana     { background: #fee2e2; color: #991b1b; }
+.labelKatakana     { background: #dbeafe; color: #1e40af; }
+.labelVocabulary   { background: #d1fae5; color: #065f46; }
+.labelGrammar      { background: #f3e8ff; color: #6b21a8; }
+.labelConversation { background: #ccfbf1; color: #0f766e; }
+.labelJLPTN5       { background: #fef3c7; color: #92400e; }
+.labelQuiz         { background: #fce7f3; color: #9d174d; }
+
+.taskTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.taskLink {
+  flex-shrink: 0;
+  padding: 8px 18px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.taskLink:hover {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+/* COMPLETE BUTTON */
+.completeWrap {
+  padding: 0 80px 48px;
+  display: flex;
+  justify-content: center;
+}
+
+.completeBtn {
+  padding: 14px 40px;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.completeBtn:hover {
+  background: var(--red);
+  border-color: var(--red);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--red);
+}
+
+.completedBtn {
+  composes: completeBtn;
+  background: #22c55e;
+  border-color: #22c55e;
+  box-shadow: 4px 4px 0 #16a34a;
+  cursor: default;
+}
+
+.completedBtn:hover {
+  background: #22c55e;
+  border-color: #22c55e;
+  transform: none;
+  box-shadow: 4px 4px 0 #16a34a;
+}
+
+/* NAV BUTTONS */
+.navButtons {
+  padding: 0 80px 64px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.navBtn {
+  padding: 10px 24px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.navBtn:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .main {
+    padding-top: 70px;
+  }
+
+  .header {
+    padding: 24px 16px 20px;
+  }
+
+  .dayTitle {
+    font-size: 1.6rem;
+  }
+
+  .tipCard {
+    margin: 0 16px 24px;
+  }
+
+  .tasksList {
+    padding: 0 16px 24px;
+    gap: 10px;
+  }
+
+  .taskCard {
+    flex-wrap: wrap;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .taskLink {
+    width: 100%;
+    text-align: center;
+  }
+
+  .completeWrap {
+    padding: 0 16px 32px;
+  }
+
+  .navButtons {
+    padding: 0 16px 48px;
+    flex-direction: column;
+  }
+
+  .navBtn {
+    text-align: center;
+  }
+}
