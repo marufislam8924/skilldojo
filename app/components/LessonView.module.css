@@ -687,3 +687,77 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 420px) {
+  .content {
+    padding: 22px 12px 48px;
+  }
+
+  .lessonTitle {
+    font-size: 1.6rem;
+  }
+
+  .lessonSubtitle {
+    font-size: 0.84rem;
+  }
+
+  .flashcard {
+    min-height: 230px;
+    padding: 34px 14px 36px;
+    border-radius: 16px;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .wordFlashcard {
+    min-height: 280px;
+    padding: 34px 14px 32px;
+  }
+
+  .fcKana {
+    font-size: 3.9rem;
+  }
+
+  .fcWord {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .fcHint {
+    font-size: 1rem;
+  }
+
+  .fcExampleBox {
+    margin-top: 14px;
+    padding: 12px;
+  }
+
+  .allCharsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(74px, 1fr));
+    gap: 8px;
+  }
+
+  .charCell {
+    padding: 10px 5px 8px;
+  }
+
+  .charKana {
+    font-size: 1.5rem;
+  }
+
+  .doneScreen {
+    margin: 56px auto;
+    padding: 0 12px;
+  }
+
+  .doneTitle {
+    font-size: 1.8rem;
+  }
+
+  .doneBtns {
+    flex-direction: column;
+  }
+
+  .btnPrimary,
+  .btnSecondary {
+    width: 100%;
+  }
+}

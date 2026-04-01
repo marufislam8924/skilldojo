@@ -12,6 +12,7 @@
   --soft: #ede8df;
   --muted: #7a7067;
   --border: #d9d0c3;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 html {
@@ -29,6 +30,20 @@ body {
   color: var(--ink);
   font-family: 'Sora', 'Segoe UI', sans-serif;
   overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: var(--safe-bottom);
+  }
 }
 
 a,
