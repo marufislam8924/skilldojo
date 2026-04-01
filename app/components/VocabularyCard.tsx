@@ -296,7 +296,7 @@ export default function VocabularyCard({ lesson, totalLessons }: VocabularyCardP
         <button
           onClick={handlePrevious}
           disabled={cardIndex === 0}
-          className={`py-3 px-4 font-bold rounded-xl transition-colors text-sm sm:text-base ${
+          className={`py-3 px-4 font-bold rounded-xl transition-colors text-base ${
             cardIndex === 0
               ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
               : 'bg-white border-2 border-blue-400 text-blue-600 hover:bg-blue-50'
@@ -307,7 +307,7 @@ export default function VocabularyCard({ lesson, totalLessons }: VocabularyCardP
         <button
           onClick={handleNext}
           disabled={cardIndex === lesson.words.length - 1}
-          className={`py-3 px-4 font-bold rounded-xl transition-colors text-sm sm:text-base ${
+          className={`py-3 px-4 font-bold rounded-xl transition-colors text-base ${
             cardIndex === lesson.words.length - 1
               ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
               : 'bg-white border-2 border-blue-400 text-blue-600 hover:bg-blue-50'

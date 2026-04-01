@@ -155,7 +155,7 @@ export default async function DashboardPage() {
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
             Welcome back, {displayName}!
           </h1>
-          <p className="mt-2 text-sm text-slate-600">
+          <p className="mt-2 text-base text-slate-600">
             Keep your momentum going with streaks, XP, and badge progress.
           </p>
 
@@ -167,7 +167,7 @@ export default async function DashboardPage() {
           <div className="mt-6">
             <Link
               href={continueHref}
-              className="inline-flex items-center rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-500"
+              className="inline-flex items-center rounded-full bg-emerald-600 px-5 py-2.5 text-base font-semibold text-white transition hover:bg-emerald-500"
             >
               {continueLabel}
             </Link>
@@ -193,7 +193,7 @@ export default async function DashboardPage() {
                   )}
                 </div>
 
-                <p className="mt-2 text-sm text-slate-600">
+                <p className="mt-2 text-base text-slate-600">
                   {course.completed}/{course.total} lessons complete
                 </p>
 
@@ -207,7 +207,7 @@ export default async function DashboardPage() {
                 {!course.isCompleted ? (
                   <Link
                     href={course.ctaHref}
-                    className="mt-4 inline-flex items-center rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-500"
+                    className="mt-4 inline-flex items-center rounded-full bg-emerald-600 px-4 py-2 text-base font-semibold text-white transition hover:bg-emerald-500"
                   >
                     {course.ctaLabel}
                   </Link>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "./page.module.css";
-import StudentNavAction from "./components/StudentNavAction";
+import Navbar from "./components/Navbar";
 import UserProgressBanner from "./components/UserProgressBanner";
 import { HeroSection, CoursesSection, SeoSection, AboutSection } from "./components/HomeClient";
 
@@ -75,16 +75,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      {/* NAV */}
-      <nav className={styles.nav}>
-        <Link href="/" className={styles.logo}>Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場</Link>
-        <div className={styles.navActions}>
-          <StudentNavAction className={styles.navLink} dashboardLabel="Progress" />
-          <a href="https://youtube.com/@skilldojo-b2t" target="_blank" className={styles.ytLink}>
-            ▶ YouTube
-          </a>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* USER PROGRESS BANNER */}
       <UserProgressBanner />

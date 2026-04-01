@@ -206,7 +206,7 @@ export default function LessonView({
 
         {/* Flashcard */}
         <div
-          className={`${styles.flashcard} ${revealed ? styles.revealed : ""} ${speaking ? styles.speaking : ""} ${isWordStyle ? styles.wordFlashcard : ""} min-h-[200px] px-4 sm:px-6`}
+          className={`${styles.flashcard} ${revealed ? styles.revealed : ""} ${speaking ? styles.speaking : ""} ${isWordStyle ? styles.wordFlashcard : ""} min-h-[200px] w-full max-w-sm mx-auto flex items-center justify-center rounded-2xl text-6xl`}
           onClick={reveal}
           role="button"
           tabIndex={0}
@@ -262,10 +262,10 @@ export default function LessonView({
         {/* Action Buttons */}
         {revealed ? (
           <div className={styles.fcBtns}>
-            <button className={styles.btnAgain} onClick={() => next("again")}>
+            <button className={`${styles.btnAgain} min-h-12 text-base`} onClick={() => next("again")}>
               Again
             </button>
-            <button className={styles.btnGood} onClick={() => next("good")}>
+            <button className={`${styles.btnGood} min-h-12 text-base`} onClick={() => next("good")}>
               Good ✓
             </button>
           </div>

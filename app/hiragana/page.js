@@ -40,18 +40,22 @@ export default function HiraganaPage() {
 
       <div className={styles.grid}>
         {hiraganaLessons.map((lesson) => (
-          <div
+          <Link
             key={lesson.id}
-            className={styles.lessonCard}
-            onClick={() => router.push(`/hiragana/${lesson.id}`)}
+            href={`/hiragana/${lesson.id}`}
+            className={`${styles.lessonCard} flex items-center gap-4 p-4 min-h-[64px] rounded-xl border hover:bg-gray-50 active:bg-gray-100`}
           >
-            <div className={styles.lessonNum}>Lesson {lesson.id}</div>
-            <div className={styles.lessonKana}>{lesson.kana}</div>
-            <div className={styles.lessonName}>{lesson.name}</div>
-            <div className={styles.lessonChars}>
-              {lesson.chars.map((c) => c.r).join(" · ")}
+            <div>
+              <div className={styles.lessonNum}>Lesson {lesson.id}</div>
+              <div className={`${styles.lessonKana} text-5xl`}>{lesson.kana}</div>
             </div>
-          </div>
+            <div>
+              <div className={styles.lessonName}>{lesson.name}</div>
+              <div className={styles.lessonChars}>
+                {lesson.chars.map((c) => c.r).join(" · ")}
+              </div>
+            </div>
+          </Link>
         ))}
       </div>
     </main>

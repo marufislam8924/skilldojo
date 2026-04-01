@@ -68,7 +68,9 @@ export default function RootLayout({ children }) {
         <Suspense fallback={null}>
           <GoogleAnalytics />
         </Suspense>
-        {children}
+        <main className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+          {children}
+        </main>
       </body>
     </html>
   );

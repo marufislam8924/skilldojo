@@ -31,17 +31,17 @@ export function HeroSection() {
           </p>
         </ScrollReveal>
         <ScrollReveal delay={500} direction="up">
-          <div className={styles.heroBtns}>
-            <Link className={styles.btnPrimary} href="/student/signin">
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Link className={`${styles.btnPrimary} w-full sm:w-auto py-3 px-6 text-center text-base`} href="/student/signin">
               Start for Free →
             </Link>
-            <Link href="/katakana" className={styles.btnSecondary}>
+            <Link href="/katakana" className={`${styles.btnSecondary} w-full sm:w-auto py-3 px-6 text-center text-base`}>
               Explore Katakana
             </Link>
             <a
               href="https://youtube.com/@skilldojo-b2t"
               target="_blank"
-              className={styles.btnSecondary}
+              className={`${styles.btnSecondary} w-full sm:w-auto py-3 px-6 text-center text-base`}
             >
               Watch on YouTube
             </a>
@@ -110,7 +110,7 @@ export function CoursesSection({ courses }) {
           </p>
         </div>
       </ScrollReveal>
-      <div className={styles.coursesGrid}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {courses.map((c, i) => {
           const levelClass = c.level === "Beginner" ? styles.levelBeginner : styles.levelJlpt;
 
@@ -141,11 +141,11 @@ export function CoursesSection({ courses }) {
           );
 
           const card = c.live ? (
-            <Link key={c.key} href={`/${c.key}`} className={styles.courseCard}>
+            <Link key={c.key} href={`/${c.key}`} className={`${styles.courseCard} rounded-xl border p-5 flex flex-col gap-2 active:bg-gray-100`}>
               {cardContent}
             </Link>
           ) : (
-            <div key={c.key} className={styles.courseCard}>
+            <div key={c.key} className={`${styles.courseCard} rounded-xl border p-5 flex flex-col gap-2 active:bg-gray-100`}>
               {cardContent}
             </div>
           );
