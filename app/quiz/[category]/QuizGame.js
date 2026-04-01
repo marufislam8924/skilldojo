@@ -8,7 +8,6 @@ import { hiraganaLessons, katakanaLessons } from "../../data";
 import { vocabularyLessons } from "../../vocabData";
 import { grammarLessons } from "../../grammarData";
 import { updateStreakAndXP, getStudentSession } from "../../lib/studentProgress";
-import StudentNavAction from "../../components/StudentNavAction";
 import Confetti from "../../components/Confetti";
 import styles from "./quizgame.module.css";
 
@@ -170,39 +169,10 @@ export default function QuizGame({ categoryId }) {
     }
   }
 
-  /* ─── Nav Bar ─── */
-  function NavBar() {
-    return (
-      <nav className={styles.nav}>
-        <div className="flex w-full items-center justify-between md:w-auto md:justify-start">
-          <span className={styles.logo}>
-            Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場
-          </span>
-          <button
-            type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-[var(--border)] bg-white text-xl md:hidden"
-            aria-label="Toggle navigation menu"
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((v) => !v)}
-          >
-            {menuOpen ? "✕" : "☰"}
-          </button>
-        </div>
-        <div className={`${styles.navActions} ${menuOpen ? "flex" : "hidden"} w-full flex-col gap-2 md:flex md:w-auto md:flex-row md:gap-4`}>
-          <StudentNavAction className={styles.navLink} dashboardLabel="My Progress" />
-          <button className={styles.backBtn} onClick={() => router.push("/quiz")}>
-            ← Back
-          </button>
-        </div>
-      </nav>
-    );
-  }
-
   /* ─── Not found ─── */
   if (!category) {
     return (
       <main className={styles.main}>
-        <NavBar />
         <div className={styles.notFound}>
           <p className={styles.notFoundText}>Quiz not found</p>
           <Link href="/quiz" className={styles.notFoundLink}>
@@ -217,7 +187,6 @@ export default function QuizGame({ categoryId }) {
   if (questions.length === 0) {
     return (
       <main className={`${styles.main} ${styles.loading}`}>
-        <NavBar />
         <div className={styles.spinner} />
       </main>
     );
@@ -227,7 +196,6 @@ export default function QuizGame({ categoryId }) {
   if (gameOver) {
     return (
       <main className={styles.main}>
-        <NavBar />
         <div className={styles.doneScreen}>
           <div className={styles.doneEmoji}>💔</div>
           <h2 className={styles.doneTitle}>Out of Hearts!</h2>
@@ -256,7 +224,6 @@ export default function QuizGame({ categoryId }) {
     return (
       <main className={styles.main}>
         <Confetti show={perfect} />
-        <NavBar />
         <div className={styles.doneScreen}>
           <div className={styles.doneEmoji}>{perfect ? "🏆" : percent >= 80 ? "⭐" : "🎉"}</div>
           <h2 className={styles.doneTitle}>
@@ -313,7 +280,6 @@ export default function QuizGame({ categoryId }) {
 
   return (
     <main className={styles.main}>
-      <NavBar />
       <div className={styles.content}>
         {/* Progress */}
         <div className={styles.progressWrap}>

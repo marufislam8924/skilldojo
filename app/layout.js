@@ -1,5 +1,6 @@
 import "./globals.css";
 import GoogleAnalytics from "./components/GoogleAnalytics";
+import Navbar from "./components/Navbar";
 import { Suspense } from "react";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
@@ -68,6 +69,7 @@ export default function RootLayout({ children }) {
         <Suspense fallback={null}>
           <GoogleAnalytics />
         </Suspense>
+        <Navbar />
         <main className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8">
           {children}
         </main>

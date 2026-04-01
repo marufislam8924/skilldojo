@@ -1,6 +1,5 @@
 import Link from "next/link";
 import styles from "./page.module.css";
-import Navbar from "./components/Navbar";
 import UserProgressBanner from "./components/UserProgressBanner";
 import { HeroSection, CoursesSection, SeoSection, AboutSection } from "./components/HomeClient";
 
@@ -74,8 +73,6 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-
-      <Navbar />
 
       {/* USER PROGRESS BANNER */}
       <UserProgressBanner />

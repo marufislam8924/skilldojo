@@ -5,24 +5,12 @@ import {
   vocabularyLessons,
 } from "../vocabData";
 import styles from "./vocab.module.css";
-import StudentNavAction from "../components/StudentNavAction";
 
 export default function VocabularyPage() {
   const dailyLesson = getDailyVocabularyLesson();
 
   return (
     <main className={styles.main}>
-      <nav className={styles.nav}>
-        <Link href="/" className={styles.logo}>
-          Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場
-        </Link>
-        <div className={styles.navActions}>
-          <StudentNavAction className={styles.navLink} dashboardLabel="My Progress" />
-          <Link className={styles.backBtn} href="/">
-            ← Back
-          </Link>
-        </div>
-      </nav>
 
       <div className={styles.menu}>
         <div className={styles.menuLinks}>
