@@ -1,4 +1,18 @@
-type BadgeId = "first_lesson" | "week_streak" | "n5_complete" | "vocab_master";
+type BadgeId =
+  | "first_lesson"
+  | "week_streak"
+  | "n5_complete"
+  | "vocab_master"
+  | "three_day_streak"
+  | "month_streak"
+  | "speed_demon"
+  | "perfectionist"
+  | "xp_500"
+  | "xp_1000"
+  | "ten_lessons"
+  | "fifty_lessons"
+  | "daily_champion"
+  | "comeback_kid";
 
 type BadgeCardProps = {
   badgeId: BadgeId;
@@ -11,10 +25,30 @@ const BADGE_META: Record<BadgeId, { icon: string; name: string; description: str
     name: "First Lesson",
     description: "Complete your first lesson.",
   },
+  three_day_streak: {
+    icon: "🌱",
+    name: "Getting Started",
+    description: "Maintain a 3-day streak.",
+  },
   week_streak: {
     icon: "🔥",
     name: "Week Streak",
     description: "Stay active for 7 days in a row.",
+  },
+  month_streak: {
+    icon: "💎",
+    name: "Monthly Master",
+    description: "Maintain a 30-day streak.",
+  },
+  ten_lessons: {
+    icon: "📖",
+    name: "Dedicated Student",
+    description: "Complete 10 lessons total.",
+  },
+  fifty_lessons: {
+    icon: "🎓",
+    name: "Scholar",
+    description: "Complete 50 lessons total.",
   },
   n5_complete: {
     icon: "🏆",
@@ -25,6 +59,36 @@ const BADGE_META: Record<BadgeId, { icon: string; name: string; description: str
     icon: "📚",
     name: "Vocab Master",
     description: "Earn 100 XP from your study progress.",
+  },
+  xp_500: {
+    icon: "⚡",
+    name: "Power Learner",
+    description: "Earn 500 XP total.",
+  },
+  xp_1000: {
+    icon: "🌟",
+    name: "XP Legend",
+    description: "Earn 1,000 XP total.",
+  },
+  speed_demon: {
+    icon: "⏱️",
+    name: "Speed Demon",
+    description: "Complete 3 lessons in a single day.",
+  },
+  perfectionist: {
+    icon: "💯",
+    name: "Perfectionist",
+    description: "Get a perfect score on 5 lessons.",
+  },
+  daily_champion: {
+    icon: "🏅",
+    name: "Daily Champion",
+    description: "Meet your daily goal 7 times.",
+  },
+  comeback_kid: {
+    icon: "🔄",
+    name: "Comeback Kid",
+    description: "Return after missing a day and start a new streak.",
   },
 };
 

@@ -1,0 +1,175 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.overlayVisible {
+  opacity: 1;
+}
+
+.modal {
+  position: relative;
+  background: #fff;
+  border-radius: 24px;
+  padding: 48px 40px 36px;
+  text-align: center;
+  max-width: 380px;
+  width: 90%;
+  overflow: hidden;
+  transform: scale(0.7) translateY(30px);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modalVisible {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  bottom: -10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f59e0b;
+  animation: rise 2s ease-out forwards;
+}
+
+.particle:nth-child(odd) {
+  background: #ef4444;
+  width: 6px;
+  height: 6px;
+}
+
+.particle:nth-child(3n) {
+  background: #8b5cf6;
+  width: 10px;
+  height: 10px;
+}
+
+.particle:nth-child(4n) {
+  background: #22c55e;
+}
+
+@keyframes rise {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-400px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.badge {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: badgePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.2), 0 0 30px rgba(245, 158, 11, 0.3);
+}
+
+@keyframes badgePop {
+  0% { transform: scale(0) rotate(-180deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.badgeIcon {
+  font-size: 2.4rem;
+  display: block;
+}
+
+.title {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--ink, #1a1a2e);
+  margin-bottom: 8px;
+  animation: slideUp 0.5s ease 0.3s both;
+}
+
+.levelDisplay {
+  margin: 8px auto 16px;
+  animation: levelPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
+}
+
+.levelNumber {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 4rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+@keyframes levelPop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.milestone {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f59e0b;
+  margin-bottom: 8px;
+  animation: slideUp 0.5s ease 0.5s both;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  animation: slideUp 0.5s ease 0.6s both;
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(15px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.continueBtn {
+  background: var(--ink, #1a1a2e);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 36px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 4px 4px 0 var(--red, #e63329);
+  animation: slideUp 0.5s ease 0.7s both;
+}
+
+.continueBtn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--red, #e63329);
+}

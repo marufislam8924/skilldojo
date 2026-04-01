@@ -126,11 +126,44 @@ export function updateStreakAndXP(lessonsCompleted = 0) {
     lessonsToday = 0;
   }
 
-  // XP: 10 points per lesson
-  const xpGained = lessonsCompleted * 10;
-  const newTotal = (gamif.totalXP || 0) + xpGained;
+  // Streak multiplier: bonus XP for consecutive days
+  let multiplier = 1.0;
+  if (currentStreak >= 30) multiplier = 2.0;
+  else if (currentStreak >= 14) multiplier = 1.5;
+  else if (currentStreak >= 7) multiplier = 1.3;
+  else if (currentStreak >= 3) multiplier = 1.1;
+
+  // XP: 10 points per lesson, modified by streak multiplier
+  const baseXP = lessonsCompleted * 10;
+  const xpGained = Math.floor(baseXP * multiplier);
+  const oldTotal = gamif.totalXP || 0;
+  const newTotal = oldTotal + xpGained;
+  const oldLevel = calculateLevel(oldTotal);
+  const newLevel = calculateLevel(newTotal);
+  const didLevelUp = newLevel > oldLevel;
 
   lessonsToday += lessonsCompleted;
+
+  // Track daily goals met
+  const dailyGoalData = readJson("skilldojo.dailyGoal", { goal: 3, daysGoalMet: 0 });
+  const dailyGoal = dailyGoalData.goal || 3;
+  let daysGoalMet = dailyGoalData.daysGoalMet || 0;
+  const wasGoalMet = (gamif.lessonsCompletedToday || 0) >= dailyGoal;
+  const isGoalMetNow = lessonsToday >= dailyGoal;
+  if (!wasGoalMet && isGoalMetNow) {
+    daysGoalMet += 1;
+    writeJson("skilldojo.dailyGoal", { ...dailyGoalData, daysGoalMet });
+  }
+
+  // Track perfect scores count
+  const perfectCount = gamif.perfectScores || 0;
+
+  // Track activity dates for calendar heatmap
+  const activityDates = gamif.activityDates || [];
+  const todayIso = new Date().toISOString().slice(0, 10);
+  if (!activityDates.includes(todayIso)) {
+    activityDates.push(todayIso);
+  }
 
   const newData = {
     totalXP: newTotal,
@@ -138,14 +171,21 @@ export function updateStreakAndXP(lessonsCompleted = 0) {
     longestStreak,
     lastActivityDate: new Date().toISOString(),
     lessonsCompletedToday: lessonsToday,
+    perfectScores: perfectCount,
+    activityDates,
   };
 
   saveGamification(newData);
   return {
     xpGained,
-    newLevel: calculateLevel(newTotal),
+    baseXP,
+    multiplier,
+    newLevel,
+    oldLevel,
+    didLevelUp,
     currentStreak,
-    message: `+${xpGained} XP • Streak: ${currentStreak} days`,
+    lessonsToday,
+    message: `+${xpGained} XP${multiplier > 1 ? ` (${multiplier}x streak bonus!)` : ""} • Streak: ${currentStreak} days`,
   };
 }
 
@@ -156,13 +196,24 @@ export function getGamificationStats() {
   const currentLevelXP = (level - 1) * 100;
   const progressToNext = Math.min(100, Math.round(((gamif.totalXP - currentLevelXP) / xpForNextLevel) * 100));
 
+  // Streak multiplier
+  const streak = gamif.currentStreak || 0;
+  let multiplier = 1.0;
+  if (streak >= 30) multiplier = 2.0;
+  else if (streak >= 14) multiplier = 1.5;
+  else if (streak >= 7) multiplier = 1.3;
+  else if (streak >= 3) multiplier = 1.1;
+
   return {
     totalXP: gamif.totalXP || 0,
     level,
     progressToNext,
-    currentStreak: gamif.currentStreak || 0,
+    currentStreak: streak,
     longestStreak: gamif.longestStreak || 0,
     lessonsCompletedToday: gamif.lessonsCompletedToday || 0,
+    multiplier,
+    activityDates: gamif.activityDates || [],
+    perfectScores: gamif.perfectScores || 0,
   };
 }
 

@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState, useCallback, useRef } from "react";
 import styles from "./LessonView.module.css";
 import Confetti from "./Confetti";
+import LevelUpModal from "./LevelUpModal";
 import { markLessonComplete } from "../lib/studentProgress";
 
 export default function LessonView({
@@ -22,6 +23,8 @@ export default function LessonView({
   const [autoVoice, setAutoVoice] = useState(true);
   const [xpGained, setXPGained] = useState(0);
   const [gamifStats, setGamifStats] = useState(null);
+  const [showLevelUp, setShowLevelUp] = useState(false);
+  const [newLevelValue, setNewLevelValue] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const synthRef = useRef(null);
 
@@ -86,6 +89,10 @@ export default function LessonView({
       setXPGained(gamifResult?.xpGained || 0);
       setGamifStats(gamifResult);
       setDone(true);
+      if (gamifResult?.didLevelUp) {
+        setNewLevelValue(gamifResult.newLevel);
+        setTimeout(() => setShowLevelUp(true), 800);
+      }
     } else {
       setScore((s) => s + 1);
       setCardIndex(nextIndex);
@@ -106,6 +113,12 @@ export default function LessonView({
     return (
       <main className={styles.main}>
         <Confetti show={true} />
+        {showLevelUp && newLevelValue && (
+          <LevelUpModal
+            newLevel={newLevelValue}
+            onClose={() => setShowLevelUp(false)}
+          />
+        )}
         <div className={styles.doneScreen}>
           <div className={styles.doneEmoji}>{perfect ? "🏆" : "🎉"}</div>
           <h2 className={styles.doneTitle}>
@@ -119,11 +132,32 @@ export default function LessonView({
             <div className={styles.xpReward}>
               <span className={styles.xpIcon}>✨</span>
               <span className={styles.xpText}>+{xpGained} XP</span>
+              {gamifStats?.multiplier > 1 && (
+                <span className={styles.multiplierText}>
+                  {gamifStats.multiplier}x streak bonus!
+                </span>
+              )}
               {gamifStats?.currentStreak > 0 && (
                 <span className={styles.streakText}>
                   🔥 {gamifStats.currentStreak}-day streak!
                 </span>
               )}
+            </div>
+          )}
+          {gamifStats?.currentStreak >= 3 && (
+            <div className={styles.streakMilestone}>
+              <span className={styles.streakMilestoneIcon}>
+                {gamifStats.currentStreak >= 30 ? "💎" : gamifStats.currentStreak >= 7 ? "🔥" : "🌱"}
+              </span>
+              <span className={styles.streakMilestoneText}>
+                {gamifStats.currentStreak >= 30
+                  ? "2x XP bonus active!"
+                  : gamifStats.currentStreak >= 14
+                    ? "1.5x XP bonus active!"
+                    : gamifStats.currentStreak >= 7
+                      ? "1.3x XP bonus active!"
+                      : "1.1x XP bonus — keep it up!"}
+              </span>
             </div>
           )}
           <div className={styles.doneBtns}>

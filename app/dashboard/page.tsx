@@ -7,7 +7,22 @@ import { createSupabaseServerClient } from "@/lib/supabaseServer";
 
 export const dynamic = "force-dynamic";
 
-const BADGE_IDS = ["first_lesson", "week_streak", "n5_complete", "vocab_master"] as const;
+const BADGE_IDS = [
+  "first_lesson",
+  "three_day_streak",
+  "week_streak",
+  "month_streak",
+  "ten_lessons",
+  "fifty_lessons",
+  "n5_complete",
+  "vocab_master",
+  "xp_500",
+  "xp_1000",
+  "speed_demon",
+  "perfectionist",
+  "daily_champion",
+  "comeback_kid",
+] as const;
 
 type BadgeId = (typeof BADGE_IDS)[number];
 
@@ -78,8 +93,15 @@ export default async function DashboardPage() {
   const level = statsData?.level ?? Math.floor(totalXP / 100) + 1;
   const streak = statsData?.current_streak ?? 0;
 
+  // Calculate streak multiplier  
+  let multiplier = 1.0;
+  if (streak >= 30) multiplier = 2.0;
+  else if (streak >= 14) multiplier = 1.5;
+  else if (streak >= 7) multiplier = 1.3;
+  else if (streak >= 3) multiplier = 1.1;
+
   const progressRows = progressData ?? [];
-  const earnedBadgeIds = new Set((badgesData ?? []).map((row) => row.badge_id as BadgeId));
+  const earnedBadgeIds = new Set((badgesData ?? []).map((row) => row.badge_id));
 
   const n5Completed = new Set(
     progressRows
@@ -164,6 +186,30 @@ export default async function DashboardPage() {
             <XPBar totalXP={totalXP} level={level} />
           </div>
 
+          {multiplier > 1 && (
+            <div className="mt-4 inline-flex items-center gap-2 rounded-lg border border-violet-300 bg-violet-50 px-4 py-2.5">
+              <span className="text-lg">⚡</span>
+              <span className="text-sm font-bold text-violet-700">
+                {multiplier}x XP bonus active
+              </span>
+              <span className="text-xs font-semibold text-violet-500">
+                ({streak}-day streak)
+              </span>
+            </div>
+          )}
+
+          {multiplier < 2.0 && streak > 0 && (
+            <p className="mt-2 text-xs text-slate-500">
+              {streak < 3
+                ? `${3 - streak} more day${3 - streak > 1 ? "s" : ""} to unlock 1.1x XP bonus!`
+                : streak < 7
+                  ? `${7 - streak} more day${7 - streak > 1 ? "s" : ""} to reach 1.3x XP bonus!`
+                  : streak < 14
+                    ? `${14 - streak} more day${14 - streak > 1 ? "s" : ""} to reach 1.5x XP bonus!`
+                    : `${30 - streak} more day${30 - streak > 1 ? "s" : ""} to reach 2x XP bonus!`}
+            </p>
+          )}
+
           <div className="mt-6">
             <Link
               href={continueHref}
@@ -218,8 +264,11 @@ export default async function DashboardPage() {
         </section>
 
         <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-xl font-bold text-slate-900">Badges</h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <h2 className="mb-2 text-xl font-bold text-slate-900">Badges</h2>
+          <p className="mb-4 text-sm text-slate-500">
+            {earnedBadgeIds.size} / {BADGE_IDS.length} earned
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {BADGE_IDS.map((badgeId) => (
               <BadgeCard key={badgeId} badgeId={badgeId} earned={earnedBadgeIds.has(badgeId)} />
             ))}

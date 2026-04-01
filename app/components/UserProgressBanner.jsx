@@ -6,6 +6,8 @@ import styles from "./UserProgressBanner.module.css";
 import { getStudentSession, getGamificationStats, getDashboardData } from "../lib/studentProgress";
 import XPBadge from "./XPBadge";
 import StreakCounter from "./StreakCounter";
+import DailyGoal from "./DailyGoal";
+import StreakCalendar from "./StreakCalendar";
 
 export default function UserProgressBanner() {
   const [student, setStudent] = useState(null);
@@ -77,6 +79,23 @@ export default function UserProgressBanner() {
             <span className={styles.resumeArrow}>→</span>
           </Link>
         )}
+
+        {gamifStats.multiplier > 1 && (
+          <div className={styles.multiplierBanner}>
+            <span className={styles.multiplierIcon}>⚡</span>
+            <span className={styles.multiplierText}>
+              {gamifStats.multiplier}x XP bonus active
+            </span>
+            <span className={styles.multiplierStreak}>
+              ({gamifStats.currentStreak}-day streak)
+            </span>
+          </div>
+        )}
+
+        <div className={styles.retentionRow}>
+          <DailyGoal lessonsCompletedToday={gamifStats.lessonsCompletedToday} />
+          <StreakCalendar activityDates={gamifStats.activityDates} />
+        </div>
       </div>
     </div>
   );

@@ -60,8 +60,18 @@ export async function awardXP(userId: string, amount: number, lessonId: number) 
   const safeAmount = Math.max(0, Math.floor(amount));
   const stats = await getOrCreateUserStats(userId);
 
-  const newTotalXP = (stats.total_xp ?? 0) + safeAmount;
+  // Streak multiplier: bonus XP for consecutive days
+  let multiplier = 1.0;
+  if (stats.current_streak >= 30) multiplier = 2.0;
+  else if (stats.current_streak >= 14) multiplier = 1.5;
+  else if (stats.current_streak >= 7) multiplier = 1.3;
+  else if (stats.current_streak >= 3) multiplier = 1.1;
+
+  const bonusXP = Math.floor(safeAmount * multiplier);
+  const newTotalXP = (stats.total_xp ?? 0) + bonusXP;
+  const oldLevel = stats.level ?? 1;
   const newLevel = Math.floor(newTotalXP / 100) + 1;
+  const didLevelUp = newLevel > oldLevel;
 
   const { error: updateError } = await supabase
     .from("user_stats")
@@ -77,7 +87,7 @@ export async function awardXP(userId: string, amount: number, lessonId: number) 
     user_id: userId,
     lesson_id: lessonId,
     course_id: N5_COURSE_ID,
-    xp_earned: safeAmount,
+    xp_earned: bonusXP,
   });
 
   if (progressError) throw progressError;
@@ -85,7 +95,11 @@ export async function awardXP(userId: string, amount: number, lessonId: number) 
   return {
     totalXP: newTotalXP,
     level: newLevel,
-    xpEarned: safeAmount,
+    xpEarned: bonusXP,
+    baseXP: safeAmount,
+    multiplier,
+    didLevelUp,
+    oldLevel,
   };
 }
 
@@ -156,24 +170,28 @@ export async function checkAndAwardBadges(userId: string) {
   const { data: progressRows, error: progressError } = await supabase
     .from("user_progress")
     .select("lesson_id, course_id")
-    .eq("user_id", userId)
-    .eq("course_id", N5_COURSE_ID);
+    .eq("user_id", userId);
 
   if (progressError) throw progressError;
 
-  const completedN5Lessons = new Set((progressRows ?? []).map((row) => row.lesson_id));
+  const allLessons = progressRows ?? [];
+  const n5Lessons = allLessons.filter((row) => row.course_id === N5_COURSE_ID);
+  const completedN5Lessons = new Set(n5Lessons.map((row) => row.lesson_id));
+  const totalLessonsCompleted = allLessons.length;
+
   const hasLessonOne = completedN5Lessons.has(1);
   const hasCompletedAllN5 = completedN5Lessons.size >= 10;
-  const hasWeekStreak = (stats?.current_streak ?? 0) >= 7;
-  const hasVocabMasterXP = (stats?.total_xp ?? 0) >= 100;
+  const currentStreak = stats?.current_streak ?? 0;
+  const totalXP = stats?.total_xp ?? 0;
 
   const badgesToInsert: string[] = [];
 
+  // Original badges
   if (hasLessonOne && !alreadyEarned.has("first_lesson")) {
     badgesToInsert.push("first_lesson");
   }
 
-  if (hasWeekStreak && !alreadyEarned.has("week_streak")) {
+  if (currentStreak >= 7 && !alreadyEarned.has("week_streak")) {
     badgesToInsert.push("week_streak");
   }
 
@@ -181,8 +199,33 @@ export async function checkAndAwardBadges(userId: string) {
     badgesToInsert.push("n5_complete");
   }
 
-  if (hasVocabMasterXP && !alreadyEarned.has("vocab_master")) {
+  if (totalXP >= 100 && !alreadyEarned.has("vocab_master")) {
     badgesToInsert.push("vocab_master");
+  }
+
+  // New badges
+  if (currentStreak >= 3 && !alreadyEarned.has("three_day_streak")) {
+    badgesToInsert.push("three_day_streak");
+  }
+
+  if (currentStreak >= 30 && !alreadyEarned.has("month_streak")) {
+    badgesToInsert.push("month_streak");
+  }
+
+  if (totalLessonsCompleted >= 10 && !alreadyEarned.has("ten_lessons")) {
+    badgesToInsert.push("ten_lessons");
+  }
+
+  if (totalLessonsCompleted >= 50 && !alreadyEarned.has("fifty_lessons")) {
+    badgesToInsert.push("fifty_lessons");
+  }
+
+  if (totalXP >= 500 && !alreadyEarned.has("xp_500")) {
+    badgesToInsert.push("xp_500");
+  }
+
+  if (totalXP >= 1000 && !alreadyEarned.has("xp_1000")) {
+    badgesToInsert.push("xp_1000");
   }
 
   if (badgesToInsert.length > 0) {
