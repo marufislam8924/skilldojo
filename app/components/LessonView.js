@@ -74,17 +74,20 @@ export default function LessonView({
   }
 
   function next(result) {
-    const earned = result === "good" ? 1 : 0;
+    if (result === "again") {
+      setRevealed(false);
+      return;
+    }
     const nextIndex = cardIndex + 1;
     if (nextIndex >= data.chars.length) {
-      const finalScore = score + earned;
+      const finalScore = score + 1;
       setScore(finalScore);
       const gamifResult = markLessonComplete(courseSlug, lessonId, finalScore, data.chars.length);
       setXPGained(gamifResult?.xpGained || 0);
       setGamifStats(gamifResult);
       setDone(true);
     } else {
-      if (earned) setScore((s) => s + 1);
+      setScore((s) => s + 1);
       setCardIndex(nextIndex);
       setRevealed(false);
     }
