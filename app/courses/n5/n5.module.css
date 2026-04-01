@@ -1,0 +1,232 @@
+.main {
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(250, 247, 242, 0.93);
+  backdrop-filter: blur(10px);
+  border-bottom: 1.5px solid var(--border);
+}
+
+.logo {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.navLink {
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+.navLink:hover {
+  color: var(--red);
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.15s;
+}
+
+.backBtn:hover {
+  color: var(--red);
+}
+
+/* HEADER */
+.header {
+  padding: 32px 80px 48px;
+}
+
+.headerTag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 10px;
+}
+
+.headerTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.headerDesc {
+  color: var(--muted);
+  font-size: 1rem;
+  max-width: 600px;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+  padding: 0 80px 80px;
+}
+
+.lessonCard {
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+
+.lessonCard:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 var(--red);
+  border-color: var(--red);
+}
+
+.lessonNum {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.lessonTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.lessonJapanese {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.skillBadge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.skillVocabulary {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.skillGrammar {
+  background: #fce7f3;
+  color: #9d174d;
+}
+
+.skillReading {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.skillListening {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.startBtn {
+  margin-top: auto;
+  padding: 10px 0;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.startBtn:hover {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .main {
+    padding-top: 118px;
+  }
+
+  .nav {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 16px 14px;
+  }
+
+  .logo {
+    font-size: 1.1rem;
+  }
+
+  .navActions {
+    width: 100%;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .navActions::-webkit-scrollbar {
+    display: none;
+  }
+
+  .navLink,
+  .backBtn {
+    min-height: 36px;
+    white-space: nowrap;
+  }
+
+  .header {
+    padding: 24px 16px 24px;
+  }
+
+  .headerTitle {
+    font-size: 1.8rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    padding: 0 16px 48px;
+    gap: 14px;
+  }
+}

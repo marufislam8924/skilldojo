@@ -1,0 +1,423 @@
+.main {
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(250, 247, 242, 0.93);
+  backdrop-filter: blur(10px);
+  border-bottom: 1.5px solid var(--border);
+}
+
+.logo {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.15s;
+}
+
+.backBtn:hover {
+  color: var(--red);
+}
+
+/* CONTENT */
+.content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 28px 80px;
+}
+
+.lessonTag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+
+.lessonTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.lessonJapanese {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.skillBadge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 24px;
+}
+
+.skillVocabulary { background: #dbeafe; color: #1e40af; }
+.skillGrammar    { background: #fce7f3; color: #9d174d; }
+.skillReading    { background: #d1fae5; color: #065f46; }
+.skillListening  { background: #fef3c7; color: #92400e; }
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.tab:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.tabActive {
+  color: #fff;
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.tabActive:hover {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+/* VOCABULARY */
+.vocabGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.vocabCard {
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.vocabCard:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--red);
+  border-color: var(--red);
+}
+
+.vocabJapanese {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--red);
+  margin-bottom: 6px;
+}
+
+.vocabRomaji {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.vocabEnglish {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* GRAMMAR */
+.grammarList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.grammarCard {
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.grammarPattern {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+
+.grammarMeaning {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.grammarExLabel {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--red);
+  margin-bottom: 6px;
+}
+
+.grammarExJp {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.grammarExRomaji {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+
+.grammarExEn {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+/* PRACTICE */
+.practiceList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.practiceCard {
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.practiceJp {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.practiceToggle {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--red);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.practiceToggle:hover {
+  text-decoration: underline;
+}
+
+.practiceRomaji {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.practiceEn {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+/* QUIZ */
+.quizWrap {
+  max-width: 520px;
+}
+
+.quizProgress {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.quizQuestion {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.quizOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.quizOption {
+  padding: 14px 20px;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  background: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.quizOption:hover:not(:disabled) {
+  border-color: var(--red);
+  background: #fff5f5;
+}
+
+.quizOptionCorrect {
+  border-color: #16a34a;
+  background: #dcfce7;
+}
+
+.quizOptionWrong {
+  border-color: #dc2626;
+  background: #fee2e2;
+}
+
+.quizExplanation {
+  background: var(--soft);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.quizNext {
+  padding: 12px 32px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.quizNext:hover {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.quizDone {
+  text-align: center;
+  padding: 48px 0;
+}
+
+.quizDoneTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.quizScore {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .main {
+    padding-top: 70px;
+  }
+
+  .nav {
+    padding: 12px 16px;
+  }
+
+  .logo {
+    font-size: 1.1rem;
+  }
+
+  .content {
+    padding: 24px 16px 60px;
+  }
+
+  .lessonTitle {
+    font-size: 1.6rem;
+  }
+
+  .tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab {
+    white-space: nowrap;
+    font-size: 0.72rem;
+    padding: 6px 14px;
+  }
+
+  .vocabGrid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .vocabJapanese {
+    font-size: 1.5rem;
+  }
+}
