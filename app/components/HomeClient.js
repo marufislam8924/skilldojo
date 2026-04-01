@@ -33,7 +33,7 @@ export function HeroSection() {
         </ScrollReveal>
         <ScrollReveal delay={500} direction="up">
           <div className={styles.heroBtns}>
-            <Link className={styles.btnPrimary} href="/hiragana">
+            <Link className={styles.btnPrimary} href="/student/signin">
               Start for Free →
             </Link>
             <Link href="/katakana" className={styles.btnSecondary}>
