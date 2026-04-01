@@ -199,7 +199,7 @@ export function AboutSection() {
   const stats = [
     { num: "46",   label: "Hiragana Characters" },
     { num: "46",   label: "Katakana Characters" },
-    { num: "1,000+", label: "N5 vocabulary words" },
+    { num: "1,000+", label: "N5 Vocabulary Words" },
     { num: "Free", label: "Always Free" },
   ];
 

@@ -86,16 +86,6 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* MENU BAR */}
-      <div className={styles.menuBar}>
-        <Link href="/hiragana" className={styles.menuLink}>Hiragana</Link>
-        <Link href="/katakana" className={styles.menuLink}>Katakana</Link>
-        <Link href="/vocab" className={styles.menuLink}>Vocabulary</Link>
-        <Link href="/grammar" className={styles.menuLink}>Grammar</Link>
-        <Link href="/conversation" className={styles.menuLink}>Conversation</Link>
-        <Link href="/quiz" className={styles.menuLink}>Quiz</Link>
-      </div>
-
       {/* USER PROGRESS BANNER */}
       <UserProgressBanner />
 
