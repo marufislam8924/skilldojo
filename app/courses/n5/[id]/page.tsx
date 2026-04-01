@@ -62,11 +62,11 @@ export default function N5LessonPage({ params }: { params: { id: string } }) {
           {lesson.skill}
         </span>
 
-        <div className={styles.tabs}>
+        <div className={`${styles.tabs} flex-nowrap overflow-x-auto whitespace-nowrap md:overflow-visible`}>
           {tabs.map((t) => (
             <button
               key={t.key}
-              className={`${styles.tab} ${activeTab === t.key ? styles.tabActive : ""}`}
+              className={`${styles.tab} ${activeTab === t.key ? styles.tabActive : ""} shrink-0 whitespace-nowrap`}
               onClick={() => setActiveTab(t.key)}
             >
               {t.label}
@@ -88,10 +88,10 @@ function VocabularySection({ lesson }: { lesson: N5Lesson }) {
   return (
     <div className={styles.vocabGrid}>
       {lesson.vocabulary.map((v, i) => (
-        <div key={i} className={styles.vocabCard}>
+        <div key={i} className={`${styles.vocabCard} min-h-[200px]`}>
           <div className={styles.vocabJapanese}>{v.japanese}</div>
-          <div className={styles.vocabRomaji}>{v.romaji}</div>
-          <div className={styles.vocabEnglish}>{v.english}</div>
+          <div className={`${styles.vocabRomaji} text-sm sm:text-base`}>{v.romaji}</div>
+          <div className={`${styles.vocabEnglish} text-sm sm:text-base`}>{v.english}</div>
         </div>
       ))}
     </div>
@@ -289,7 +289,7 @@ function QuizSection({ lesson }: { lesson: N5Lesson }) {
           return (
             <button
               key={opt}
-              className={cls}
+              className={`${cls} w-full min-h-12`}
               onClick={() => handleSelect(opt)}
               disabled={!!selected}
             >

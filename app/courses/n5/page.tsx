@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { jlptN5Course } from "../../../data/jlptN5Course";
@@ -14,14 +15,26 @@ const skillClass: Record<string, string> = {
 
 export default function N5CoursePage() {
   const router = useRouter();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <main className={styles.main}>
       <nav className={styles.nav}>
-        <span className={styles.logo}>
-          Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場
-        </span>
-        <div className={styles.navActions}>
+        <div className="flex w-full items-center justify-between md:w-auto md:justify-start">
+          <span className={styles.logo}>
+            Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場
+          </span>
+          <button
+            type="button"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-[var(--border)] bg-white text-xl md:hidden"
+            aria-label="Toggle navigation menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            {menuOpen ? "✕" : "☰"}
+          </button>
+        </div>
+        <div className={`${styles.navActions} ${menuOpen ? "flex" : "hidden"} w-full flex-col gap-2 md:flex md:w-auto md:flex-row md:gap-4`}>
           <StudentNavAction className={styles.navLink} dashboardLabel="My Progress" />
           <button className={styles.backBtn} onClick={() => router.push("/")}>
             ← Back
@@ -38,7 +51,7 @@ export default function N5CoursePage() {
         </p>
       </div>
 
-      <div className={styles.grid}>
+      <div className={`${styles.grid} grid-cols-1 md:grid-cols-2 lg:grid-cols-3`}>
         {jlptN5Course.map((lesson) => (
           <div key={lesson.id} className={styles.lessonCard}>
             <div className={styles.lessonNum}>Lesson {lesson.id}</div>

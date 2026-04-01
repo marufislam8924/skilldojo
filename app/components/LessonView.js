@@ -23,6 +23,7 @@ export default function LessonView({
   const [autoVoice, setAutoVoice] = useState(true);
   const [xpGained, setXPGained] = useState(0);
   const [gamifStats, setGamifStats] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const synthRef = useRef(null);
 
   const isWordStyle =
@@ -107,6 +108,8 @@ export default function LessonView({
           courseSlug={courseSlug}
           router={router}
           allLessonsHref={allLessonsHref}
+          menuOpen={menuOpen}
+          setMenuOpen={setMenuOpen}
         />
         <div className={styles.doneScreen}>
           <div className={styles.doneEmoji}>{perfect ? "🏆" : "🎉"}</div>
@@ -162,6 +165,8 @@ export default function LessonView({
         courseSlug={courseSlug}
         router={router}
         allLessonsHref={allLessonsHref}
+        menuOpen={menuOpen}
+        setMenuOpen={setMenuOpen}
       />
 
       <div className={styles.content}>
@@ -201,8 +206,16 @@ export default function LessonView({
 
         {/* Flashcard */}
         <div
-          className={`${styles.flashcard} ${revealed ? styles.revealed : ""} ${speaking ? styles.speaking : ""} ${isWordStyle ? styles.wordFlashcard : ""}`}
+          className={`${styles.flashcard} ${revealed ? styles.revealed : ""} ${speaking ? styles.speaking : ""} ${isWordStyle ? styles.wordFlashcard : ""} min-h-[200px] px-4 sm:px-6`}
           onClick={reveal}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              reveal();
+            }
+          }}
         >
           {/* Sound waves when speaking */}
           {speaking && (
@@ -289,13 +302,24 @@ export default function LessonView({
   );
 }
 
-function NavBar({ courseSlug, router, allLessonsHref }) {
+function NavBar({ courseSlug, router, allLessonsHref, menuOpen, setMenuOpen }) {
   return (
     <nav className={styles.nav}>
-      <span className={styles.logo}>
-        Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場
-      </span>
-      <div className={styles.navActions}>
+      <div className="flex w-full items-center justify-between md:w-auto md:justify-start">
+        <span className={styles.logo}>
+          Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場
+        </span>
+        <button
+          type="button"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-[var(--border)] bg-white text-xl md:hidden"
+          aria-label="Toggle navigation menu"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          {menuOpen ? "✕" : "☰"}
+        </button>
+      </div>
+      <div className={`${styles.navActions} ${menuOpen ? "flex" : "hidden"} w-full flex-col gap-2 md:flex md:w-auto md:flex-row md:gap-4`}>
         <StudentNavAction className={styles.navLink} dashboardLabel="My Dashboard" />
         <button
           className={styles.backBtn}

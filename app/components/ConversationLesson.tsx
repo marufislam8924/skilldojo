@@ -155,8 +155,16 @@ export default function ConversationLesson({ lesson, totalLessons }: Props) {
 
       {/* Flashcard */}
       <div
-        className={`${styles.card} ${revealed ? styles.revealed : ""} ${speaking ? styles.speaking : ""} ${isA ? styles.cardA : styles.cardB}`}
+        className={`${styles.card} ${revealed ? styles.revealed : ""} ${speaking ? styles.speaking : ""} ${isA ? styles.cardA : styles.cardB} min-h-[200px] px-4 sm:px-6`}
         onClick={reveal}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            reveal();
+          }
+        }}
       >
         {speaking && (
           <div className={styles.waves}>

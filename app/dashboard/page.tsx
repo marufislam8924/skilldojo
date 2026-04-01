@@ -179,7 +179,7 @@ export default async function DashboardPage() {
             <h2 className="text-xl font-bold text-slate-900">Course Progress</h2>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {courseCards.map((course) => (
               <article key={course.courseId} className="rounded-xl border border-slate-200 p-4">
                 <div className="flex items-start justify-between gap-4">
