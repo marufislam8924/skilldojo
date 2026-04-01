@@ -4,7 +4,7 @@ export default function Head() {
       <title>JLPT N5 Vocabulary Lessons</title>
       <meta
         name="description"
-        content="Practice 500+ JLPT N5 vocabulary words lesson-wise with daily picks, flashcards, and audio pronunciation."
+        content="Practice 1,000+ N5 vocabulary words lesson-wise with daily picks, flashcards, and audio pronunciation."
       />
       <meta
         name="keywords"

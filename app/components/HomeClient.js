@@ -3,7 +3,6 @@
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import ScrollReveal from "./ScrollReveal";
-import AnimatedCounter from "./AnimatedCounter";
 import TypingText from "./TypingText";
 import styles from "../page.module.css";
 
@@ -165,7 +164,7 @@ export function CoursesSection({ courses }) {
 export function SeoSection() {
   const cards = [
     { title: "Learn Japanese N5 from scratch", desc: "Starting from zero is easier than you think. SkillDojo breaks Japanese down into small, focused lessons — beginning with the alphabet, building into vocabulary, and finishing with real conversation. Every lesson is designed for complete beginners, so you never feel lost or overwhelmed. Just open a lesson and start." },
-    { title: "Japanese N5 vocabulary list with meaning", desc: "Vocabulary is the fastest way to unlock the language. SkillDojo covers all 800+ JLPT N5 words organized into short, focused lessons with Japanese text, romaji pronunciation, and English meaning side by side. Interactive flashcards let you test yourself and track which words you know — so you spend more time on what matters." },
+    { title: "Japanese N5 vocabulary list with meaning", desc: "Vocabulary is the fastest way to unlock the language. SkillDojo covers 1,000+ N5 vocabulary words organized into short, focused lessons with Japanese text, romaji pronunciation, and English meaning side by side. Interactive flashcards let you test yourself and track which words you know — so you spend more time on what matters." },
     { title: "JLPT N5 grammar explained easy", desc: "Japanese grammar looks intimidating at first, but the core patterns are surprisingly logical. SkillDojo explains each N5 grammar point in plain English with real example sentences — no linguistic jargon, no unnecessary complexity. You learn how grammar works by seeing it used in everyday conversation, which makes it stick far better than memorizing rules alone." },
     { title: "Japanese N5 listening practice with answers", desc: "Reading Japanese is one skill. Hearing it is another. Every lesson on SkillDojo includes AI-powered audio so you can hear native-quality pronunciation for every word and phrase. Listening exercises train your ear to recognize sounds quickly — which is exactly what the JLPT N5 listening section tests." },
     { title: "How to pass JLPT N5 in 30 days", desc: "Passing N5 in a month is possible with the right structure. Spend the first week mastering Hiragana and Katakana — SkillDojo's 21-lesson kana courses cover both completely. Week two moves into core vocabulary. Week three adds grammar patterns and conversation practice. Week four is review: flashcards, timed drills, and mock-style self-checks. Consistent 30-minute daily sessions are all it takes." },
@@ -198,10 +197,10 @@ export function SeoSection() {
 
 export function AboutSection() {
   const stats = [
-    { num: "46",   label: "Hiragana Characters", target: 46 },
-    { num: "46",   label: "Katakana Characters", target: 46 },
-    { num: "500+", label: "N5 Vocabulary Words", target: 500 },
-    { num: "Free", label: "Always Free", target: null },
+    { num: "46",   label: "Hiragana Characters" },
+    { num: "46",   label: "Katakana Characters" },
+    { num: "1,000+", label: "N5 vocabulary words" },
+    { num: "Free", label: "Always Free" },
   ];
 
   return (
@@ -217,7 +216,7 @@ export function AboutSection() {
               and actually enjoyable — no bloated courses, no paywalls.
             </p>
             <p className={styles.aboutDesc}>
-              We cover Hiragana, Katakana, 500+ N5 vocabulary words, and real-life
+              We cover Hiragana, Katakana, 1,000+ N5 vocabulary words, and real-life
               conversation phrases — all with audio, flashcards, and progress tracking.
             </p>
             <a
@@ -231,16 +230,10 @@ export function AboutSection() {
           </ScrollReveal>
         </div>
         <div className={styles.aboutStats}>
-          {stats.map(({ num, label, target }, i) => (
+          {stats.map(({ num, label }, i) => (
             <ScrollReveal key={label} delay={i * 150} direction="scale">
               <div className={styles.statCard}>
-                <span className={styles.statNum}>
-                  {target !== null ? (
-                    <AnimatedCounter target={target} suffix={num.includes("+") ? "+" : ""} />
-                  ) : (
-                    num
-                  )}
-                </span>
+                <span className={styles.statNum}>{num}</span>
                 <span className={styles.statLabel}>{label}</span>
               </div>
             </ScrollReveal>

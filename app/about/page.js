@@ -48,8 +48,8 @@ export default function AboutPage() {
             <div className={styles.cardIcon}>📚</div>
             <h2 className={styles.cardTitle}>What We Cover</h2>
             <p className={styles.cardText}>
-              Complete Hiragana and Katakana courses (46 characters each), 500+ JLPT N5
-              vocabulary flashcards with audio, and 15 beginner conversation lessons with
+              Complete Hiragana and Katakana courses (46 characters each), 1,000+ N5
+              vocabulary words with audio flashcards, and 15 beginner conversation lessons with
               tap-to-hear pronunciation support.
             </p>
           </div>
@@ -77,7 +77,7 @@ export default function AboutPage() {
         {[
           { num: "46",   label: "Hiragana characters" },
           { num: "46",   label: "Katakana characters" },
-          { num: "500+", label: "N5 vocabulary words" },
+          { num: "1,000+", label: "N5 vocabulary words" },
           { num: "15",   label: "Conversation lessons" },
           { num: "Free", label: "Always free" },
         ].map(({ num, label }) => (
@@ -105,6 +105,7 @@ export default function AboutPage() {
         <div className={styles.footerLinks}>
           <a href="https://youtube.com/@skilldojo-b2t" target="_blank" rel="noopener noreferrer">YouTube</a>
           <Link href="/about">About</Link>
+          <Link href="/privacy-policy">Privacy Policy</Link>
           <Link href="/contact">Contact</Link>
         </div>
         <p style={{ color: "#7a7a7a", fontSize: "0.85rem" }}>© 2026 SkillDojo</p>
