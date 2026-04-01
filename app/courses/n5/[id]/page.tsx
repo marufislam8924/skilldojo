@@ -1,6 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { awardXP, checkAndAwardBadges, updateStreak } from "@/lib/gamification";
+import { supabase } from "@/lib/supabase";
 import { jlptN5Course } from "../../../../data/jlptN5Course";
 import type { N5Lesson } from "../../../../data/jlptN5Course";
 import styles from "./lesson.module.css";
@@ -145,13 +147,37 @@ function PracticeSection({ lesson }: { lesson: N5Lesson }) {
 
 /* ─── QUIZ ─── */
 function QuizSection({ lesson }: { lesson: N5Lesson }) {
+  const router = useRouter();
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [isFinalizing, setIsFinalizing] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [completionOpen, setCompletionOpen] = useState(false);
+  const [completionAwarded, setCompletionAwarded] = useState(false);
+  const [completionStreak, setCompletionStreak] = useState<number>(0);
+  const [completionError, setCompletionError] = useState<string | null>(null);
 
   const quiz = lesson.quiz;
   const q = quiz[current];
+  const nextLessonId = lesson.id < jlptN5Course.length ? lesson.id + 1 : null;
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (!mounted || error) return;
+      setUserId(data.user?.id ?? null);
+    };
+
+    void loadUser();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const handleSelect = (option: string) => {
     if (selected) return;
@@ -159,9 +185,42 @@ function QuizSection({ lesson }: { lesson: N5Lesson }) {
     if (option === q.answer) setScore((s) => s + 1);
   };
 
+  const finalizeLesson = async () => {
+    if (!userId) {
+      setCompletionError("Please sign in to save XP and streak progress.");
+      setFinished(true);
+      setCompletionOpen(true);
+      return;
+    }
+
+    if (completionAwarded) {
+      setFinished(true);
+      setCompletionOpen(true);
+      return;
+    }
+
+    setIsFinalizing(true);
+    setCompletionError(null);
+
+    try {
+      await awardXP(userId, 20, lesson.id);
+      const streak = await updateStreak(userId);
+      await checkAndAwardBadges(userId);
+
+      setCompletionStreak(streak.currentStreak);
+      setCompletionAwarded(true);
+    } catch {
+      setCompletionError("Progress sync failed. You can retry by completing the quiz again.");
+    } finally {
+      setIsFinalizing(false);
+      setFinished(true);
+      setCompletionOpen(true);
+    }
+  };
+
   const handleNext = () => {
     if (current + 1 >= quiz.length) {
-      setFinished(true);
+      void finalizeLesson();
     } else {
       setCurrent((c) => c + 1);
       setSelected(null);
@@ -173,6 +232,7 @@ function QuizSection({ lesson }: { lesson: N5Lesson }) {
     setSelected(null);
     setScore(0);
     setFinished(false);
+    setCompletionOpen(false);
   };
 
   if (finished) {
@@ -185,6 +245,30 @@ function QuizSection({ lesson }: { lesson: N5Lesson }) {
         <button className={styles.quizNext} onClick={handleRestart}>
           Retry Quiz
         </button>
+        {completionOpen && (
+          <div className={styles.completionOverlay} role="dialog" aria-modal="true">
+            <div className={styles.completionModal}>
+              <h3 className={styles.completionTitle}>Lesson Complete! 🎉</h3>
+              <div className={styles.completionXP}>+20 XP</div>
+              <div className={styles.completionStreak}>Current streak: {completionStreak} day(s)</div>
+              {completionError && <div className={styles.completionError}>{completionError}</div>}
+              <div className={styles.completionActions}>
+                <button className={styles.backBtn} onClick={() => setCompletionOpen(false)}>
+                  Close
+                </button>
+                <button
+                  className={styles.quizNext}
+                  onClick={() => {
+                    if (nextLessonId) router.push(`/courses/n5/${nextLessonId}`);
+                    else router.push("/courses/n5");
+                  }}
+                >
+                  Next Lesson →
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -218,7 +302,7 @@ function QuizSection({ lesson }: { lesson: N5Lesson }) {
         <>
           <div className={styles.quizExplanation}>{q.explanation}</div>
           <button className={styles.quizNext} onClick={handleNext}>
-            {current + 1 >= quiz.length ? "See Results" : "Next →"}
+            {current + 1 >= quiz.length ? (isFinalizing ? "Saving..." : "See Results") : "Next →"}
           </button>
         </>
       )}
