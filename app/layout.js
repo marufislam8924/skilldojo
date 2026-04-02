@@ -68,21 +68,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {ADSENSE_ACCOUNT && (
-          <>
-            <meta
-              name="google-adsense-account"
-              content={ADSENSE_ACCOUNT}
-            />
-            <Script
-              id="adsense-script"
-              async
-              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ACCOUNT}`}
-              crossOrigin="anonymous"
-              strategy="afterInteractive"
-            />
-          </>
-        )}
+        <meta
+          name="google-adsense-account"
+          content={ADSENSE_ACCOUNT}
+        />
+        <Script
+          id="adsense-script"
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ACCOUNT}`}
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         {GA_ID && (
           <>
             <Script
