@@ -1,7 +1,6 @@
 import Link from "next/link";
-import styles from "./page.module.css";
 import UserProgressBanner from "./components/UserProgressBanner";
-import { HeroSection, CoursesSection, SeoSection, AboutSection } from "./components/HomeClient";
+import HomeClient from "./components/HomeClient";
 
 export const metadata = {
   title: "Japanese N5 and JLPT N5 Beginner Course",
@@ -58,57 +57,16 @@ export default function Home() {
     ],
   };
 
-  const courses = [
-    { key: "courses/30-days", kana: "30", title: "Japanese in 30 Days", desc: "Structured daily plan from zero to JLPT N5 foundations in one month.", lessons: 30, level: "Beginner", bg: "#fef0f0", live: true },
-    { key: "hiragana", kana: "あ", title: "Hiragana Complete", desc: "Master all 46 hiragana characters with AI voice.", lessons: 21, level: "Beginner", bg: "#fff0f0", live: true },
-    { key: "katakana", kana: "ア", title: "Katakana Complete", desc: "Learn katakana for loanwords and modern Japanese.", lessons: 21, level: "Beginner", bg: "#f0f4ff", live: true },
-    { key: "vocab",    kana: "言", title: "Daily Vocabulary",  desc: "1,000+ N5 vocabulary words organized into interactive lessons.", lessons: 20, level: "JLPT N5", bg: "#f0fff4", live: true },
-    { key: "grammar", kana: "文", title: "N5 Grammar", desc: "Essential beginner grammar patterns with example sentences and AI voice.", lessons: 8, level: "JLPT N5", bg: "#f6f5ff", live: true },
-    { key: "conversation", kana: "話", title: "Basic Conversation", desc: "Real-life phrases with interactive AI voice flashcards.", lessons: 15, level: "Beginner", bg: "#fffaf0", live: true },
-    { key: "quiz", kana: "試", title: "Quiz Mode", desc: "Test your knowledge with timed multiple-choice quizzes.", lessons: 5, level: "All Levels", bg: "#fef3c7", live: true },
-  ];
-
   return (
-    <main className={styles.main}>
+    <main className="min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      {/* USER PROGRESS BANNER */}
       <UserProgressBanner />
 
-      {/* HERO */}
-      <HeroSection />
-
-      {/* COURSES */}
-      <CoursesSection courses={courses} />
-
-      <SeoSection />
-
-      {/* ABOUT */}
-      <AboutSection />
-
-      {/* FOOTER */}
-      <footer className={styles.footer}>
-        <div>
-          <div className={styles.footerLogo}>
-            Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場
-          </div>
-          <p style={{ color: "#7a7a7a", fontSize: "0.85rem", marginTop: "6px" }}>
-            Free Japanese education for everyone.
-          </p>
-        </div>
-        <div className={styles.footerLinks}>
-          <a href="https://youtube.com/@skilldojo-b2t" target="_blank">YouTube</a>
-          <Link href="/about">About</Link>
-          <Link href="/privacy-policy">Privacy Policy</Link>
-          <Link href="/contact">Contact</Link>
-        </div>
-        <p style={{ color: "#7a7a7a", fontSize: "0.85rem" }}>
-          © 2026 SkillDojo
-        </p>
-      </footer>
+      <HomeClient />
     </main>
   );
 }
