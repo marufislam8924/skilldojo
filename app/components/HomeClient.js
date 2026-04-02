@@ -32,7 +32,7 @@ export function HeroSection() {
         </ScrollReveal>
         <ScrollReveal delay={500} direction="up">
           <div className="flex flex-col sm:flex-row gap-3">
-            <Link className={`${styles.btnPrimary} w-full sm:w-auto py-3 px-6 text-center text-base`} href="/student/signin">
+            <Link className={`${styles.btnPrimary} w-full sm:w-auto py-3 px-6 text-center text-base`} href="/courses/30-days">
               Start for Free →
             </Link>
             <Link href="/katakana" className={`${styles.btnSecondary} w-full sm:w-auto py-3 px-6 text-center text-base`}>
