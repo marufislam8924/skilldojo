@@ -1,5 +1,6 @@
 .main {
   min-height: 100vh;
+  background: linear-gradient(180deg, #fffcf9 0%, #f9f7f3 52%, #f5f7fb 100%);
 }
 
 /* NAV */
@@ -96,8 +97,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  padding: 160px 80px 80px;
-  gap: 60px;
+  padding: 182px 92px 110px;
+  gap: 76px;
   position: relative;
   overflow: hidden;
 }
@@ -123,15 +124,17 @@
 }
 
 .heroTag {
-  display: inline-block;
-  background: #f5a623;
-  color: var(--ink);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #fff5e8 0%, #ffedd6 100%);
+  color: #7a4818;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 5px 14px;
-  border-radius: 3px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #f1d8bb;
   margin-bottom: 24px;
 }
 
@@ -139,9 +142,10 @@
   font-family: 'Zen Maru Gothic', sans-serif;
   font-size: clamp(2.9rem, 5.2vw, 4.8rem);
   font-weight: 900;
-  line-height: 1.02;
+  line-height: 1.04;
   letter-spacing: -0.01em;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  max-width: 14ch;
 }
 
 .heroTitle em {
@@ -156,10 +160,10 @@
 
 .heroDesc {
   font-size: 1.08rem;
-  color: var(--muted);
-  line-height: 1.6;
+  color: #665f59;
+  line-height: 1.72;
   max-width: 540px;
-  margin-bottom: 40px;
+  margin-bottom: 44px;
 }
 
 .heroBtns {
@@ -172,56 +176,52 @@
   background: linear-gradient(135deg, #121f30 0%, #203854 100%);
   color: var(--paper);
   padding: 15px 34px;
-  border-radius: 8px;
+  border-radius: 14px;
   font-size: 1rem;
   font-weight: 800;
   border: none;
   cursor: pointer;
-  box-shadow: 6px 6px 0 var(--red);
-  transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+  box-shadow: 0 12px 30px rgba(24, 34, 52, 0.24);
+  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .btnPrimary:hover {
-  transform: translate(-3px, -3px) scale(1.01);
-  box-shadow: 9px 9px 0 var(--red);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(24, 34, 52, 0.28);
   filter: brightness(1.04);
 }
 
 .btnSecondary {
-  border: 2px solid var(--ink);
-  color: var(--ink);
+  border: 1px solid #d8dce4;
+  color: #253141;
   padding: 14px 32px;
-  border-radius: 8px;
+  border-radius: 14px;
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  transition: background 0.15s, color 0.15s;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 24px rgba(35, 44, 60, 0.08);
+  transition: background 0.2s, color 0.2s, transform 0.2s;
 }
 
 .btnSecondary:hover {
-  background: var(--ink);
-  color: var(--paper);
+  background: #f0f4fa;
+  transform: translateY(-2px);
 }
 
 /* HERO CARD */
 .heroCard {
   position: relative;
   z-index: 1;
-  background: #fff;
-  border: 2px solid var(--ink);
-  border-radius: 16px;
-  padding: 36px;
-  box-shadow: 8px 8px 0 var(--ink);
-  animation: floatCard 4s ease-in-out infinite;
-}
-
-@keyframes floatCard {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-12px); }
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+  border: 1px solid #e5e9f0;
+  border-radius: 24px;
+  padding: 38px;
+  box-shadow: 0 22px 54px rgba(31, 43, 62, 0.14);
 }
 
 .cardLabel {
@@ -241,8 +241,8 @@
 }
 
 .kanaCell {
-  background: var(--soft);
-  border-radius: 8px;
+  background: linear-gradient(180deg, #f6f7fa 0%, #eff2f7 100%);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -253,9 +253,9 @@
 }
 
 .kanaCell:hover {
-  background: var(--red);
-  transform: scale(1.12) rotate(-2deg);
-  box-shadow: 0 6px 18px rgba(230, 51, 41, 0.25);
+  background: #eef3fb;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(66, 92, 128, 0.18);
 }
 
 @keyframes kanaPop {
@@ -366,11 +366,11 @@
 
 /* COURSES */
 .courses {
-  padding: 100px 80px;
+  padding: 118px 92px;
   background:
-    radial-gradient(1200px 500px at 20% -20%, rgba(230, 51, 41, 0.1), transparent 60%),
-    radial-gradient(900px 420px at 100% 0%, rgba(245, 166, 35, 0.14), transparent 62%),
-    linear-gradient(180deg, #f7f3ec 0%, #f2ece2 100%);
+    radial-gradient(1200px 500px at 20% -20%, rgba(222, 121, 72, 0.08), transparent 60%),
+    radial-gradient(900px 420px at 100% 0%, rgba(83, 139, 214, 0.08), transparent 62%),
+    linear-gradient(180deg, #f8f8f9 0%, #f2f4f8 100%);
 }
 
 .coursesHeader {
@@ -409,8 +409,8 @@
 }
 
 .seoSection {
-  padding: 90px 80px;
-  background: #fff;
+  padding: 110px 92px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
 }
 
 .seoGrid {
@@ -420,17 +420,17 @@
 }
 
 .seoCard {
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  padding: 18px;
-  background: #fffdf9;
+  border: 1px solid #e6e9ef;
+  border-radius: 18px;
+  padding: 22px;
+  background: #ffffff;
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s, border-color 0.25s;
 }
 
 .seoCard:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  border-color: var(--red);
+  box-shadow: 0 14px 34px rgba(30, 42, 58, 0.12);
+  border-color: #d6dce7;
 }
 
 .seoCard h3 {
@@ -473,19 +473,19 @@
 
 .courseCard {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, #fff 100%);
-  border: 1px solid #e9dfd2;
-  border-radius: 20px;
+  border: 1px solid #e3e7ef;
+  border-radius: 22px;
   overflow: hidden;
-  box-shadow: 0 14px 36px rgba(24, 21, 18, 0.08);
+  box-shadow: 0 14px 34px rgba(28, 39, 56, 0.1);
   text-decoration: none;
   color: inherit;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .courseCard:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 52px rgba(24, 21, 18, 0.15);
-  border-color: #d8cab7;
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(28, 39, 56, 0.16);
+  border-color: #ccd5e3;
 }
 
 .courseCard:hover .courseThumb {
@@ -623,8 +623,8 @@
 
 /* ABOUT */
 .about {
-  padding: 100px 80px;
-  background: var(--ink);
+  padding: 112px 92px;
+  background: linear-gradient(145deg, #171f2c 0%, #111823 45%, #1f2837 100%);
   color: var(--paper);
 }
 
@@ -667,9 +667,9 @@
 }
 
 .statCard {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1.5px solid rgba(255, 255, 255, 0.12);
-  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
   padding: 28px 20px;
   display: flex;
   flex-direction: column;
@@ -703,9 +703,9 @@
 
 /* FOOTER */
 .footer {
-  background: var(--ink);
+  background: #111823;
   color: var(--paper);
-  padding: 60px 80px;
+  padding: 68px 92px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -738,7 +738,7 @@
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
-    padding: 100px 28px 60px;
+    padding: 128px 30px 74px;
   }
   .hero::before {
     font-size: 14rem;
@@ -748,13 +748,13 @@
     display: none;
   }
   .courses {
-    padding: 60px 28px;
+    padding: 72px 30px;
   }
   .seoSection {
-    padding: 56px 28px;
+    padding: 72px 30px;
   }
   .about {
-    padding: 70px 28px;
+    padding: 82px 30px;
   }
   .aboutInner {
     grid-template-columns: 1fr;
@@ -764,7 +764,7 @@
     grid-template-columns: repeat(2, 1fr);
   }
   .footer {
-    padding: 40px 28px;
+    padding: 48px 30px;
     flex-direction: column;
     text-align: center;
   }
@@ -831,7 +831,7 @@
 
   .hero {
     min-height: auto;
-    padding: 160px 18px 52px;
+    padding: 162px 20px 58px;
     gap: 34px;
   }
 
@@ -841,13 +841,13 @@
 
   .heroTitle {
     font-size: clamp(2rem, 9vw, 2.7rem);
-    margin-bottom: 14px;
+    margin-bottom: 18px;
   }
 
   .heroDesc {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 24px;
+    font-size: 0.98rem;
+    line-height: 1.68;
+    margin-bottom: 28px;
   }
 
   .heroBtns {
@@ -859,19 +859,19 @@
   .btnSecondary {
     width: 100%;
     justify-content: center;
-    padding: 13px 18px;
+    padding: 14px 18px;
   }
 
   .courses,
   .seoSection,
   .footer {
-    padding-left: 18px;
-    padding-right: 18px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   .courses {
-    padding-top: 48px;
-    padding-bottom: 48px;
+    padding-top: 58px;
+    padding-bottom: 58px;
   }
 
   .coursesHeader {
@@ -884,8 +884,8 @@
   }
 
   .seoSection {
-    padding-top: 48px;
-    padding-bottom: 48px;
+    padding-top: 58px;
+    padding-bottom: 58px;
   }
 
   .sectionHeader {
@@ -899,8 +899,8 @@
   }
 
   .footer {
-    padding-top: 32px;
-    padding-bottom: 32px;
+    padding-top: 40px;
+    padding-bottom: 40px;
     gap: 16px;
   }
 
