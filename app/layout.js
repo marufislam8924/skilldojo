@@ -79,7 +79,7 @@ export default function RootLayout({ children }) {
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
                 gtag('config', '${GA_ID}');
-                console.log("GA LOADED:", '${GA_ID}');
+                console.log("GA ACTIVE:", '${GA_ID}');
               `}
             </Script>
           </>
