@@ -63,10 +63,25 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const ADSENSE_ACCOUNT = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT;
 
   return (
     <html lang="en">
       <head>
+        {ADSENSE_ACCOUNT && (
+          <>
+            <meta
+              name="google-adsense-account"
+              content={ADSENSE_ACCOUNT}
+            />
+            <Script
+              async
+              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ACCOUNT}`}
+              crossOrigin="anonymous"
+              strategy="afterInteractive"
+            />
+          </>
+        )}
         {GA_ID && (
           <>
             <Script
