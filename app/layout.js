@@ -2,8 +2,18 @@ import "./globals.css";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import Navbar from "./components/Navbar";
 import { Suspense } from "react";
+import Script from "next/script";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-TX9MPZFMDT";
+const GA_SCRIPT_SRC = "https://www.googletagmanager.com/gtag/js?id=" + GA_MEASUREMENT_ID;
+const GA_INLINE_SCRIPT = [
+  "window.dataLayer = window.dataLayer || [];",
+  "function gtag(){dataLayer.push(arguments);}",
+  "window.gtag = gtag;",
+  "gtag('js', new Date());",
+  "gtag('config', '" + GA_MEASUREMENT_ID + "', { send_page_view: false });",
+].join("\n");
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -65,6 +75,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          src={GA_SCRIPT_SRC}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {GA_INLINE_SCRIPT}
+        </Script>
+      </head>
       <body>
         <Suspense fallback={null}>
           <GoogleAnalytics />
