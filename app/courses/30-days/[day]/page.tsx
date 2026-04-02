@@ -15,6 +15,14 @@ const labelClass: Record<string, string> = {
   Quiz: styles.labelQuiz,
 };
 
+const QUIZ_ID_TO_CATEGORY: Record<number, string> = {
+  1: "hiragana",
+  2: "katakana",
+  3: "vocab",
+  4: "grammar",
+  5: "mixed",
+};
+
 function getTaskHref(course: string, lessonId: number): string {
   switch (course) {
     case "hiragana":     return `/hiragana/${lessonId}`;
@@ -23,7 +31,7 @@ function getTaskHref(course: string, lessonId: number): string {
     case "grammar":      return `/grammar/${lessonId}`;
     case "conversation": return `/conversation/${lessonId}`;
     case "n5":           return `/courses/n5/${lessonId}`;
-    case "quiz":         return `/quiz/${lessonId}`;
+    case "quiz":         return `/quiz/${QUIZ_ID_TO_CATEGORY[lessonId] || "mixed"}`;
     default:             return "/";
   }
 }

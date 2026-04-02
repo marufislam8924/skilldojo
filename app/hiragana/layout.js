@@ -1,10 +1,12 @@
 export const metadata = {
-  title: "Hiragana and Katakana Full Course - Hiragana",
+  title: "Learn Hiragana — Complete Japanese Alphabet Course for Beginners",
   description:
-    "Start Japanese language basics with a complete Hiragana course for JLPT N5 beginners.",
+    "Master all 46 Hiragana characters with interactive lessons, audio pronunciation, and beginner-friendly flashcards. Start reading Japanese today.",
   keywords: [
-    "Hiragana and Katakana full course",
-    "Japanese language basics",
+    "learn hiragana",
+    "hiragana course",
+    "Japanese alphabet",
+    "hiragana flashcards",
     "Japanese beginner course",
     "Japanese N5",
   ],

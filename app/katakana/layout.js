@@ -1,10 +1,12 @@
 export const metadata = {
-  title: "Hiragana and Katakana Full Course - Katakana",
+  title: "Learn Katakana — Japanese Writing System Course for Beginners",
   description:
-    "Learn Katakana step by step as part of your Japanese beginner course and JLPT N5 preparation.",
+    "Study all 46 Katakana characters step by step with guided lessons, pronunciation support, and interactive practice for JLPT N5 preparation.",
   keywords: [
-    "Hiragana and Katakana full course",
-    "Japanese N5",
+    "learn katakana",
+    "katakana course",
+    "Japanese writing system",
+    "katakana lessons",
     "JLPT N5",
     "Learn Japanese N5",
   ],

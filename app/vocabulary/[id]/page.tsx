@@ -1,6 +1,7 @@
 import { getVocabularyLessonById, totalVocabularyLessons } from '../../../data/vocabularyLessons';
 import VocabularyCard from '../../components/VocabularyCard';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 
 interface Props {
   params: {
@@ -15,10 +16,20 @@ export async function generateStaticParams() {
   return ids;
 }
 
-export const metadata = {
-  title: 'Vocabulary Lesson | SkillDojo',
-  description: 'Learn Japanese vocabulary with interactive flashcards',
-};
+export function generateMetadata({ params }: Props): Metadata {
+  const lesson = getVocabularyLessonById(params.id);
+  const title = lesson ? `${lesson.title} — Japanese Vocabulary Lesson ${params.id}` : 'Vocabulary Lesson';
+  const description = lesson
+    ? `Learn ${lesson.title} in Japanese with interactive flashcards, audio pronunciation, and spaced repetition.`
+    : 'Learn Japanese vocabulary with interactive flashcards';
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/vocabulary/${params.id}`,
+    },
+  };
+}
 
 export default function VocabularyLessonPage({ params }: Props) {
   const lesson = getVocabularyLessonById(params.id);

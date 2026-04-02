@@ -2,6 +2,9 @@ import { hiraganaLessons, katakanaLessons } from "./data";
 import { vocabularyLessons } from "./vocabData";
 import { grammarLessons } from "./grammarData";
 import { conversationLessons } from "../data/conversationLessons";
+import { quizCategories } from "../data/quizData";
+import { vocabularyLessons as vocabStandalone } from "../data/vocabularyLessons";
+import { jlptN5Course } from "../data/jlptN5Course";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
 
@@ -12,12 +15,16 @@ export default function sitemap() {
     "",
     "/about",
     "/contact",
+    "/privacy-policy",
     "/hiragana",
     "/katakana",
     "/vocab",
+    "/vocabulary",
     "/grammar",
     "/conversation",
     "/quiz",
+    "/courses/30-days",
+    "/courses/n5",
   ].map((path) => ({
     url: `${siteUrl}${path}`,
     lastModified: now,
@@ -60,6 +67,34 @@ export default function sitemap() {
     priority: 0.75,
   }));
 
+  const quizPages = quizCategories.map((cat) => ({
+    url: `${siteUrl}/quiz/${cat.id}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  const vocabStandalonePages = vocabStandalone.map((lesson) => ({
+    url: `${siteUrl}/vocabulary/${lesson.id}`,
+    lastModified: now,
+    changeFrequency: "weekly",
+    priority: 0.7,
+  }));
+
+  const n5Pages = jlptN5Course.map((lesson) => ({
+    url: `${siteUrl}/courses/n5/${lesson.id}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  const thirtyDayPages = Array.from({ length: 30 }, (_, i) => ({
+    url: `${siteUrl}/courses/30-days/${i + 1}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.65,
+  }));
+
   return [
     ...staticPages,
     ...hiraganaPages,
@@ -67,5 +102,9 @@ export default function sitemap() {
     ...vocabPages,
     ...grammarPages,
     ...conversationPages,
+    ...quizPages,
+    ...vocabStandalonePages,
+    ...n5Pages,
+    ...thirtyDayPages,
   ];
 }

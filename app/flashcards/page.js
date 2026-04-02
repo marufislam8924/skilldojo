@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Flashcards",
+  title: "Japanese Flashcards — Spaced Repetition Practice",
   description:
     "Japanese flashcard practice is coming soon to SkillDojo. Continue with Hiragana, Katakana, Vocabulary, Grammar, and Conversation in the meantime.",
   robots: {

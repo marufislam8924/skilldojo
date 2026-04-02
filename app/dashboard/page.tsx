@@ -7,6 +7,16 @@ import { createSupabaseServerClient } from "@/lib/supabaseServer";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = {
+  title: "Dashboard — Your Japanese Learning Progress",
+  description:
+    "Track your JLPT N5 course progress, XP, streaks, and earned badges on your personal SkillDojo dashboard.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 const BADGE_IDS = [
   "first_lesson",
   "three_day_streak",
@@ -67,7 +77,7 @@ export default async function DashboardPage() {
   } = await supabase.auth.getUser();
 
   if (authError || !user) {
-    redirect("/login");
+    redirect("/student/signin");
   }
 
   const [{ data: statsData }, { data: progressData }, { data: badgesData }] = await Promise.all([
