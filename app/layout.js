@@ -1,19 +1,8 @@
 import "./globals.css";
-import GoogleAnalytics from "./components/GoogleAnalytics";
 import Navbar from "./components/Navbar";
-import { Suspense } from "react";
 import Script from "next/script";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-TX9MPZFMDT";
-const GA_SCRIPT_SRC = "https://www.googletagmanager.com/gtag/js?id=" + GA_MEASUREMENT_ID;
-const GA_INLINE_SCRIPT = [
-  "window.dataLayer = window.dataLayer || [];",
-  "function gtag(){dataLayer.push(arguments);}",
-  "window.gtag = gtag;",
-  "gtag('js', new Date());",
-  "gtag('config', '" + GA_MEASUREMENT_ID + "', { send_page_view: false });",
-].join("\n");
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -76,18 +65,22 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/* Google Analytics */}
         <Script
-          src={GA_SCRIPT_SRC}
+          src="https://www.googletagmanager.com/gtag/js?id=G-TX9MPZFMDT"
           strategy="afterInteractive"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {GA_INLINE_SCRIPT}
+        <Script id="ga-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-TX9MPZFMDT');
+            console.log("GA LOADED SUCCESSFULLY");
+          `}
         </Script>
       </head>
       <body>
-        <Suspense fallback={null}>
-          <GoogleAnalytics />
-        </Suspense>
         <Navbar />
         <main className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8">
           {children}
