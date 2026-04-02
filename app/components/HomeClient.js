@@ -15,25 +15,25 @@ export function HeroSection() {
         </ScrollReveal>
         <ScrollReveal delay={200} direction="up">
           <h1 className={styles.heroTitle}>
-            Learn{" "}
+            Speak Real Japanese{" "}
             <TypingText
               texts={["Japanese", "Hiragana", "Katakana", "Vocabulary", "Grammar"]}
               speed={90}
               pause={2200}
               className={styles.typingWord}
             />
-            <br />the <em>Right</em> Way.
+            <br />in 30 Focused Minutes a Day.
           </h1>
         </ScrollReveal>
         <ScrollReveal delay={350} direction="up">
           <p className={styles.heroDesc}>
-            SkillDojo teaches real Japanese — Hiragana, Katakana, vocabulary, grammar, and conversation — step by step. No fluff.
+            Build reading, listening, and conversation confidence fast with bite-size lessons and instant practice feedback made for complete beginners.
           </p>
         </ScrollReveal>
         <ScrollReveal delay={500} direction="up">
           <div className="flex flex-col sm:flex-row gap-3">
             <Link className={`${styles.btnPrimary} w-full sm:w-auto py-3 px-6 text-center text-base`} href="/courses/30-days">
-              Start for Free →
+              Start the 30-Day Plan Free →
             </Link>
             <Link href="/katakana" className={`${styles.btnSecondary} w-full sm:w-auto py-3 px-6 text-center text-base`}>
               Explore Katakana
