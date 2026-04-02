@@ -38,13 +38,6 @@ export function HeroSection() {
             <Link href="/katakana" className={`${styles.btnSecondary} w-full sm:w-auto py-3 px-6 text-center text-base`}>
               Explore Katakana
             </Link>
-            <a
-              href="https://youtube.com/@skilldojo-b2t"
-              target="_blank"
-              className={`${styles.btnSecondary} w-full sm:w-auto py-3 px-6 text-center text-base`}
-            >
-              Watch on YouTube
-            </a>
           </div>
         </ScrollReveal>
       </div>
@@ -220,14 +213,6 @@ export function AboutSection() {
               We cover Hiragana, Katakana, 1,000+ N5 vocabulary words, and real-life
               conversation phrases — all with audio, flashcards, and progress tracking.
             </p>
-            <a
-              href="https://youtube.com/@skilldojo-b2t"
-              target="_blank"
-              className={styles.btnPrimary}
-              style={{ display: "inline-block", marginTop: "12px" }}
-            >
-              ▶ Watch on YouTube
-            </a>
           </ScrollReveal>
         </div>
         <div className={styles.aboutStats}>
