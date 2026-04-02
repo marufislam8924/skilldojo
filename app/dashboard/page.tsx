@@ -169,7 +169,7 @@ export default async function DashboardPage() {
       total,
       percent,
       isCompleted,
-      ctaLabel: completed === 0 ? "Start Course" : "Continue",
+      ctaLabel: completed === 0 ? "Start Learning Free" : "Continue",
       ctaHref: completed === 0 ? startHref : continueHref,
     };
   });

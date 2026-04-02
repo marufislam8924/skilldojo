@@ -4,6 +4,7 @@ import {
   totalVocabularyWords,
   vocabularyLessons,
 } from "../vocabData";
+import CourseProgressPanel from "../components/CourseProgressPanel";
 import styles from "./vocab.module.css";
 
 export default function VocabularyPage() {
@@ -28,6 +29,13 @@ export default function VocabularyPage() {
           reveal-based flashcards, reading, meaning, and AI voice support.
         </p>
       </div>
+
+      <CourseProgressPanel
+        courseSlug="vocab"
+        totalLessons={vocabularyLessons.length}
+        courseLabel="Vocabulary"
+        courseHref="/vocab"
+      />
 
       <section className={styles.dailyCard}>
         <div className={styles.dailyMeta}>Recommended for today</div>

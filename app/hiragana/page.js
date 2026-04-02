@@ -1,12 +1,10 @@
 "use client";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { hiraganaLessons } from "../data";
+import CourseProgressPanel from "../components/CourseProgressPanel";
 import styles from "./hiragana.module.css";
 
 export default function HiraganaPage() {
-  const router = useRouter();
-
   return (
     <main className={styles.main}>
 
@@ -25,6 +23,13 @@ export default function HiraganaPage() {
           Start Japanese language basics with 21 hiragana lessons and interactive flashcards.
         </p>
       </div>
+
+      <CourseProgressPanel
+        courseSlug="hiragana"
+        totalLessons={hiraganaLessons.length}
+        courseLabel="Hiragana"
+        courseHref="/hiragana"
+      />
 
       <div className={styles.grid}>
         {hiraganaLessons.map((lesson) => (

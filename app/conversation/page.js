@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { conversationLessons, totalConversationLessons } from "../../data/conversationLessons";
 import { getStudentProgress } from "../lib/studentProgress";
+import CourseProgressPanel from "../components/CourseProgressPanel";
 import styles from "./conversation.module.css";
 
 export default function ConversationPage() {
@@ -44,6 +45,13 @@ export default function ConversationPage() {
           with full dialogues, romaji support, English meaning, and Japanese voice playback.
         </p>
       </div>
+
+      <CourseProgressPanel
+        courseSlug="conversation"
+        totalLessons={conversationLessons.length}
+        courseLabel="Conversation"
+        courseHref="/conversation"
+      />
 
       <section className={styles.featuredCard}>
         <div className={styles.featuredMeta}>

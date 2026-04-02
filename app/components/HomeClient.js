@@ -126,7 +126,9 @@ export function CoursesSection({ courses }) {
                     {c.level}
                   </span>
                 </div>
-                <div className={styles.courseCta}>Start Course →</div>
+                <div className={styles.courseCta}>
+                  {c.key === "courses/30-days" ? "Begin Your 30-Day Journey →" : "Start Learning Free →"}
+                </div>
                 {!c.live && (
                   <div className={styles.comingSoon}>Coming Soon</div>
                 )}

@@ -1,12 +1,10 @@
 "use client";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { katakanaLessons } from "../data";
+import CourseProgressPanel from "../components/CourseProgressPanel";
 import styles from "../hiragana/hiragana.module.css";
 
 export default function KatakanaPage() {
-  const router = useRouter();
-
   return (
     <main className={styles.main}>
 
@@ -25,6 +23,13 @@ export default function KatakanaPage() {
           Build Japanese beginner course confidence with 21 katakana lessons and AI voice.
         </p>
       </div>
+
+      <CourseProgressPanel
+        courseSlug="katakana"
+        totalLessons={katakanaLessons.length}
+        courseLabel="Katakana"
+        courseHref="/katakana"
+      />
 
       <div className={styles.grid}>
         {katakanaLessons.map((lesson) => (

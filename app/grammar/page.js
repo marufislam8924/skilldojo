@@ -4,6 +4,7 @@ import {
   grammarLessons,
   totalGrammarPatterns,
 } from "../grammarData";
+import CourseProgressPanel from "../components/CourseProgressPanel";
 import styles from "./grammar.module.css";
 
 export default function GrammarPage() {
@@ -28,6 +29,13 @@ export default function GrammarPage() {
           reveal-based flashcards, examples, and AI voice support.
         </p>
       </div>
+
+      <CourseProgressPanel
+        courseSlug="grammar"
+        totalLessons={grammarLessons.length}
+        courseLabel="Grammar"
+        courseHref="/grammar"
+      />
 
       <section className={styles.dailyCard}>
         <div className={styles.dailyMeta}>Recommended for today</div>

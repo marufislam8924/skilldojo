@@ -1,0 +1,107 @@
+.panel {
+  margin: 0 80px 28px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  border: 1px solid #e4e8f0;
+  background: linear-gradient(140deg, #ffffff 0%, #f7fbff 100%);
+  box-shadow: 0 10px 28px rgba(26, 36, 51, 0.08);
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #6e7682;
+}
+
+.title {
+  margin: 2px 0 0;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: #1f2a38;
+}
+
+.streakChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 0.83rem;
+  font-weight: 700;
+  color: #7c410d;
+  background: #fff1e5;
+  border: 1px solid #ffd8b8;
+  white-space: nowrap;
+}
+
+.flame {
+  font-size: 0.95rem;
+}
+
+.barTrack {
+  height: 10px;
+  border-radius: 999px;
+  background: #e9edf4;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ff6f3f 0%, #ff944a 45%, #ffb14e 100%);
+  transition: width 0.35s ease;
+}
+
+.metaRow {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #5f6772;
+  font-size: 0.88rem;
+}
+
+.cta {
+  text-decoration: none;
+  font-weight: 700;
+  color: #1f4f95;
+}
+
+.cta:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .panel {
+    margin: 0 16px 20px;
+    padding: 14px;
+  }
+
+  .topRow,
+  .metaRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .title {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .panel {
+    margin: 0 12px 16px;
+  }
+}
