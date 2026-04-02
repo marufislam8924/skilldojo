@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import styles from "./LessonView.module.css";
 import Confetti from "./Confetti";
 import LevelUpModal from "./LevelUpModal";
@@ -13,6 +13,7 @@ export default function LessonView({
   totalLessons,
   nextLessonHref,
   allLessonsHref,
+  onCardChange,
 }) {
   const router = useRouter();
   const [cardIndex, setCardIndex] = useState(0);
@@ -34,6 +35,11 @@ export default function LessonView({
   const current = data.chars[cardIndex];
   const progress = Math.round((cardIndex / data.chars.length) * 100);
   const currentVoice = current.voice || current.reading || current.k;
+
+  useEffect(() => {
+    if (onCardChange) onCardChange(cardIndex);
+  }, [cardIndex, onCardChange]);
+
   const courseLabel =
     courseSlug === "hiragana"
       ? "Hiragana"

@@ -1,4 +1,4 @@
-import LessonView from "../../components/LessonView";
+import GrammarLessonClient from "./GrammarLessonClient";
 import { grammarLessons } from "../../grammarData";
 
 export function generateStaticParams() {
@@ -23,10 +23,9 @@ export default function GrammarLessonPage({ params }) {
   const data = grammarLessons.find((entry) => entry.id === lessonId) || grammarLessons[0];
 
   return (
-    <LessonView
+    <GrammarLessonClient
       lessonId={lessonId}
       data={data}
-      courseSlug="grammar"
       totalLessons={grammarLessons.length}
     />
   );
