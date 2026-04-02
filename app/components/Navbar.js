@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import StudentNavAction from "./StudentNavAction";
+import { getGamificationStats } from "../lib/studentProgress";
 
 const navLinks = [
   { href: "/hiragana", label: "Hiragana", icon: "あ" },
@@ -17,6 +18,7 @@ const navLinks = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [streak, setStreak] = useState(0);
   const pathname = usePathname();
   const panelRef = useRef(null);
   const hamburgerRef = useRef(null);
@@ -33,6 +35,17 @@ export default function Navbar() {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const refreshStats = () => {
+      const stats = getGamificationStats();
+      setStreak(stats.currentStreak || 0);
+    };
+
+    refreshStats();
+    window.addEventListener("skilldojo-progress-changed", refreshStats);
+    return () => window.removeEventListener("skilldojo-progress-changed", refreshStats);
   }, []);
 
   /* Lock body scroll when menu is open */
@@ -126,6 +139,11 @@ export default function Navbar() {
 
               <div className="mx-2 h-5 w-px bg-[var(--border)]" />
 
+              <div className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-2.5 py-1 text-xs font-bold text-orange-700">
+                <span aria-hidden="true">🔥</span>
+                <span>{streak}</span>
+              </div>
+
               <StudentNavAction
                 className="inline-flex items-center rounded-lg bg-[var(--red)] px-4 py-2 text-[13px] font-semibold text-white no-underline shadow-sm transition-all duration-200 hover:bg-[#c4261e] hover:shadow-md active:scale-[0.97]"
                 signInLabel="Sign In"
@@ -188,9 +206,14 @@ export default function Navbar() {
       >
         {/* Panel header */}
         <div className="flex h-16 shrink-0 items-center justify-between border-b border-[var(--border)] px-5">
-          <span className="text-xl font-black tracking-tight text-[var(--ink)]">
-            Skill<span className="text-[var(--red)]">Dojo</span>
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-xl font-black tracking-tight text-[var(--ink)]">
+              Skill<span className="text-[var(--red)]">Dojo</span>
+            </span>
+            <div className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-2 py-0.5 text-[11px] font-bold text-orange-700">
+              🔥 {streak}
+            </div>
+          </div>
           <button
             type="button"
             onClick={close}

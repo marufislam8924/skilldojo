@@ -2,7 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { markLessonComplete } from "../lib/studentProgress";
+import ProgressBar from "./gamification/ProgressBar";
+import AchievementPopup from "./gamification/AchievementPopup";
+import { markLessonComplete, recordMistake } from "../lib/studentProgress";
 import styles from "./ConversationLesson.module.css";
 
 type Speaker = "A" | "B";
@@ -35,11 +37,11 @@ export default function ConversationLesson({ lesson, totalLessons }: Props) {
   const [speaking, setSpeaking] = useState(false);
   const [autoVoice, setAutoVoice] = useState(true);
   const [viewAll, setViewAll] = useState(false);
+  const [toast, setToast] = useState({ show: false, text: "", variant: "success" as "success" | "reward" | "badge" });
   const synthRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   const total = lesson.dialogue.length;
   const current = lesson.dialogue[cardIndex];
-  const progress = Math.round((cardIndex / total) * 100);
   const isA = current?.speaker === "A";
 
   useEffect(() => {
@@ -76,10 +78,29 @@ export default function ConversationLesson({ lesson, totalLessons }: Props) {
 
   function next(result: "good" | "again") {
     const earned = result === "good" ? 1 : 0;
+    if (result === "again") {
+      recordMistake("conversation", lesson.id, {
+        prompt: current.japanese,
+        answer: "again",
+        expected: current.english,
+      });
+    } else {
+      setToast({ show: true, text: "Correct! 🎉", variant: "success" });
+    }
+
     const nextIndex = cardIndex + 1;
     if (nextIndex >= total) {
       const finalScore = score + earned;
-      markLessonComplete("conversation", lesson.id, finalScore, total);
+      const resultStats = markLessonComplete("conversation", lesson.id, finalScore, total);
+      if (resultStats?.xpGained) {
+        setToast({ show: true, text: `Lesson Complete! +${resultStats.xpGained} XP`, variant: "reward" });
+      }
+      if (resultStats?.unlockedBadges?.length) {
+        const first = resultStats.unlockedBadges[0];
+        setTimeout(() => {
+          setToast({ show: true, text: `Badge Unlocked: ${first.title} 🏅`, variant: "badge" });
+        }, 900);
+      }
       setScore(finalScore);
       setDone(true);
     } else {
@@ -101,6 +122,12 @@ export default function ConversationLesson({ lesson, totalLessons }: Props) {
     const perfect = score === total;
     return (
       <div className={styles.doneScreen}>
+        <AchievementPopup
+          show={toast.show}
+          text={toast.text}
+          variant={toast.variant}
+          onDone={() => setToast({ show: false, text: "", variant: "success" })}
+        />
         <div className={styles.doneEmoji}>{perfect ? "🏆" : "🎉"}</div>
         <h2 className={styles.doneTitle}>{perfect ? "Perfect Score!" : "Lesson Complete!"}</h2>
         <p className={styles.doneDesc}>
@@ -125,6 +152,12 @@ export default function ConversationLesson({ lesson, totalLessons }: Props) {
   // ── FLASHCARD SCREEN ──
   return (
     <div className={styles.lessonWrap}>
+      <AchievementPopup
+        show={toast.show}
+        text={toast.text}
+        variant={toast.variant}
+        onDone={() => setToast({ show: false, text: "", variant: "success" })}
+      />
       {/* Header */}
       <div className={styles.lessonHeader}>
         <div className={styles.lessonTag}>Conversation · Lesson {lesson.id}</div>
@@ -133,12 +166,7 @@ export default function ConversationLesson({ lesson, totalLessons }: Props) {
       </div>
 
       {/* Progress bar */}
-      <div className={styles.progressWrap}>
-        <div className={styles.progressBar}>
-          <div className={styles.progressFill} style={{ width: `${progress}%` }} />
-        </div>
-        <span className={styles.progressLabel}>{cardIndex} / {total}</span>
-      </div>
+      <ProgressBar current={cardIndex + 1} total={total} label="Lesson" />
 
       {/* Auto-speak toggle */}
       <div className={styles.voiceToggle}>

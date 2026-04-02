@@ -1,6 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import ContinueCard from "./gamification/ContinueCard";
+import StreakBadge from "./gamification/StreakBadge";
+import XPBar from "./gamification/XPBar";
+import DailyGoal from "./DailyGoal";
+import {
+  clearReviewMistakes,
+  getDashboardData,
+  getGamificationStats,
+  getReviewMistakes,
+} from "../lib/studentProgress";
 
 function Section({ id, title, subtitle, children }) {
   return (
@@ -266,6 +277,85 @@ function ProgressMotivationSection() {
   );
 }
 
+function ProgressDashboardSection() {
+  const [stats, setStats] = useState({
+    totalXP: 0,
+    level: 1,
+    currentStreak: 0,
+    lessonsCompletedToday: 0,
+  });
+  const [overall, setOverall] = useState({ completedLessons: 0, totalLessons: 0, completedPercent: 0 });
+  const [mistakes, setMistakes] = useState([]);
+
+  useEffect(() => {
+    const refresh = () => {
+      setStats(getGamificationStats());
+      setOverall(getDashboardData().overall);
+      setMistakes(getReviewMistakes(6));
+    };
+
+    refresh();
+    window.addEventListener("skilldojo-progress-changed", refresh);
+    return () => window.removeEventListener("skilldojo-progress-changed", refresh);
+  }, []);
+
+  return (
+    <Section title="Progress Dashboard" subtitle="Retention">
+      <div className="grid gap-5 lg:grid-cols-3">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-md">
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="text-lg font-bold text-slate-900">Daily Momentum</h3>
+            <StreakBadge streak={stats.currentStreak} />
+          </div>
+          <XPBar totalXP={stats.totalXP} level={stats.level} />
+          <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-3">
+            <p className="text-sm font-semibold text-slate-700">Lessons completed</p>
+            <p className="mt-1 text-sm text-slate-500">
+              {overall.completedLessons} / {overall.totalLessons} ({overall.completedPercent}%)
+            </p>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-md">
+          <h3 className="mb-3 text-lg font-bold text-slate-900">Daily Goal</h3>
+          <DailyGoal lessonsCompletedToday={stats.lessonsCompletedToday} />
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-md">
+          <div className="mb-3 flex items-center justify-between">
+            <h3 className="text-lg font-bold text-slate-900">Review Mistakes</h3>
+            {mistakes.length > 0 ? (
+              <button
+                type="button"
+                onClick={() => {
+                  clearReviewMistakes();
+                  setMistakes([]);
+                }}
+                className="text-xs font-semibold text-red-600 hover:text-red-700"
+              >
+                Clear
+              </button>
+            ) : null}
+          </div>
+
+          {mistakes.length === 0 ? (
+            <p className="text-sm text-slate-500">No mistakes saved yet. Great job.</p>
+          ) : (
+            <div className="space-y-2">
+              {mistakes.map((item) => (
+                <div key={item.id} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+                  <p className="text-sm font-semibold text-slate-800">{item.prompt || "Question"}</p>
+                  <p className="mt-1 text-xs text-slate-500">Expected: {item.expected || "N/A"}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </Section>
+  );
+}
+
 function CTASection() {
   return (
     <Section>
@@ -307,9 +397,15 @@ export default function HomeClient() {
   return (
     <div className="bg-white text-slate-900">
       <HeroSection />
+      <section className="px-6 pb-2">
+        <div className="max-w-7xl mx-auto">
+          <ContinueCard />
+        </div>
+      </section>
       <TrustSection />
       <LearningPathSection />
       <FeaturesSection />
+      <ProgressDashboardSection />
       <ProgressMotivationSection />
       <CTASection />
       <Footer />

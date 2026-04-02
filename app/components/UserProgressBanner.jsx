@@ -93,7 +93,10 @@ export default function UserProgressBanner() {
         )}
 
         <div className={styles.retentionRow}>
-          <DailyGoal lessonsCompletedToday={gamifStats.lessonsCompletedToday} />
+          <DailyGoal
+            lessonsCompletedToday={gamifStats.lessonsCompletedToday}
+            minutesStudiedToday={gamifStats.minutesStudiedToday}
+          />
           <StreakCalendar activityDates={gamifStats.activityDates} />
         </div>
       </div>

@@ -4,7 +4,9 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import styles from "./LessonView.module.css";
 import Confetti from "./Confetti";
 import LevelUpModal from "./LevelUpModal";
-import { markLessonComplete } from "../lib/studentProgress";
+import ProgressBar from "./gamification/ProgressBar";
+import AchievementPopup from "./gamification/AchievementPopup";
+import { markLessonComplete, recordMistake } from "../lib/studentProgress";
 
 export default function LessonView({
   lessonId,
@@ -27,13 +29,14 @@ export default function LessonView({
   const [showLevelUp, setShowLevelUp] = useState(false);
   const [newLevelValue, setNewLevelValue] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [toast, setToast] = useState({ show: false, text: "", variant: "success" });
   const synthRef = useRef(null);
 
   const isWordStyle =
     courseSlug === "vocab" || courseSlug === "grammar" || courseSlug === "conversation";
   const isConversation = courseSlug === "conversation";
   const current = data.chars[cardIndex];
-  const progress = Math.round((cardIndex / data.chars.length) * 100);
+  const progressStep = cardIndex + 1;
   const currentVoice = current.voice || current.reading || current.k;
 
   useEffect(() => {
@@ -84,9 +87,16 @@ export default function LessonView({
 
   function next(result) {
     if (result === "again") {
+      recordMistake(courseSlug, lessonId, {
+        prompt: current.k,
+        answer: "again",
+        expected: current.r,
+      });
       setRevealed(false);
       return;
     }
+
+    setToast({ show: true, text: "Correct! 🎉", variant: "success" });
     const nextIndex = cardIndex + 1;
     if (nextIndex >= data.chars.length) {
       const finalScore = score + 1;
@@ -98,6 +108,20 @@ export default function LessonView({
       if (gamifResult?.didLevelUp) {
         setNewLevelValue(gamifResult.newLevel);
         setTimeout(() => setShowLevelUp(true), 800);
+      }
+
+      if (gamifResult?.xpGained) {
+        setToast({
+          show: true,
+          text: `Lesson Complete! +${gamifResult.xpGained} XP`,
+          variant: "reward",
+        });
+      }
+      if (gamifResult?.unlockedBadges?.length) {
+        const first = gamifResult.unlockedBadges[0];
+        setTimeout(() => {
+          setToast({ show: true, text: `Badge Unlocked: ${first.title} 🏅`, variant: "badge" });
+        }, 900);
       }
     } else {
       setScore((s) => s + 1);
@@ -118,6 +142,12 @@ export default function LessonView({
     const perfect = score === data.chars.length;
     return (
       <main className={styles.main}>
+        <AchievementPopup
+          show={toast.show}
+          text={toast.text}
+          variant={toast.variant}
+          onDone={() => setToast({ show: false, text: "", variant: "success" })}
+        />
         <Confetti show={true} />
         {showLevelUp && newLevelValue && (
           <LevelUpModal
@@ -196,6 +226,12 @@ export default function LessonView({
   // ── FLASHCARD SCREEN ──
   return (
     <main className={styles.main}>
+      <AchievementPopup
+        show={toast.show}
+        text={toast.text}
+        variant={toast.variant}
+        onDone={() => setToast({ show: false, text: "", variant: "success" })}
+      />
 
       <div className={styles.content}>
         {/* Header */}
@@ -210,14 +246,7 @@ export default function LessonView({
         </div>
 
         {/* Progress bar */}
-        <div className={styles.progressWrap}>
-          <div className={styles.progressBar}>
-            <div className={styles.progressFill} style={{ width: `${progress}%` }} />
-          </div>
-          <span className={styles.progressLabel}>
-            {cardIndex} / {data.chars.length}
-          </span>
-        </div>
+        <ProgressBar current={progressStep} total={data.chars.length} label="Lesson" />
 
         {/* Auto-voice toggle */}
         <div className={styles.voiceToggle}>

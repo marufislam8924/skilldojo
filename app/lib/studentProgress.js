@@ -1,6 +1,8 @@
 export const AUTH_KEY = "skilldojo.student";
 export const PROGRESS_KEY = "skilldojo.progress";
 export const GAMIFICATION_KEY = "skilldojo.gamification";
+const MISTAKES_KEY = "skilldojo.mistakes";
+const DAILY_GOAL_KEY = "skilldojo.dailyGoal";
 
 import {
   getGoogleRedirectSignInResult,
@@ -32,6 +34,27 @@ export const COURSE_LABELS = {
   conversation: "Conversation",
 };
 
+const ACHIEVEMENTS = [
+  {
+    id: "first_lesson",
+    title: "First Lesson Completed",
+    description: "You finished your first lesson.",
+    test: ({ totalCompletedLessons }) => totalCompletedLessons >= 1,
+  },
+  {
+    id: "three_day_streak",
+    title: "3 Day Streak",
+    description: "You studied for 3 days in a row.",
+    test: ({ currentStreak }) => currentStreak >= 3,
+  },
+  {
+    id: "xp_50",
+    title: "50 XP Earned",
+    description: "You reached 50 XP.",
+    test: ({ totalXP }) => totalXP >= 50,
+  },
+];
+
 function hasWindow() {
   return typeof window !== "undefined";
 }
@@ -58,6 +81,17 @@ function writeJson(key, value) {
   window.localStorage.setItem(key, JSON.stringify(value));
 }
 
+function isSameDay(a, b) {
+  return new Date(a).toDateString() === new Date(b).toDateString();
+}
+
+function getTotalCompletedLessons(progress) {
+  return Object.values(progress || {}).reduce((sum, state) => {
+    const completed = Array.isArray(state?.completedLessons) ? state.completedLessons.length : 0;
+    return sum + completed;
+  }, 0);
+}
+
 export function getStudentSession() {
   return readJson(AUTH_KEY, null);
 }
@@ -74,11 +108,60 @@ function getGamification() {
     longestStreak: 0,
     lastActivityDate: null,
     lessonsCompletedToday: 0,
+    xpToday: 0,
+    minutesStudiedToday: 0,
+    unlockedBadges: [],
   });
 }
 
 function saveGamification(data) {
   writeJson(GAMIFICATION_KEY, data);
+  if (hasWindow()) {
+    window.dispatchEvent(new Event("skilldojo-progress-changed"));
+    window.dispatchEvent(new Event("skilldojo-gamification-changed"));
+  }
+}
+
+function getDailyGoalData() {
+  return readJson(DAILY_GOAL_KEY, {
+    goalMinutes: 10,
+    daysGoalMet: 0,
+  });
+}
+
+export function setDailyGoalMinutes(goalMinutes) {
+  const safeGoal = [5, 10, 20].includes(Number(goalMinutes)) ? Number(goalMinutes) : 10;
+  const goal = getDailyGoalData();
+  writeJson(DAILY_GOAL_KEY, { ...goal, goalMinutes: safeGoal });
+  if (hasWindow()) {
+    window.dispatchEvent(new Event("skilldojo-progress-changed"));
+  }
+}
+
+export function getDailyGoalMinutes() {
+  const goal = getDailyGoalData();
+  return goal.goalMinutes || 10;
+}
+
+function evaluateAndUnlockAchievements(progress) {
+  const gamif = getGamification();
+  const unlocked = new Set(gamif.unlockedBadges || []);
+  const totalCompletedLessons = getTotalCompletedLessons(progress);
+
+  const payload = {
+    totalXP: gamif.totalXP || 0,
+    currentStreak: gamif.currentStreak || 0,
+    totalCompletedLessons,
+  };
+
+  const newlyUnlocked = ACHIEVEMENTS.filter((badge) => !unlocked.has(badge.id) && badge.test(payload));
+
+  if (newlyUnlocked.length > 0) {
+    newlyUnlocked.forEach((badge) => unlocked.add(badge.id));
+    saveGamification({ ...gamif, unlockedBadges: Array.from(unlocked) });
+  }
+
+  return newlyUnlocked;
 }
 
 function calculateLevel(totalXP) {
@@ -100,6 +183,8 @@ export function updateStreakAndXP(lessonsCompleted = 0) {
   let currentStreak = gamif.currentStreak || 0;
   let longestStreak = gamif.longestStreak || 0;
   let lessonsToday = gamif.lessonsCompletedToday || 0;
+  let xpToday = gamif.xpToday || 0;
+  let minutesStudiedToday = gamif.minutesStudiedToday || 0;
 
   // Update streak: if activity across days
   if (lastDate !== today) {
@@ -124,6 +209,8 @@ export function updateStreakAndXP(lessonsCompleted = 0) {
 
     longestStreak = Math.max(longestStreak, currentStreak);
     lessonsToday = 0;
+    xpToday = 0;
+    minutesStudiedToday = 0;
   }
 
   // Streak multiplier: bonus XP for consecutive days
@@ -143,16 +230,17 @@ export function updateStreakAndXP(lessonsCompleted = 0) {
   const didLevelUp = newLevel > oldLevel;
 
   lessonsToday += lessonsCompleted;
+  minutesStudiedToday += lessonsCompleted * 3;
 
   // Track daily goals met
-  const dailyGoalData = readJson("skilldojo.dailyGoal", { goal: 3, daysGoalMet: 0 });
-  const dailyGoal = dailyGoalData.goal || 3;
+  const dailyGoalData = getDailyGoalData();
+  const dailyGoal = dailyGoalData.goalMinutes || 10;
   let daysGoalMet = dailyGoalData.daysGoalMet || 0;
-  const wasGoalMet = (gamif.lessonsCompletedToday || 0) >= dailyGoal;
-  const isGoalMetNow = lessonsToday >= dailyGoal;
+  const wasGoalMet = (gamif.minutesStudiedToday || 0) >= dailyGoal;
+  const isGoalMetNow = minutesStudiedToday >= dailyGoal;
   if (!wasGoalMet && isGoalMetNow) {
     daysGoalMet += 1;
-    writeJson("skilldojo.dailyGoal", { ...dailyGoalData, daysGoalMet });
+    writeJson(DAILY_GOAL_KEY, { ...dailyGoalData, daysGoalMet });
   }
 
   // Track perfect scores count
@@ -171,8 +259,11 @@ export function updateStreakAndXP(lessonsCompleted = 0) {
     longestStreak,
     lastActivityDate: new Date().toISOString(),
     lessonsCompletedToday: lessonsToday,
+    xpToday: xpToday + xpGained,
+    minutesStudiedToday,
     perfectScores: perfectCount,
     activityDates,
+    unlockedBadges: gamif.unlockedBadges || [],
   };
 
   saveGamification(newData);
@@ -185,8 +276,126 @@ export function updateStreakAndXP(lessonsCompleted = 0) {
     didLevelUp,
     currentStreak,
     lessonsToday,
+    minutesStudiedToday,
     message: `+${xpGained} XP${multiplier > 1 ? ` (${multiplier}x streak bonus!)` : ""} • Streak: ${currentStreak} days`,
   };
+}
+
+export function updateStreak() {
+  if (!hasWindow()) return {};
+
+  const gamif = getGamification();
+  const today = new Date().toDateString();
+  const lastDate = gamif.lastActivityDate ? new Date(gamif.lastActivityDate).toDateString() : null;
+
+  let currentStreak = gamif.currentStreak || 0;
+  let longestStreak = gamif.longestStreak || 0;
+
+  if (lastDate !== today) {
+    if (lastDate) {
+      const diffDays =
+        (new Date(today).getTime() - new Date(lastDate).getTime()) / (1000 * 60 * 60 * 24);
+      currentStreak = diffDays === 1 ? currentStreak + 1 : 1;
+    } else {
+      currentStreak = 1;
+    }
+    longestStreak = Math.max(longestStreak, currentStreak);
+  }
+
+  saveGamification({
+    ...gamif,
+    currentStreak,
+    longestStreak,
+    lastActivityDate: new Date().toISOString(),
+  });
+
+  return { currentStreak, longestStreak };
+}
+
+export function addXP(points = 0, options = {}) {
+  if (!hasWindow() || points <= 0) return {};
+
+  const gamif = getGamification();
+  const oldTotal = gamif.totalXP || 0;
+  const oldLevel = calculateLevel(oldTotal);
+  const nextTotal = oldTotal + Number(points);
+  const nextLevel = calculateLevel(nextTotal);
+  const didLevelUp = nextLevel > oldLevel;
+
+  const today = new Date().toDateString();
+  const wasToday = gamif.lastActivityDate && isSameDay(gamif.lastActivityDate, today);
+
+  const data = {
+    ...gamif,
+    totalXP: nextTotal,
+    xpToday: (wasToday ? gamif.xpToday || 0 : 0) + Number(points),
+    lastActivityDate: wasToday ? gamif.lastActivityDate : new Date().toISOString(),
+  };
+
+  saveGamification(data);
+  const unlockedBadges = evaluateAndUnlockAchievements(getStudentProgress());
+
+  return {
+    xpGained: Number(points),
+    oldLevel,
+    newLevel: nextLevel,
+    didLevelUp,
+    currentStreak: data.currentStreak || 0,
+    unlockedBadges,
+  };
+}
+
+export function recordMistake(courseSlug, lessonId, payload = {}) {
+  if (!hasWindow()) return;
+
+  const mistakes = readJson(MISTAKES_KEY, []);
+  mistakes.unshift({
+    id: `${courseSlug}-${lessonId}-${Date.now()}`,
+    courseSlug,
+    lessonId,
+    createdAt: new Date().toISOString(),
+    prompt: payload.prompt || "",
+    answer: payload.answer || "",
+    expected: payload.expected || "",
+  });
+
+  writeJson(MISTAKES_KEY, mistakes.slice(0, 200));
+  window.dispatchEvent(new Event("skilldojo-progress-changed"));
+}
+
+export function getReviewMistakes(limit = 30) {
+  const mistakes = readJson(MISTAKES_KEY, []);
+  return mistakes.slice(0, limit);
+}
+
+export function clearReviewMistakes() {
+  if (!hasWindow()) return;
+  window.localStorage.removeItem(MISTAKES_KEY);
+  window.dispatchEvent(new Event("skilldojo-progress-changed"));
+}
+
+export function saveProgress(progress) {
+  saveStudentProgress(progress);
+}
+
+export function getContinueLesson() {
+  const dashboard = getDashboardData();
+  const priority = ["hiragana", "katakana", "vocab", "grammar", "conversation"];
+
+  for (const slug of priority) {
+    const course = dashboard.courses.find((c) => c.slug === slug);
+    if (course && course.completedCount < course.totalLessons) {
+      return {
+        courseSlug: slug,
+        courseLabel: course.label,
+        lessonId: course.nextLesson,
+        href: `/${slug}/${course.nextLesson}`,
+        completedPercent: course.completedPercent,
+      };
+    }
+  }
+
+  return null;
 }
 
 export function getGamificationStats() {
@@ -211,6 +420,10 @@ export function getGamificationStats() {
     currentStreak: streak,
     longestStreak: gamif.longestStreak || 0,
     lessonsCompletedToday: gamif.lessonsCompletedToday || 0,
+    minutesStudiedToday: gamif.minutesStudiedToday || 0,
+    xpToday: gamif.xpToday || 0,
+    dailyGoalMinutes: getDailyGoalMinutes(),
+    unlockedBadges: gamif.unlockedBadges || [],
     multiplier,
     activityDates: gamif.activityDates || [],
     perfectScores: gamif.perfectScores || 0,
@@ -434,6 +647,7 @@ export function markLessonComplete(courseSlug, lessonId, score, totalCards) {
 
   // Track XP and streak only for new lessons
   const gamifResult = isNewLesson ? updateStreakAndXP(1) : {};
+  const unlockedBadges = isNewLesson ? evaluateAndUnlockAchievements(progress) : [];
 
   const student = getStudentSession();
   if (student?.uid && student.provider === "google") {
@@ -442,7 +656,10 @@ export function markLessonComplete(courseSlug, lessonId, score, totalCards) {
     });
   }
 
-  return gamifResult;
+  return {
+    ...gamifResult,
+    unlockedBadges,
+  };
 }
 
 export function getDashboardData() {

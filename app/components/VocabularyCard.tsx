@@ -3,7 +3,9 @@
 import { useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { VocabularyLesson, VocabularyWord } from '../../data/vocabularyLessons';
-import { markLessonComplete } from '../lib/studentProgress';
+import ProgressBar from './gamification/ProgressBar';
+import AchievementPopup from './gamification/AchievementPopup';
+import { markLessonComplete, recordMistake } from '../lib/studentProgress';
 
 interface VocabularyCardProps {
   lesson: VocabularyLesson;
@@ -23,6 +25,12 @@ export default function VocabularyCard({ lesson, totalLessons }: VocabularyCardP
   const [done, setDone] = useState(false);
   const [results, setResults] = useState<ResultCounts>({ gotIt: 0, review: 0, dontKnow: 0 });
   const [speaking, setSpeaking] = useState(false);
+  const [xpGained, setXPGained] = useState(0);
+  const [toast, setToast] = useState<{ show: boolean; text: string; variant: "success" | "reward" | "badge" }>({
+    show: false,
+    text: '',
+    variant: 'success',
+  });
   const synth = useRef<SpeechSynthesisUtterance | null>(null);
 
   const current = lesson.words[cardIndex];
@@ -64,11 +72,31 @@ export default function VocabularyCard({ lesson, totalLessons }: VocabularyCardP
     const newResults = { ...results };
     newResults[type]++;
 
+    if (type !== 'gotIt') {
+      recordMistake('vocab', lesson.id, {
+        prompt: current.japanese,
+        answer: type,
+        expected: current.english,
+      });
+    } else {
+      setToast({ show: true, text: 'Correct! 🎉', variant: 'success' });
+    }
+
     if (cardIndex === lesson.words.length - 1) {
       // Last card - show summary
       setResults(newResults);
       setDone(true);
-      markLessonComplete('vocabulary', lesson.id, results.gotIt, total);
+      const result = markLessonComplete('vocab', lesson.id, newResults.gotIt, total);
+      if (result?.xpGained) {
+        setXPGained(result.xpGained);
+        setToast({ show: true, text: `Lesson Complete! +${result.xpGained} XP`, variant: 'reward' });
+      }
+      if (result?.unlockedBadges?.length) {
+        const first = result.unlockedBadges[0];
+        setTimeout(() => {
+          setToast({ show: true, text: `Badge Unlocked: ${first.title} 🏅`, variant: 'badge' });
+        }, 900);
+      }
     } else {
       // Move to next card
       setResults(newResults);
@@ -111,6 +139,12 @@ export default function VocabularyCard({ lesson, totalLessons }: VocabularyCardP
   if (done) {
     return (
       <div className="flex items-center justify-center min-h-[100svh] bg-gradient-to-b from-orange-50 to-amber-50 p-3 sm:p-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] sm:pb-4">
+        <AchievementPopup
+          show={toast.show}
+          text={toast.text}
+          variant={toast.variant}
+          onDone={() => setToast({ show: false, text: '', variant: 'success' })}
+        />
         <div className="w-full max-w-md">
           {/* Header */}
           <div className="text-center mb-6 sm:mb-8">
@@ -126,6 +160,7 @@ export default function VocabularyCard({ lesson, totalLessons }: VocabularyCardP
                 {results.gotIt} / {total}
               </p>
               <p className="text-gray-600 text-lg">You got it!</p>
+              {xpGained > 0 ? <p className="mt-2 text-sm font-semibold text-emerald-700">+{xpGained} XP earned</p> : null}
             </div>
 
             {/* Results breakdown */}
@@ -176,21 +211,17 @@ export default function VocabularyCard({ lesson, totalLessons }: VocabularyCardP
   // Card screen
   return (
     <div className="min-h-[100svh] bg-gradient-to-b from-blue-50 to-indigo-50 p-3 sm:p-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] sm:pb-4 flex flex-col">
+      <AchievementPopup
+        show={toast.show}
+        text={toast.text}
+        variant={toast.variant}
+        onDone={() => setToast({ show: false, text: '', variant: 'success' })}
+      />
       {/* Header */}
       <div className="mb-4 sm:mb-6">
         <h1 className="text-xl sm:text-2xl font-bold text-blue-900 mb-2 leading-tight">{lesson.title}</h1>
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-semibold text-gray-600">
-            {cardIndex + 1} / {lesson.words.length}
-          </span>
-          <span className="text-sm font-semibold text-gray-600">{results.gotIt} correct</span>
-        </div>
-        <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-          <div
-            className="bg-blue-600 h-full transition-all duration-300"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
+        <div className="mb-2 text-sm font-semibold text-gray-600">{results.gotIt} correct</div>
+        <ProgressBar current={cardIndex + 1} total={lesson.words.length} label="Lesson" />
       </div>
 
       {/* Main card container */}

@@ -7,7 +7,8 @@ import { quizCategories } from "../../../data/quizData";
 import { hiraganaLessons, katakanaLessons } from "../../data";
 import { vocabularyLessons } from "../../vocabData";
 import { grammarLessons } from "../../grammarData";
-import { updateStreakAndXP, getStudentSession } from "../../lib/studentProgress";
+import { addXP } from "../../lib/studentProgress";
+import AchievementPopup from "../../components/gamification/AchievementPopup";
 import Confetti from "../../components/Confetti";
 import styles from "./quizgame.module.css";
 
@@ -113,8 +114,10 @@ export default function QuizGame({ categoryId }) {
   const [done, setDone] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [xpResult, setXpResult] = useState(null);
+  const [xpEarned, setXpEarned] = useState(0);
   const [shake, setShake] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [toast, setToast] = useState({ show: false, text: "", variant: "success" });
 
   const startQuiz = useCallback(() => {
     setQuestions(generateQuiz(categoryId));
@@ -126,6 +129,7 @@ export default function QuizGame({ categoryId }) {
     setDone(false);
     setGameOver(false);
     setXpResult(null);
+    setXpEarned(0);
     setShake(false);
   }, [categoryId]);
 
@@ -141,6 +145,10 @@ export default function QuizGame({ categoryId }) {
     const isCorrect = index === questions[current].correctIndex;
     if (isCorrect) {
       setScore((s) => s + 1);
+      const xp = addXP(5);
+      setXpResult(xp);
+      setXpEarned((v) => v + 5);
+      setToast({ show: true, text: "Correct! +5 XP 🎉", variant: "success" });
     } else {
       const newHearts = hearts - 1;
       setHearts(newHearts);
@@ -157,11 +165,6 @@ export default function QuizGame({ categoryId }) {
     const nextIndex = current + 1;
     if (nextIndex >= questions.length) {
       setDone(true);
-      const session = getStudentSession();
-      if (session && score > 0) {
-        const result = updateStreakAndXP(score);
-        setXpResult(result);
-      }
     } else {
       setCurrent(nextIndex);
       setSelected(null);
@@ -223,6 +226,12 @@ export default function QuizGame({ categoryId }) {
 
     return (
       <main className={styles.main}>
+        <AchievementPopup
+          show={toast.show}
+          text={toast.text}
+          variant={toast.variant}
+          onDone={() => setToast({ show: false, text: "", variant: "success" })}
+        />
         <Confetti show={perfect} />
         <div className={styles.doneScreen}>
           <div className={styles.doneEmoji}>{perfect ? "🏆" : percent >= 80 ? "⭐" : "🎉"}</div>
@@ -251,7 +260,7 @@ export default function QuizGame({ categoryId }) {
           {xpResult && (
             <div className={styles.xpReward}>
               <span className={styles.xpIcon}>✨</span>
-              <span className={styles.xpText}>+{score * 10} XP</span>
+              <span className={styles.xpText}>+{xpEarned} XP</span>
               {xpResult.currentStreak > 0 && (
                 <span className={styles.streakText}>
                   🔥 {xpResult.currentStreak}-day streak!
@@ -280,6 +289,12 @@ export default function QuizGame({ categoryId }) {
 
   return (
     <main className={styles.main}>
+      <AchievementPopup
+        show={toast.show}
+        text={toast.text}
+        variant={toast.variant}
+        onDone={() => setToast({ show: false, text: "", variant: "success" })}
+      />
       <div className={styles.content}>
         {/* Progress */}
         <div className={styles.progressWrap}>
@@ -342,7 +357,7 @@ export default function QuizGame({ categoryId }) {
                 {isCorrect ? "Correct!" : "Incorrect"}
               </div>
               <div className={styles.feedbackDetail}>
-                {isCorrect ? "+10 XP" : `Correct answer: ${q.options[q.correctIndex]}`}
+                {isCorrect ? "+5 XP" : `Correct answer: ${q.options[q.correctIndex]}`}
               </div>
             </div>
           </div>
