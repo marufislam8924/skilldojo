@@ -133,6 +133,7 @@ export default function PrivacyPolicyPage() {
           <a href="https://youtube.com/@skilldojo-b2t" target="_blank" rel="noopener noreferrer">YouTube</a>
           <Link href="/about">About</Link>
           <Link href="/privacy-policy">Privacy Policy</Link>
+          <Link href="/terms">Terms</Link>
           <Link href="/contact">Contact</Link>
         </div>
         <p style={{ color: "#7a7a7a", fontSize: "0.85rem" }}>© 2026 SkillDojo</p>

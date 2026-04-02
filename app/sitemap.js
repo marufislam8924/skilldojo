@@ -16,6 +16,7 @@ export default function sitemap() {
     "/about",
     "/contact",
     "/privacy-policy",
+    "/terms",
     "/hiragana",
     "/katakana",
     "/vocab",

@@ -384,6 +384,10 @@ function Footer() {
           <Link href="/">Home</Link>
           <Link href="/hiragana">Lessons</Link>
           <Link href="/vocab">Vocabulary</Link>
+          <Link href="/about">About</Link>
+          <Link href="/contact">Contact</Link>
+          <Link href="/privacy-policy">Privacy Policy</Link>
+          <Link href="/terms">Terms</Link>
           <a href="https://github.com/marufislam8924/skilldojo" target="_blank" rel="noreferrer">
             GitHub
           </a>
