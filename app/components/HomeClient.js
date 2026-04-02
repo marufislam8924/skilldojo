@@ -6,6 +6,7 @@ import ContinueCard from "./gamification/ContinueCard";
 import StreakBadge from "./gamification/StreakBadge";
 import XPBar from "./gamification/XPBar";
 import DailyGoal from "./DailyGoal";
+import AdSenseUnit from "./AdSenseUnit";
 import {
   clearReviewMistakes,
   getDashboardData,
@@ -394,6 +395,8 @@ function Footer() {
 }
 
 export default function HomeClient() {
+  const homeAdSlot = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_HOME_SLOT;
+
   return (
     <div className="bg-white text-slate-900">
       <HeroSection />
@@ -403,6 +406,11 @@ export default function HomeClient() {
         </div>
       </section>
       <TrustSection />
+      <section className="px-6 py-4">
+        <div className="max-w-7xl mx-auto rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <AdSenseUnit slot={homeAdSlot} />
+        </div>
+      </section>
       <LearningPathSection />
       <FeaturesSection />
       <ProgressDashboardSection />
