@@ -1,5 +1,6 @@
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import Breadcrumbs from "./components/Breadcrumbs";
 import Script from "next/script";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
@@ -100,6 +101,7 @@ export default function RootLayout({ children }) {
       <body>
         <Navbar />
         <main className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs />
           {children}
         </main>
       </body>

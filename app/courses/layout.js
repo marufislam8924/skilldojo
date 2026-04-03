@@ -7,6 +7,19 @@ export const metadata = {
   alternates: {
     canonical: "/courses",
   },
+  openGraph: {
+    title: "Japanese Courses | SkillDojo",
+    description:
+      "Browse structured Japanese beginner courses on SkillDojo, including the 30-day plan and complete JLPT N5 curriculum.",
+    url: "/courses",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Japanese Courses | SkillDojo",
+    description:
+      "Structured beginner Japanese courses with clear daily progression and JLPT N5 preparation.",
+  },
 };
 
 export default function CoursesLayout({ children }) {

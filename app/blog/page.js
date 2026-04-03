@@ -2,6 +2,22 @@ import Link from "next/link";
 import { blogPosts } from "../../data/blogPosts";
 import styles from "./blog.module.css";
 
+export const metadata = {
+  title: "Blog — Japanese Learning Guides",
+  description:
+    "Read Japanese learning guides, JLPT N5 tips, and conversation practice articles on the SkillDojo blog.",
+  alternates: {
+    canonical: "/blog",
+  },
+  openGraph: {
+    title: "SkillDojo Blog — Japanese Learning Guides",
+    description:
+      "Read Japanese learning guides, JLPT N5 tips, and conversation practice articles.",
+    url: "/blog",
+    type: "website",
+  },
+};
+
 export default function BlogPage() {
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
