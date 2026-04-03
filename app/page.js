@@ -3,7 +3,7 @@ import UserProgressBanner from "./components/UserProgressBanner";
 import HomeClient from "./components/HomeClient";
 
 export const metadata = {
-  title: "Japanese N5 and JLPT N5 Beginner Course",
+  title: "Learn Japanese Fast (Beginner Guide 2026)",
   description:
     "Learn Japanese N5 from scratch with vocabulary lists, easy grammar explanations, listening practice, and a practical 30-day JLPT N5 study plan for learners in the United States.",
   keywords: [

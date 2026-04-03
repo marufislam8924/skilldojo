@@ -1,7 +1,7 @@
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
 
 export const metadata = {
-  title: "Learn Japanese in 30 Days — Structured JLPT N5 Study Plan",
+  title: "JLPT N5 Study Plan (Pass in 30 Days)",
   description:
     "Follow a free 30-day study plan to learn Japanese from scratch with daily lessons covering Hiragana, Katakana, vocabulary, grammar, and conversation for JLPT N5 learners in the United States.",
   keywords: [
@@ -19,7 +19,7 @@ export const metadata = {
     },
   },
   openGraph: {
-    title: "Learn Japanese in 30 Days — JLPT N5 Study Plan",
+    title: "JLPT N5 Study Plan (Pass in 30 Days)",
     description:
       "Free 30-day study plan to learn Japanese from scratch with daily lessons for learners in the United States.",
     url: "/courses/30-days",
@@ -27,7 +27,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Learn Japanese in 30 Days",
+    title: "JLPT N5 Study Plan (Pass in 30 Days)",
     description:
       "Free 30-day JLPT N5 study plan covering Hiragana, Katakana, vocabulary, grammar, and conversation for learners in the United States.",
   },

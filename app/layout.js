@@ -8,7 +8,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.ap
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Learn Japanese N5 from Scratch | SkillDojo",
+    default: "Learn Japanese Fast (Beginner Guide 2026)",
     template: "%s | SkillDojo",
   },
   description:
@@ -48,7 +48,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     url: siteUrl,
-    title: "Learn Japanese N5 from Scratch | SkillDojo",
+    title: "Learn Japanese Fast (Beginner Guide 2026)",
     description:
       "Master Japanese language basics with Hiragana, Katakana, JLPT N5 vocabulary, and interactive beginner lessons built for learners in the United States.",
     siteName: "SkillDojo",
@@ -56,7 +56,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Learn Japanese N5 from Scratch | SkillDojo",
+    title: "Learn Japanese Fast (Beginner Guide 2026)",
     description:
       "Japanese beginner course with Hiragana, Katakana, JLPT N5 vocabulary, and listening practice for learners in the United States.",
   },

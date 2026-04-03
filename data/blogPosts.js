@@ -114,7 +114,7 @@ Ready to begin? [Start the 30-day Japanese course](/courses/30-days) or [explore
   },
   {
     slug: "hiragana-chart",
-    title: "Complete Hiragana Chart — Learn All 46 Characters with Audio",
+    title: "Hiragana Chart (Free + Easy Guide)",
     description:
       "A complete Hiragana chart with all 46 basic characters, romaji readings, stroke order tips, and audio pronunciation. Perfect for Japanese beginners and JLPT N5 study.",
     keywords: [
