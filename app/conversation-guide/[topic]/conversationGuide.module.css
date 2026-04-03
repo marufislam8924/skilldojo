@@ -1,0 +1,272 @@
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(250, 247, 242, 0.93);
+  backdrop-filter: blur(10px);
+  border-bottom: 1.5px solid var(--border, #d9d0c3);
+}
+
+.logo {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--ink, #0f0e0d);
+  text-decoration: none;
+}
+
+.backLink {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink, #0f0e0d);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+.backLink:hover {
+  color: var(--red, #e63329);
+}
+
+.header {
+  padding: 140px 40px 48px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+  background: var(--gold, #f5a623);
+  color: var(--ink, #0f0e0d);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 3px;
+  margin-bottom: 18px;
+}
+
+.title {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  color: var(--ink, #0f0e0d);
+}
+
+.description {
+  font-size: 1.05rem;
+  color: var(--muted, #7a7067);
+  line-height: 1.7;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* CONTENT */
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 40px 48px;
+}
+
+.sectionTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+  color: var(--ink, #0f0e0d);
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border, #d9d0c3);
+}
+
+.intro {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--muted, #7a7067);
+  margin-bottom: 40px;
+}
+
+/* PHRASE LIST */
+.phraseList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.phraseItem {
+  background: #fff;
+  border: 2px solid var(--ink, #0f0e0d);
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 3px 3px 0 var(--ink, #0f0e0d);
+}
+
+.phraseJp {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink, #0f0e0d);
+  margin-bottom: 4px;
+}
+
+.phraseRomaji {
+  font-size: 0.85rem;
+  color: var(--muted, #7a7067);
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+.phraseEn {
+  font-size: 0.92rem;
+  color: var(--muted, #7a7067);
+  margin-bottom: 8px;
+}
+
+.phraseContext {
+  display: inline-block;
+  background: var(--soft, #ede8df);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted, #7a7067);
+  padding: 3px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+}
+
+/* RELATED TOPICS */
+.related {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 40px 60px;
+  border-top: 2px solid var(--border, #d9d0c3);
+}
+
+.relatedTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.relatedCard {
+  display: block;
+  background: #fff;
+  border: 2px solid var(--ink, #0f0e0d);
+  border-radius: 10px;
+  padding: 20px;
+  text-decoration: none;
+  box-shadow: 3px 3px 0 var(--ink, #0f0e0d);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.relatedCard:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink, #0f0e0d);
+}
+
+.relatedCardTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--ink, #0f0e0d);
+  line-height: 1.35;
+}
+
+/* CTA */
+.cta {
+  text-align: center;
+  padding: 60px 40px 80px;
+  border-top: 2px solid var(--border, #d9d0c3);
+}
+
+.ctaTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.ctaDesc {
+  font-size: 0.95rem;
+  color: var(--muted, #7a7067);
+  margin-bottom: 20px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ctaBtn {
+  display: inline-block;
+  padding: 14px 36px;
+  background: var(--ink, #0f0e0d);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  text-decoration: none;
+  border: 2px solid var(--ink, #0f0e0d);
+  box-shadow: 3px 3px 0 var(--ink, #0f0e0d);
+  transition: background 0.15s;
+}
+
+.ctaBtn:hover {
+  background: var(--red, #e63329);
+  border-color: var(--red, #e63329);
+  box-shadow: 3px 3px 0 var(--red, #e63329);
+}
+
+/* FOOTER */
+.footer {
+  padding: 32px 40px;
+  text-align: center;
+  border-top: 1.5px solid var(--border, #d9d0c3);
+}
+
+.footerLinks {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footerLink {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink, #0f0e0d);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+}
+
+.footerLink:hover {
+  color: var(--red, #e63329);
+}
+
+@media (max-width: 640px) {
+  .nav { padding: 14px 20px; }
+  .header { padding: 120px 20px 30px; }
+  .content { padding: 0 20px 36px; }
+  .related { padding: 30px 20px 40px; }
+  .relatedGrid { grid-template-columns: 1fr; }
+  .cta { padding: 40px 20px 60px; }
+}

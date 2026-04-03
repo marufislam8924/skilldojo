@@ -402,10 +402,12 @@ function Footer() {
           <div>
             <p className="font-bold text-slate-900 mb-3">Resources</p>
             <div className="flex flex-col gap-2 text-sm text-slate-600">
+              <Link href="/learn">Learning Guides</Link>
+              <Link href="/hiragana-guide/a">Hiragana A Row Guide</Link>
+              <Link href="/conversation-guide/greetings">Greetings Guide</Link>
               <Link href="/blog">Japanese Learning Blog</Link>
               <Link href="/blog/hiragana-chart">Hiragana Chart</Link>
               <Link href="/blog/learn-japanese-n5-guide">N5 Beginner Guide</Link>
-              <Link href="/blog/basic-japanese-conversation">Conversation Phrases</Link>
             </div>
           </div>
           <div>

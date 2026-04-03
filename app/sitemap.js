@@ -6,6 +6,10 @@ import { quizCategories } from "../data/quizData";
 import { vocabularyLessons as vocabStandalone } from "../data/vocabularyLessons";
 import { jlptN5Course } from "../data/jlptN5Course";
 import { blogPosts } from "../data/blogPosts";
+import { seoPages } from "../data/seoPages";
+import { keywordPages } from "../data/keywords";
+import { hiraganaCharPages } from "../data/hiraganaCharPages";
+import { conversationTopicPages } from "../data/conversationTopicPages";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
 
@@ -28,6 +32,7 @@ export default function sitemap() {
     "/courses/30-days",
     "/courses/n5",
     "/blog",
+    "/learn",
   ].map((path) => ({
     url: `${siteUrl}${path}`,
     lastModified: now,
@@ -105,6 +110,34 @@ export default function sitemap() {
     priority: 0.75,
   }));
 
+  const learnPages = seoPages.map((page) => ({
+    url: `${siteUrl}/learn/${page.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.75,
+  }));
+
+  const keywordLearnPages = keywordPages.map((page) => ({
+    url: `${siteUrl}/learn/${page.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.72,
+  }));
+
+  const hiraganaGuidePages = hiraganaCharPages.map((page) => ({
+    url: `${siteUrl}/hiragana-guide/${page.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  const conversationGuidePages = conversationTopicPages.map((page) => ({
+    url: `${siteUrl}/conversation-guide/${page.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
   return [
     ...staticPages,
     ...hiraganaPages,
@@ -117,5 +150,9 @@ export default function sitemap() {
     ...n5Pages,
     ...thirtyDayPages,
     ...blogPages,
+    ...learnPages,
+    ...keywordLearnPages,
+    ...hiraganaGuidePages,
+    ...conversationGuidePages,
   ];
 }
