@@ -1,0 +1,310 @@
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* NAV */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(250, 247, 242, 0.93);
+  backdrop-filter: blur(10px);
+  border-bottom: 1.5px solid var(--border, #e5e2dc);
+}
+
+.logo {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--ink, #1a1a1a);
+  text-decoration: none;
+}
+
+.backLink {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink, #1a1a1a);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+.backLink:hover {
+  color: var(--red, #c41e3a);
+}
+
+/* ARTICLE HEADER */
+.header {
+  padding: 140px 40px 40px;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.tag {
+  display: inline-block;
+  background: #f5a623;
+  color: var(--ink, #1a1a1a);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 3px;
+  margin-bottom: 18px;
+}
+
+.title {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  color: var(--ink, #1a1a1a);
+}
+
+.meta {
+  font-size: 0.88rem;
+  color: var(--muted, #6b6b6b);
+}
+
+/* ARTICLE BODY */
+.article {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 40px 60px;
+  line-height: 1.8;
+  color: var(--ink, #1a1a1a);
+}
+
+.article h2 {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin: 40px 0 16px;
+  color: var(--ink, #1a1a1a);
+}
+
+.article h3 {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 32px 0 12px;
+  color: var(--ink, #1a1a1a);
+}
+
+.article p {
+  font-size: 1rem;
+  margin-bottom: 18px;
+  color: var(--muted, #4a4a4a);
+  line-height: 1.8;
+}
+
+.article ul,
+.article ol {
+  margin: 0 0 18px 24px;
+  color: var(--muted, #4a4a4a);
+}
+
+.article li {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.article strong {
+  color: var(--ink, #1a1a1a);
+  font-weight: 700;
+}
+
+.article a {
+  color: var(--red, #c41e3a);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.article a:hover {
+  color: var(--ink, #1a1a1a);
+}
+
+.article blockquote {
+  border-left: 4px solid var(--red, #c41e3a);
+  padding: 12px 20px;
+  margin: 20px 0;
+  background: var(--soft, #faf7f2);
+  border-radius: 0 8px 8px 0;
+}
+
+.article blockquote p {
+  margin-bottom: 6px;
+}
+
+.article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.92rem;
+}
+
+.article th,
+.article td {
+  border: 1.5px solid var(--border, #e5e2dc);
+  padding: 10px 14px;
+  text-align: left;
+}
+
+.article th {
+  background: var(--soft, #faf7f2);
+  font-weight: 700;
+  color: var(--ink, #1a1a1a);
+}
+
+.article td {
+  color: var(--muted, #4a4a4a);
+}
+
+/* RELATED POSTS */
+.related {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 40px 60px;
+  border-top: 2px solid var(--border, #e5e2dc);
+}
+
+.relatedTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.relatedCard {
+  display: block;
+  background: #fff;
+  border: 2px solid var(--ink, #1a1a1a);
+  border-radius: 10px;
+  padding: 20px;
+  text-decoration: none;
+  box-shadow: 3px 3px 0 var(--ink, #1a1a1a);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.relatedCard:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink, #1a1a1a);
+}
+
+.relatedCardTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--ink, #1a1a1a);
+  line-height: 1.35;
+}
+
+/* CTA */
+.cta {
+  text-align: center;
+  padding: 60px 40px 80px;
+  border-top: 2px solid var(--border, #e5e2dc);
+}
+
+.ctaTitle {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.ctaDesc {
+  font-size: 0.95rem;
+  color: var(--muted, #6b6b6b);
+  margin-bottom: 20px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ctaBtn {
+  display: inline-block;
+  padding: 14px 36px;
+  background: var(--ink, #1a1a1a);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  text-decoration: none;
+  border: 2px solid var(--ink, #1a1a1a);
+  box-shadow: 3px 3px 0 var(--ink, #1a1a1a);
+  transition: background 0.15s;
+}
+
+.ctaBtn:hover {
+  background: var(--red, #c41e3a);
+  border-color: var(--red, #c41e3a);
+  box-shadow: 3px 3px 0 var(--red, #c41e3a);
+}
+
+/* FOOTER */
+.footer {
+  padding: 32px 40px;
+  text-align: center;
+  border-top: 1.5px solid var(--border, #e5e2dc);
+}
+
+.footerLinks {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footerLink {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink, #1a1a1a);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+}
+
+.footerLink:hover {
+  color: var(--red, #c41e3a);
+}
+
+@media (max-width: 640px) {
+  .nav {
+    padding: 14px 20px;
+  }
+
+  .header {
+    padding: 120px 20px 30px;
+  }
+
+  .article {
+    padding: 0 20px 40px;
+  }
+
+  .related {
+    padding: 30px 20px 40px;
+  }
+
+  .relatedGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta {
+    padding: 40px 20px 60px;
+  }
+}

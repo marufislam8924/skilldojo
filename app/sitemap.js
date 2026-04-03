@@ -5,6 +5,7 @@ import { conversationLessons } from "../data/conversationLessons";
 import { quizCategories } from "../data/quizData";
 import { vocabularyLessons as vocabStandalone } from "../data/vocabularyLessons";
 import { jlptN5Course } from "../data/jlptN5Course";
+import { blogPosts } from "../data/blogPosts";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
 
@@ -26,6 +27,7 @@ export default function sitemap() {
     "/quiz",
     "/courses/30-days",
     "/courses/n5",
+    "/blog",
   ].map((path) => ({
     url: `${siteUrl}${path}`,
     lastModified: now,
@@ -96,6 +98,13 @@ export default function sitemap() {
     priority: 0.65,
   }));
 
+  const blogPages = blogPosts.map((post) => ({
+    url: `${siteUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.publishDate),
+    changeFrequency: "monthly",
+    priority: 0.75,
+  }));
+
   return [
     ...staticPages,
     ...hiraganaPages,
@@ -107,5 +116,6 @@ export default function sitemap() {
     ...vocabStandalonePages,
     ...n5Pages,
     ...thirtyDayPages,
+    ...blogPages,
   ];
 }

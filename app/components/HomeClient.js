@@ -379,20 +379,57 @@ function CTASection() {
 function Footer() {
   return (
     <footer className="border-t border-slate-200 py-10 px-6">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center text-sm">
-        <div className="flex gap-5 text-slate-600">
-          <Link href="/">Home</Link>
-          <Link href="/hiragana">Lessons</Link>
-          <Link href="/vocab">Vocabulary</Link>
-          <Link href="/about">About</Link>
-          <Link href="/contact">Contact</Link>
-          <Link href="/privacy-policy">Privacy Policy</Link>
-          <Link href="/terms">Terms</Link>
-          <a href="https://github.com/marufislam8924/skilldojo" target="_blank" rel="noreferrer">
-            GitHub
-          </a>
+      <div className="max-w-7xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+          <div>
+            <p className="font-bold text-slate-900 mb-3">Courses</p>
+            <div className="flex flex-col gap-2 text-sm text-slate-600">
+              <Link href="/hiragana">Learn Hiragana</Link>
+              <Link href="/katakana">Learn Katakana</Link>
+              <Link href="/vocab">Japanese N5 Vocabulary</Link>
+              <Link href="/grammar">N5 Grammar Lessons</Link>
+            </div>
+          </div>
+          <div>
+            <p className="font-bold text-slate-900 mb-3">Practice</p>
+            <div className="flex flex-col gap-2 text-sm text-slate-600">
+              <Link href="/conversation">Japanese Conversation Practice</Link>
+              <Link href="/quiz">JLPT N5 Quiz</Link>
+              <Link href="/courses/30-days">30-Day Study Plan</Link>
+              <Link href="/courses/n5">JLPT N5 Course</Link>
+            </div>
+          </div>
+          <div>
+            <p className="font-bold text-slate-900 mb-3">Resources</p>
+            <div className="flex flex-col gap-2 text-sm text-slate-600">
+              <Link href="/blog">Japanese Learning Blog</Link>
+              <Link href="/blog/hiragana-chart">Hiragana Chart</Link>
+              <Link href="/blog/learn-japanese-n5-guide">N5 Beginner Guide</Link>
+              <Link href="/blog/basic-japanese-conversation">Conversation Phrases</Link>
+            </div>
+          </div>
+          <div>
+            <p className="font-bold text-slate-900 mb-3">About</p>
+            <div className="flex flex-col gap-2 text-sm text-slate-600">
+              <Link href="/about">About SkillDojo</Link>
+              <Link href="/contact">Contact</Link>
+              <Link href="/privacy-policy">Privacy Policy</Link>
+              <Link href="/terms">Terms of Use</Link>
+            </div>
+          </div>
         </div>
-        <p className="text-slate-500">© 2026 SkillDojoJP</p>
+        <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center text-sm border-t border-slate-200 pt-6">
+          <div className="flex gap-5 text-slate-600">
+            <Link href="/">Home</Link>
+            <Link href="/hiragana">Lessons</Link>
+            <Link href="/vocab">Vocabulary</Link>
+            <Link href="/blog">Blog</Link>
+            <a href="https://github.com/marufislam8924/skilldojo" target="_blank" rel="noreferrer">
+              GitHub
+            </a>
+          </div>
+          <p className="text-slate-500">&copy; 2026 SkillDojoJP</p>
+        </div>
       </div>
     </footer>
   );
