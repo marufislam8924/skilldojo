@@ -33,6 +33,7 @@ export default function sitemap() {
     "/courses/n5",
     "/blog",
     "/learn",
+    "/learn-japanese-n5",
   ].map((path) => ({
     url: `${siteUrl}${path}`,
     lastModified: now,

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="t d">
+  <title id="t">Weekly JLPT N5 study plan illustration</title>
+  <desc id="d">A weekly planner board showing recurring study blocks for reading, vocabulary, grammar, and practice.</desc>
+  <rect width="1200" height="700" fill="#f8fafc"/>
+  <rect x="70" y="70" width="1060" height="560" rx="26" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="100" y="130" font-size="40" font-family="Arial, sans-serif" fill="#0f172a" font-weight="700">N5 Weekly Study Plan</text>
+  <rect x="120" y="180" width="220" height="380" rx="16" fill="#e0f2fe"/>
+  <rect x="365" y="180" width="220" height="380" rx="16" fill="#dcfce7"/>
+  <rect x="610" y="180" width="220" height="380" rx="16" fill="#fef3c7"/>
+  <rect x="855" y="180" width="220" height="380" rx="16" fill="#ede9fe"/>
+  <text x="180" y="230" font-size="26" fill="#0c4a6e" font-family="Arial" font-weight="700">Daily</text>
+  <text x="430" y="230" font-size="26" fill="#166534" font-family="Arial" font-weight="700">Review</text>
+  <text x="670" y="230" font-size="26" fill="#92400e" font-family="Arial" font-weight="700">Quiz</text>
+  <text x="920" y="230" font-size="26" fill="#4338ca" font-family="Arial" font-weight="700">Speaking</text>
+  <text x="145" y="290" font-size="21" fill="#334155" font-family="Arial">20 min vocabulary</text>
+  <text x="145" y="330" font-size="21" fill="#334155" font-family="Arial">15 min grammar</text>
+  <text x="145" y="370" font-size="21" fill="#334155" font-family="Arial">10 min listening</text>
+  <text x="390" y="290" font-size="21" fill="#334155" font-family="Arial">Spaced repetition</text>
+  <text x="390" y="330" font-size="21" fill="#334155" font-family="Arial">Error notebook</text>
+  <text x="390" y="370" font-size="21" fill="#334155" font-family="Arial">Weekly checkpoint</text>
+  <text x="635" y="290" font-size="21" fill="#334155" font-family="Arial">Timed drills</text>
+  <text x="635" y="330" font-size="21" fill="#334155" font-family="Arial">Weak-point practice</text>
+  <text x="635" y="370" font-size="21" fill="#334155" font-family="Arial">Mock listening</text>
+  <text x="885" y="290" font-size="21" fill="#334155" font-family="Arial">Read aloud</text>
+  <text x="885" y="330" font-size="21" fill="#334155" font-family="Arial">Shadowing</text>
+  <text x="885" y="370" font-size="21" fill="#334155" font-family="Arial">Conversation cues</text>
+</svg>

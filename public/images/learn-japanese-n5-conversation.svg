@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="t d">
+  <title id="t">Basic Japanese conversation practice illustration</title>
+  <desc id="d">Two dialogue cards representing beginner Japanese conversation drills and listening practice.</desc>
+  <rect width="1200" height="700" fill="#eef2ff"/>
+  <rect x="80" y="80" width="1040" height="540" rx="26" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="110" y="140" font-size="40" font-family="Arial, sans-serif" fill="#0f172a" font-weight="700">Basic Conversation Practice</text>
+  <rect x="160" y="210" width="420" height="300" rx="18" fill="#e0f2fe"/>
+  <rect x="620" y="210" width="420" height="300" rx="18" fill="#dcfce7"/>
+  <text x="195" y="260" font-size="24" fill="#0c4a6e" font-family="Arial" font-weight="700">A: Ohayou gozaimasu</text>
+  <text x="195" y="305" font-size="22" fill="#334155" font-family="Arial">Good morning</text>
+  <text x="195" y="360" font-size="24" fill="#0c4a6e" font-family="Arial" font-weight="700">B: Kyou wa ame desu ka</text>
+  <text x="195" y="405" font-size="22" fill="#334155" font-family="Arial">Is it rainy today?</text>
+  <text x="655" y="260" font-size="24" fill="#166534" font-family="Arial" font-weight="700">A: Hai, ame desu</text>
+  <text x="655" y="305" font-size="22" fill="#334155" font-family="Arial">Yes, it is rainy.</text>
+  <text x="655" y="360" font-size="24" fill="#166534" font-family="Arial" font-weight="700">B: Arigatou gozaimasu</text>
+  <text x="655" y="405" font-size="22" fill="#334155" font-family="Arial">Thank you.</text>
+</svg>
