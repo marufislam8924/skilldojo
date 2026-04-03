@@ -31,6 +31,8 @@ export default function KatakanaPage() {
         courseHref="/katakana"
       />
 
+      <h2 className={styles.headerTag}>All Katakana Lessons</h2>
+
       <div className={styles.grid}>
         {katakanaLessons.map((lesson) => (
           <Link

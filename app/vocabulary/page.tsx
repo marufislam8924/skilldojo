@@ -76,6 +76,7 @@ export default function VocabularyHome() {
       {/* Content */}
       <div className="max-w-6xl mx-auto px-4 py-12">
         {/* Stats */}
+        <h2 className="text-2xl font-bold text-red-900 mb-6">Learning Overview</h2>
         <div className="mb-12 p-6 bg-white rounded-2xl shadow-md border-2 border-red-100">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
@@ -111,6 +112,7 @@ export default function VocabularyHome() {
         </div>
 
         {/* Lessons Grid */}
+        <h2 className="text-2xl font-bold text-red-900 mb-6">Choose a Vocabulary Lesson</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {vocabularyLessons.map(lesson => {
             const lessonProgress = progress[lesson.id];

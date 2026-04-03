@@ -239,7 +239,7 @@ export default function ConversationLesson({ lesson, totalLessons }: Props) {
 
       {viewAll && (
         <div className={styles.allLines}>
-          <h3 className={styles.allLinesTitle}>All lines — Lesson {lesson.id}</h3>
+          <h2 className={styles.allLinesTitle}>All lines — Lesson {lesson.id}</h2>
           <div className={styles.linesGrid}>
             {lesson.dialogue.map((line, i) => (
               <div

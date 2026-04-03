@@ -27,7 +27,7 @@ export default function LessonClient({ params }: { params: { id: string } }) {
     return (
       <main className={styles.main}>
         <div className={styles.content}>
-          <p>Lesson not found.</p>
+          <h1>Lesson not found</h1>
           <button className={styles.backBtn} onClick={() => router.push("/courses/n5")}>
             ← Back to Course
           </button>
@@ -73,6 +73,8 @@ export default function LessonClient({ params }: { params: { id: string } }) {
             </button>
           ))}
         </div>
+
+        <h2 className={styles.lessonTag}>{tabs.find((t) => t.key === activeTab)?.label}</h2>
 
         {activeTab === "vocabulary" && <VocabularySection lesson={lesson} />}
         {activeTab === "grammar" && <GrammarSection lesson={lesson} />}

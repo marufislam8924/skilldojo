@@ -220,6 +220,7 @@ export default function VocabularyCard({ lesson, totalLessons }: VocabularyCardP
       {/* Header */}
       <div className="mb-4 sm:mb-6">
         <h1 className="text-xl sm:text-2xl font-bold text-blue-900 mb-2 leading-tight">{lesson.title}</h1>
+        <h2 className="text-base sm:text-lg font-semibold text-blue-700 mb-2">Flashcard Practice</h2>
         <div className="mb-2 text-sm font-semibold text-gray-600">{results.gotIt} correct</div>
         <ProgressBar current={cardIndex + 1} total={lesson.words.length} label="Lesson" />
       </div>

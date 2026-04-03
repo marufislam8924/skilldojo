@@ -31,6 +31,8 @@ export default function HiraganaPage() {
         courseHref="/hiragana"
       />
 
+      <h2 className={styles.headerTag}>All Hiragana Lessons</h2>
+
       <div className={styles.grid}>
         {hiraganaLessons.map((lesson) => (
           <Link

@@ -28,6 +28,8 @@ export default function N5CoursePage() {
         </p>
       </div>
 
+      <h2 className={styles.headerTag}>All JLPT N5 Lessons</h2>
+
       <div className={`${styles.grid} grid-cols-1 md:grid-cols-2 lg:grid-cols-3`}>
         {jlptN5Course.map((lesson) => (
           <div key={lesson.id} className={styles.lessonCard}>

@@ -20,6 +20,24 @@ export const metadata = {
 
 export default function Home() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
+  const faqItems = [
+    {
+      question: "Can I learn Japanese N5 for free on SkillDojo?",
+      answer:
+        "Yes. SkillDojo offers free beginner lessons for Hiragana, Katakana, vocabulary, grammar, conversation, and quizzes.",
+    },
+    {
+      question: "How long does it take to complete the 30-day course?",
+      answer:
+        "The 30-day plan is designed for daily study. Most learners spend 30 to 60 minutes per day.",
+    },
+    {
+      question: "Is SkillDojo suitable for complete beginners?",
+      answer:
+        "Yes. Lessons start from zero and gradually build up to JLPT N5 level skills.",
+    },
+  ];
+
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -53,6 +71,17 @@ export default function Home() {
           "Japanese N5 conversation practice",
           "interactive Japanese grammar flashcards",
         ],
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: faqItems.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
       },
     ],
   };

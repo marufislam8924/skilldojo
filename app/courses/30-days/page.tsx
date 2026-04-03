@@ -71,6 +71,8 @@ export default function ThirtyDaysPage() {
         </div>
       </div>
 
+      <h2 className={styles.weekLabel}>Daily Study Plan</h2>
+
       {curriculum.map((day) => {
         const week = getWeek(day.day);
         const showWeek = week !== currentWeek;

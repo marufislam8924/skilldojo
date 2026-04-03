@@ -33,17 +33,42 @@ export const metadata = {
 export default function N5Layout({ children }) {
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": "Course",
-    name: "JLPT N5 Course — Complete Beginner Japanese Curriculum",
-    description:
-      "Study for the JLPT N5 exam with structured lessons covering vocabulary, grammar, reading, and listening.",
-    provider: {
-      "@type": "EducationalOrganization",
-      name: "SkillDojo",
-      url: siteUrl,
-    },
-    educationalLevel: "Beginner",
-    isAccessibleForFree: true,
+    "@graph": [
+      {
+        "@type": "Course",
+        name: "JLPT N5 Course — Complete Beginner Japanese Curriculum",
+        description:
+          "Study for the JLPT N5 exam with structured lessons covering vocabulary, grammar, reading, and listening.",
+        provider: {
+          "@type": "EducationalOrganization",
+          name: "SkillDojo",
+          url: siteUrl,
+        },
+        educationalLevel: "Beginner",
+        isAccessibleForFree: true,
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "Who is this JLPT N5 course for?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "This course is designed for beginners preparing for the JLPT N5 exam.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What skills are covered in the N5 course?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Lessons cover vocabulary, grammar, reading, listening, and quiz practice.",
+            },
+          },
+        ],
+      },
+    ],
   };
 
   return (

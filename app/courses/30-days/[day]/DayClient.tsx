@@ -97,6 +97,8 @@ export default function DayClient() {
         <span className={styles.tipText}>{day.tip}</span>
       </div>
 
+      <h2 className={styles.dayTag}>Daily Tasks</h2>
+
       <div className={styles.tasksList}>
         {day.tasks.map((task, i) => (
           <div key={i} className={styles.taskCard}>

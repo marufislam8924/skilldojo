@@ -332,7 +332,7 @@ export default function LessonView({
 
         {/* All chars grid */}
         <div className={styles.allChars}>
-          <h3 className={styles.allCharsTitle}>All {itemLabel} — Lesson {lessonId}</h3>
+          <h2 className={styles.allCharsTitle}>All {itemLabel} — Lesson {lessonId}</h2>
           <div className={`${styles.allCharsGrid} ${isWordStyle ? styles.wordGrid : ""}`}>
             {data.chars.map((c, i) => (
               <div

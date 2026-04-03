@@ -177,7 +177,7 @@ export default function QuizGame({ categoryId }) {
     return (
       <main className={styles.main}>
         <div className={styles.notFound}>
-          <p className={styles.notFoundText}>Quiz not found</p>
+          <h1 className={styles.notFoundText}>Quiz not found</h1>
           <Link href="/quiz" className={styles.notFoundLink}>
             ← Back to Quizzes
           </Link>
@@ -200,6 +200,7 @@ export default function QuizGame({ categoryId }) {
     return (
       <main className={styles.main}>
         <div className={styles.doneScreen}>
+          <h1 className={styles.doneTitle}>{category.title} Quiz</h1>
           <div className={styles.doneEmoji}>💔</div>
           <h2 className={styles.doneTitle}>Out of Hearts!</h2>
           <p className={styles.doneDesc}>
@@ -234,6 +235,7 @@ export default function QuizGame({ categoryId }) {
         />
         <Confetti show={perfect} />
         <div className={styles.doneScreen}>
+          <h1 className={styles.doneTitle}>{category.title} Quiz</h1>
           <div className={styles.doneEmoji}>{perfect ? "🏆" : percent >= 80 ? "⭐" : "🎉"}</div>
           <h2 className={styles.doneTitle}>
             {perfect ? "Perfect Score!" : percent >= 80 ? "Great Work!" : "Quiz Complete!"}
@@ -296,6 +298,7 @@ export default function QuizGame({ categoryId }) {
         onDone={() => setToast({ show: false, text: "", variant: "success" })}
       />
       <div className={styles.content}>
+        <h1 className={styles.questionText}>{category.title} Quiz</h1>
         {/* Progress */}
         <div className={styles.progressWrap}>
           <div className={styles.progressBar}>
@@ -315,7 +318,7 @@ export default function QuizGame({ categoryId }) {
 
         {/* Question Card */}
         <div className={styles.questionCard}>
-          <div className={styles.questionText}>{q.question}</div>
+          <h2 className={styles.questionText}>{q.question}</h2>
           <div className={styles.questionDisplay}>{q.display}</div>
           {q.subtitle && (
             <div className={styles.questionSubtitle}>{q.subtitle}</div>

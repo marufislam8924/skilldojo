@@ -138,7 +138,7 @@ export default function sitemap() {
     priority: 0.7,
   }));
 
-  return [
+  const entries = [
     ...staticPages,
     ...hiraganaPages,
     ...katakanaPages,
@@ -155,4 +155,11 @@ export default function sitemap() {
     ...hiraganaGuidePages,
     ...conversationGuidePages,
   ];
+
+  const dedupedByUrl = new Map();
+  entries.forEach((entry) => {
+    dedupedByUrl.set(entry.url, entry);
+  });
+
+  return Array.from(dedupedByUrl.values());
 }

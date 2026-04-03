@@ -23,6 +23,8 @@ export default function QuizPage() {
         </p>
       </div>
 
+      <h2 className={styles.headerTag}>Quiz Categories</h2>
+
       <div className={styles.grid}>
         {quizCategories.map((cat) => (
           <Link key={cat.id} href={`/quiz/${cat.id}`} className={styles.lessonCard}>

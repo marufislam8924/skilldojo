@@ -33,18 +33,43 @@ export const metadata = {
 export default function ThirtyDaysLayout({ children }) {
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": "Course",
-    name: "Learn Japanese in 30 Days",
-    description:
-      "A structured 30-day study plan to learn Japanese from scratch for JLPT N5 preparation.",
-    provider: {
-      "@type": "EducationalOrganization",
-      name: "SkillDojo",
-      url: siteUrl,
-    },
-    educationalLevel: "Beginner",
-    timeRequired: "P30D",
-    isAccessibleForFree: true,
+    "@graph": [
+      {
+        "@type": "Course",
+        name: "Learn Japanese in 30 Days",
+        description:
+          "A structured 30-day study plan to learn Japanese from scratch for JLPT N5 preparation.",
+        provider: {
+          "@type": "EducationalOrganization",
+          name: "SkillDojo",
+          url: siteUrl,
+        },
+        educationalLevel: "Beginner",
+        timeRequired: "P30D",
+        isAccessibleForFree: true,
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "How much time should I study each day?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Most learners follow the plan in 30 to 60 minutes per day.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Does this plan include JLPT N5 topics?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Yes. The plan covers Hiragana, Katakana, vocabulary, grammar, conversation, and quizzes aligned with JLPT N5 fundamentals.",
+            },
+          },
+        ],
+      },
+    ],
   };
 
   return (

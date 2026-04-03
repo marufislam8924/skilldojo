@@ -14,7 +14,10 @@ export const metadata = {
 export default function Flashcards() {
   return (
     <main className="bg-black text-white min-h-screen flex items-center justify-center">
-      <h1 className="text-3xl">Flashcards Coming Soon 🚀</h1>
+      <div className="text-center px-4">
+        <h1 className="text-3xl">Flashcards Coming Soon 🚀</h1>
+        <h2 className="mt-4 text-lg text-gray-300">Continue with Hiragana, Katakana, Vocabulary, and Grammar in the meantime.</h2>
+      </div>
     </main>
   );
 }

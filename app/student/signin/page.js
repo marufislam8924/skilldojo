@@ -117,6 +117,8 @@ export default function StudentSignInPage() {
           Save your lesson progress and continue from your personal dashboard.
         </p>
 
+        <h2 className={styles.helperText}>Choose a sign-in method</h2>
+
         {cloudReady ? (
           <button type="button" className={styles.googleBtn} onClick={handleGoogleSignIn}>
             <svg className={styles.googleIcon} viewBox="0 0 48 48" width="20" height="20">
