@@ -5,7 +5,7 @@ import styles from "./page.module.css";
 export const metadata = {
   title: "Learn Japanese N5: Complete Beginner Roadmap, Study Plan, and FAQ",
   description:
-    "Learn Japanese N5 with a complete step-by-step roadmap covering hiragana, katakana, vocabulary, grammar, listening, and conversation practice. Includes FAQ, study plan, and free course CTA.",
+    "Learn Japanese N5 with a complete step-by-step roadmap covering hiragana, katakana, vocabulary, grammar, listening, and conversation practice for learners in the United States. Includes FAQ, study plan, and free course CTA.",
   keywords: [
     "learn japanese n5",
     "jlpt n5 study plan",
@@ -13,14 +13,19 @@ export const metadata = {
     "learn japanese online",
     "jlpt n5 vocabulary",
     "japanese basic conversation",
+    "learn Japanese in USA",
+    "United States JLPT N5 guide",
   ],
   alternates: {
     canonical: "/learn-japanese-n5",
+    languages: {
+      "en-us": "/learn-japanese-n5",
+    },
   },
   openGraph: {
     title: "Learn Japanese N5: Complete Beginner Roadmap",
     description:
-      "A practical guide to learn Japanese N5 with clear milestones for scripts, vocabulary, grammar, listening, and speaking.",
+      "A practical guide to learn Japanese N5 with clear milestones for scripts, vocabulary, grammar, listening, and speaking for learners in the United States.",
     url: "/learn-japanese-n5",
     type: "article",
   },
@@ -79,14 +84,22 @@ export default function LearnJapaneseN5Page() {
         "@type": "Course",
         name: "Learn Japanese N5",
         description:
-          "A complete beginner roadmap to learn Japanese N5, including scripts, vocabulary, grammar, listening, and conversation practice.",
+          "A complete beginner roadmap to learn Japanese N5, including scripts, vocabulary, grammar, listening, and conversation practice for learners in the United States.",
         provider: {
           "@type": "EducationalOrganization",
           name: "SkillDojo",
           url: siteUrl,
         },
         educationalLevel: "Beginner",
+        inLanguage: "en-US",
         isAccessibleForFree: true,
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+          availability: "https://schema.org/InStock",
+          url: `${siteUrl}/learn-japanese-n5`,
+        },
         url: `${siteUrl}/learn-japanese-n5`,
       },
       {

@@ -3,7 +3,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.ap
 export const metadata = {
   title: "JLPT N5 Course — Complete Beginner Japanese Curriculum",
   description:
-    "Study for the JLPT N5 exam with structured lessons covering vocabulary, grammar, reading, and listening. Interactive exercises with XP tracking.",
+    "Study for the JLPT N5 exam with structured lessons covering vocabulary, grammar, reading, and listening for learners in the United States. Interactive exercises with XP tracking.",
   keywords: [
     "JLPT N5 course",
     "JLPT N5 study guide",
@@ -14,11 +14,14 @@ export const metadata = {
   ],
   alternates: {
     canonical: "/courses/n5",
+    languages: {
+      "en-us": "/courses/n5",
+    },
   },
   openGraph: {
     title: "JLPT N5 Course — Beginner Japanese Curriculum",
     description:
-      "Study for JLPT N5 with structured lessons covering vocabulary, grammar, reading, and listening.",
+      "Study for JLPT N5 with structured lessons covering vocabulary, grammar, reading, and listening for learners in the United States.",
     url: "/courses/n5",
     type: "website",
   },
@@ -26,7 +29,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "JLPT N5 Course — Beginner Japanese",
     description:
-      "Complete JLPT N5 curriculum with vocabulary, grammar, reading, and listening exercises.",
+      "Complete JLPT N5 curriculum with vocabulary, grammar, reading, and listening exercises for learners in the United States.",
   },
 };
 

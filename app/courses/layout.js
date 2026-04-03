@@ -3,14 +3,17 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.ap
 export const metadata = {
   title: "Japanese Courses",
   description:
-    "Browse structured Japanese beginner courses on SkillDojo, including the 30-day plan and complete JLPT N5 curriculum.",
+    "Browse structured Japanese beginner courses on SkillDojo, including the 30-day plan and complete JLPT N5 curriculum for learners in the United States.",
   alternates: {
     canonical: "/courses",
+    languages: {
+      "en-us": "/courses",
+    },
   },
   openGraph: {
     title: "Japanese Courses | SkillDojo",
     description:
-      "Browse structured Japanese beginner courses on SkillDojo, including the 30-day plan and complete JLPT N5 curriculum.",
+      "Browse structured Japanese beginner courses on SkillDojo, including the 30-day plan and complete JLPT N5 curriculum for learners in the United States.",
     url: "/courses",
     type: "website",
   },
@@ -18,7 +21,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Japanese Courses | SkillDojo",
     description:
-      "Structured beginner Japanese courses with clear daily progression and JLPT N5 preparation.",
+      "Structured beginner Japanese courses with clear daily progression and JLPT N5 preparation for learners in the United States.",
   },
 };
 

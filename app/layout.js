@@ -12,7 +12,7 @@ export const metadata = {
     template: "%s | SkillDojo",
   },
   description:
-    "Learn Japanese N5 from scratch with JLPT N5 vocabulary, grammar basics, listening practice, and beginner-friendly study plans.",
+    "Learn Japanese N5 from scratch with JLPT N5 vocabulary, grammar basics, listening practice, and beginner-friendly study plans for learners in the United States.",
   applicationName: "SkillDojo",
   keywords: [
     "Japanese N5",
@@ -30,16 +30,27 @@ export const metadata = {
     "Japanese N5 conversation practice",
     "JLPT N5 mock test free",
     "Japanese N5 verbs list with examples",
+    "learn Japanese in USA",
+    "United States Japanese learners",
+    "USA JLPT N5 preparation",
   ],
   alternates: {
     canonical: "/",
+    languages: {
+      "en-us": "/",
+    },
+  },
+  other: {
+    "geo.region": "US",
+    "geo.placename": "United States",
+    "content-language": "en-US",
   },
   openGraph: {
     type: "website",
     url: siteUrl,
     title: "Learn Japanese N5 from Scratch | SkillDojo",
     description:
-      "Master Japanese language basics with Hiragana, Katakana, JLPT N5 vocabulary, and interactive beginner lessons.",
+      "Master Japanese language basics with Hiragana, Katakana, JLPT N5 vocabulary, and interactive beginner lessons built for learners in the United States.",
     siteName: "SkillDojo",
     locale: "en_US",
   },
@@ -47,7 +58,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Learn Japanese N5 from Scratch | SkillDojo",
     description:
-      "Japanese beginner course with Hiragana, Katakana, JLPT N5 vocabulary, and listening practice.",
+      "Japanese beginner course with Hiragana, Katakana, JLPT N5 vocabulary, and listening practice for learners in the United States.",
   },
   robots: {
     index: true,
@@ -67,8 +78,15 @@ export default function RootLayout({ children }) {
   const ADSENSE_ACCOUNT = "ca-pub-4162671176823641";
 
   return (
-    <html lang="en">
+    <html lang="en-US">
       <head>
+        <link rel="alternate" hrefLang="en-us" href={siteUrl} />
+        <link rel="alternate" hrefLang="x-default" href={siteUrl} />
+        <meta name="language" content="en-US" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
         <meta
           name="google-adsense-account"
           content={ADSENSE_ACCOUNT}

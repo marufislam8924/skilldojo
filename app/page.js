@@ -5,16 +5,21 @@ import HomeClient from "./components/HomeClient";
 export const metadata = {
   title: "Japanese N5 and JLPT N5 Beginner Course",
   description:
-    "Learn Japanese N5 from scratch with vocabulary lists, easy grammar explanations, listening practice, and a practical 30-day JLPT N5 study plan.",
+    "Learn Japanese N5 from scratch with vocabulary lists, easy grammar explanations, listening practice, and a practical 30-day JLPT N5 study plan for learners in the United States.",
   keywords: [
     "Japanese N5",
     "JLPT N5",
     "Learn Japanese N5",
     "Japanese beginner course",
     "Japanese language basics",
+    "learn Japanese in USA",
+    "United States Japanese learning",
   ],
   alternates: {
     canonical: "/",
+    languages: {
+      "en-us": "/",
+    },
   },
 };
 
@@ -45,9 +50,13 @@ export default function Home() {
         "@type": "WebSite",
         name: "SkillDojo",
         url: siteUrl,
-        inLanguage: "en",
+        inLanguage: "en-US",
+        areaServed: {
+          "@type": "Country",
+          name: "United States",
+        },
         description:
-          "Free Japanese learning website with Hiragana, Katakana, and JLPT N5 vocabulary lessons.",
+          "Free Japanese learning website with Hiragana, Katakana, and JLPT N5 vocabulary lessons for learners in the United States.",
       },
       {
         "@type": "EducationalOrganization",
@@ -64,6 +73,14 @@ export default function Home() {
           url: siteUrl,
         },
         educationalLevel: "Beginner",
+        inLanguage: "en-US",
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+          availability: "https://schema.org/InStock",
+          url: siteUrl,
+        },
         about: [
           "Japanese N5 vocabulary list with meaning",
           "JLPT N5 grammar explained easy",
