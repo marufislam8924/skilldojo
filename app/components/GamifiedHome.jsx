@@ -8,6 +8,7 @@ import StreakBadge from "./gamification/StreakBadge";
 import XPBar from "./gamification/XPBar";
 import BadgeCard from "./gamification/BadgeCard";
 import AchievementPopup from "./gamification/AchievementPopup";
+import Confetti from "./Confetti";
 import DailyGoal from "./DailyGoal";
 import AdSenseUnit from "./AdSenseUnit";
 import {
@@ -19,6 +20,7 @@ import {
   getReviewMistakes,
 } from "../lib/studentProgress";
 import { useAnalytics } from "../hooks/useAnalytics";
+import { useBehavioralRetention } from "../hooks/useBehavioralRetention";
 
 const TESTIMONIALS = [
   {
@@ -80,7 +82,15 @@ function SectionAction({ href, label, onClick }) {
   );
 }
 
-function TopProgressLoop({ percent, continueHref, onContinueClick }) {
+function TopProgressLoop({
+  percent,
+  continueHref,
+  onContinueClick,
+  urgencyMessage,
+  streakWarningText,
+  showStreakWarning,
+  zeigarnikMessage,
+}) {
   return (
     <div className="sticky top-14 z-40 border-y border-slate-200 bg-white/95 px-6 py-3 backdrop-blur md:top-16">
       <div className="mx-auto flex max-w-7xl flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -95,6 +105,13 @@ function TopProgressLoop({ percent, continueHref, onContinueClick }) {
               style={{ width: `${percent}%` }}
             />
           </div>
+          <p className="mt-1.5 text-xs font-semibold text-slate-600">{zeigarnikMessage}</p>
+          <p className="mt-0.5 text-xs text-amber-700">{urgencyMessage}</p>
+          {showStreakWarning ? (
+            <p className="mt-1 inline-flex rounded-full bg-rose-100 px-2.5 py-1 text-xs font-bold text-rose-700 animate-pulse">
+              {streakWarningText}
+            </p>
+          ) : null}
         </div>
 
         <Link
@@ -128,6 +145,7 @@ export default function GamifiedHome() {
   const [liveLearners, setLiveLearners] = useState(23);
   const [contentReady, setContentReady] = useState(false);
   const [reward, setReward] = useState({ show: false, text: "" });
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const refreshHomeData = useCallback(() => {
     setStats(getGamificationStats());
@@ -172,6 +190,62 @@ export default function GamifiedHome() {
 
   const levelTrack = getLevelTrack(stats.level);
   const unlockedSet = useMemo(() => new Set(stats.unlockedBadges || []), [stats.unlockedBadges]);
+  const {
+    zeigarnik,
+    urgencyMessage,
+    showStreakWarning,
+    streakWarningText,
+    maybeTriggerVariableReward,
+  } = useBehavioralRetention({ stats, overall });
+
+  const triggerDopamineFeedback = useCallback(() => {
+    setShowConfetti(true);
+    window.setTimeout(() => setShowConfetti(false), 1300);
+
+    // Optional sound feedback using Web Audio API.
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      const context = new AudioCtx();
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+
+      oscillator.type = "triangle";
+      oscillator.frequency.value = 660;
+      oscillator.connect(gain);
+      gain.connect(context.destination);
+
+      gain.gain.setValueAtTime(0.0001, context.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.08, context.currentTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.16);
+
+      oscillator.start();
+      oscillator.stop(context.currentTime + 0.18);
+    } catch {
+      // No-op when audio is blocked or unsupported.
+    }
+  }, []);
+
+  const maybeAwardVariableBonus = useCallback(
+    (source) => {
+      const rewardRoll = maybeTriggerVariableReward(source);
+      if (!rewardRoll.granted) return;
+
+      const bonusResult = addXP(rewardRoll.bonusXP, {
+        source: `variable_reward_${source}`,
+      });
+
+      setReward({ show: true, text: `Lucky bonus! +${bonusResult.xpGained || rewardRoll.bonusXP} XP` });
+      triggerDopamineFeedback();
+
+      trackCustom("variable_reward_bonus", {
+        source,
+        bonus_xp: rewardRoll.bonusXP,
+        chance: rewardRoll.chance,
+      });
+    },
+    [maybeTriggerVariableReward, trackCustom, triggerDopamineFeedback]
+  );
 
   const handleStartOneClick = useCallback(() => {
     trackCTA("start_in_1_click", { location: "hero_preview", target: continueHref });
@@ -179,15 +253,20 @@ export default function GamifiedHome() {
     const xpResult = addXP(10, { source: "home_start_preview" });
     if (xpResult?.xpGained) {
       setReward({ show: true, text: `You earned +${xpResult.xpGained} XP` });
+      triggerDopamineFeedback();
     }
+
+    maybeAwardVariableBonus("start_one_click");
 
     window.setTimeout(() => {
       router.push(continueHref);
     }, 380);
-  }, [continueHref, router, trackCTA]);
+  }, [continueHref, router, trackCTA, triggerDopamineFeedback, maybeAwardVariableBonus]);
 
   return (
     <div className="bg-white text-slate-900">
+      <Confetti show={showConfetti} />
+
       <AchievementPopup
         show={reward.show}
         text={reward.text}
@@ -198,7 +277,14 @@ export default function GamifiedHome() {
       <TopProgressLoop
         percent={persistentPercent}
         continueHref={continueHref}
-        onContinueClick={() => trackCTA("continue_where_left_off", { location: "sticky_progress" })}
+        urgencyMessage={urgencyMessage}
+        streakWarningText={streakWarningText}
+        showStreakWarning={showStreakWarning}
+        zeigarnikMessage={zeigarnik.message}
+        onContinueClick={() => {
+          trackCTA("continue_where_left_off", { location: "sticky_progress" });
+          maybeAwardVariableBonus("sticky_continue");
+        }}
       />
 
       <Section id="hero">
@@ -213,6 +299,7 @@ export default function GamifiedHome() {
             <p className="mt-4 max-w-xl text-lg text-slate-600">
               Follow bite-sized lessons, earn instant rewards, and keep a streak that turns daily practice into habit.
             </p>
+            <p className="mt-2 text-sm font-semibold text-amber-700">{urgencyMessage}</p>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <button
@@ -242,6 +329,8 @@ export default function GamifiedHome() {
                   style={{ width: `${heroStartPercent}%` }}
                 />
               </div>
+              <p className="mt-2 text-xs font-semibold text-slate-600">{zeigarnik.message}</p>
+              <p className="mt-1 text-xs text-slate-500">{zeigarnik.completionMessage}</p>
             </div>
           </div>
 
@@ -274,6 +363,12 @@ export default function GamifiedHome() {
                   ))}
             </div>
 
+            {showStreakWarning ? (
+              <p className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-bold text-rose-700">
+                {streakWarningText}
+              </p>
+            ) : null}
+
             <button
               type="button"
               onClick={handleStartOneClick}
@@ -287,7 +382,10 @@ export default function GamifiedHome() {
         <SectionAction
           href={continueHref}
           label="Continue Lesson →"
-          onClick={() => trackCTA("continue_after_hero", { target: continueHref })}
+          onClick={() => {
+            trackCTA("continue_after_hero", { target: continueHref });
+            maybeAwardVariableBonus("hero_continue");
+          }}
         />
       </Section>
 
@@ -327,7 +425,10 @@ export default function GamifiedHome() {
         <SectionAction
           href="/quiz"
           label="Try Next Challenge →"
-          onClick={() => trackCTA("next_challenge_after_gamification", { target: "/quiz" })}
+          onClick={() => {
+            trackCTA("next_challenge_after_gamification", { target: "/quiz" });
+            maybeAwardVariableBonus("challenge_after_gamification");
+          }}
         />
       </Section>
 
@@ -377,7 +478,10 @@ export default function GamifiedHome() {
         <SectionAction
           href={continueHref}
           label={`${continueLabel} →`}
-          onClick={() => trackCTA("continue_after_progress_loop", { target: continueHref })}
+          onClick={() => {
+            trackCTA("continue_after_progress_loop", { target: continueHref });
+            maybeAwardVariableBonus("progress_loop_continue");
+          }}
         />
       </Section>
 
@@ -406,7 +510,10 @@ export default function GamifiedHome() {
         <SectionAction
           href="/conversation"
           label="Try Next Challenge →"
-          onClick={() => trackCTA("next_challenge_after_social_proof", { target: "/conversation" })}
+          onClick={() => {
+            trackCTA("next_challenge_after_social_proof", { target: "/conversation" });
+            maybeAwardVariableBonus("social_proof_challenge");
+          }}
         />
       </Section>
 
@@ -430,7 +537,10 @@ export default function GamifiedHome() {
         <SectionAction
           href="/courses/30-days"
           label="Continue Lesson →"
-          onClick={() => trackCTA("continue_after_curiosity", { target: "/courses/30-days" })}
+          onClick={() => {
+            trackCTA("continue_after_curiosity", { target: "/courses/30-days" });
+            maybeAwardVariableBonus("curiosity_continue");
+          }}
         />
       </Section>
 
@@ -450,6 +560,7 @@ export default function GamifiedHome() {
             type="button"
             onClick={() => {
               trackCTA("final_start_learning_now", { target: continueHref });
+              maybeAwardVariableBonus("final_start");
               router.push(continueHref);
             }}
             className="mt-7 inline-flex items-center justify-center rounded-2xl bg-white px-7 py-3 text-base font-bold text-slate-900 shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-100"
