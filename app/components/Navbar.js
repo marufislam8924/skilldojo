@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import StudentNavAction from "./StudentNavAction";
-import { getGamificationStats } from "../lib/studentProgress";
+import { getContinueLesson, getGamificationStats } from "../lib/studentProgress";
+import { trackEvent } from "../lib/analytics";
 
 const navLinks = [
   { href: "/hiragana", label: "Hiragana", icon: "あ" },
@@ -19,6 +20,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [streak, setStreak] = useState(0);
+  const [continueInfo, setContinueInfo] = useState(null);
   const pathname = usePathname();
   const panelRef = useRef(null);
   const hamburgerRef = useRef(null);
@@ -41,6 +43,7 @@ export default function Navbar() {
     const refreshStats = () => {
       const stats = getGamificationStats();
       setStreak(stats.currentStreak || 0);
+      setContinueInfo(getContinueLesson());
     };
 
     refreshStats();
@@ -143,6 +146,34 @@ export default function Navbar() {
                 <span aria-hidden="true">🔥</span>
                 <span>{streak}</span>
               </div>
+
+              {continueInfo ? (
+                <Link
+                  href={continueInfo.href}
+                  onClick={() =>
+                    trackEvent("cta_click", {
+                      cta_name: "navbar_continue_learning",
+                      target: continueInfo.href,
+                    })
+                  }
+                  className="inline-flex items-center rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-2 text-[13px] font-semibold text-emerald-800 no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-100"
+                >
+                  Continue Learning
+                </Link>
+              ) : null}
+
+              <Link
+                href="/hiragana/1"
+                onClick={() =>
+                  trackEvent("cta_click", {
+                    cta_name: "navbar_start_learning_now",
+                    target: "/hiragana/1",
+                  })
+                }
+                className="inline-flex items-center rounded-lg bg-slate-900 px-4 py-2 text-[13px] font-semibold text-white no-underline shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-800"
+              >
+                Start Learning Now
+              </Link>
 
               <StudentNavAction
                 className="inline-flex items-center rounded-lg bg-[var(--red)] px-4 py-2 text-[13px] font-semibold text-white no-underline shadow-sm transition-all duration-200 hover:bg-[#c4261e] hover:shadow-md active:scale-[0.97]"
@@ -277,6 +308,36 @@ export default function Navbar() {
 
         {/* Panel CTA */}
         <div className="shrink-0 border-t border-[var(--border)] p-4">
+          {continueInfo ? (
+            <Link
+              href={continueInfo.href}
+              onClick={() => {
+                close();
+                trackEvent("cta_click", {
+                  cta_name: "mobile_nav_continue_learning",
+                  target: continueInfo.href,
+                });
+              }}
+              className="mb-2 flex w-full items-center justify-center rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-3 text-[15px] font-semibold text-emerald-800 no-underline transition-all duration-200 hover:bg-emerald-100"
+            >
+              Continue Learning
+            </Link>
+          ) : null}
+
+          <Link
+            href="/hiragana/1"
+            onClick={() => {
+              close();
+              trackEvent("cta_click", {
+                cta_name: "mobile_nav_start_learning_now",
+                target: "/hiragana/1",
+              });
+            }}
+            className="mb-2 flex w-full items-center justify-center rounded-xl bg-slate-900 px-4 py-3 text-[15px] font-semibold text-white no-underline shadow-sm transition-all duration-200 hover:bg-slate-800"
+          >
+            Start Learning Now
+          </Link>
+
           <StudentNavAction
             className="flex w-full items-center justify-center rounded-xl bg-[var(--red)] px-4 py-3 text-[15px] font-semibold text-white no-underline shadow-sm transition-all duration-200 hover:bg-[#c4261e] hover:shadow-md active:scale-[0.97]"
             signInLabel="Sign In"

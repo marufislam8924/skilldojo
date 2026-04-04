@@ -17,6 +17,7 @@ import {
   clearPendingRedirect,
   waitForRedirectUser,
 } from "./firebaseClient";
+import { trackEvent, trackLessonCompletion } from "./analytics";
 
 export const COURSE_TOTALS = {
   hiragana: 21,
@@ -338,6 +339,15 @@ export function addXP(points = 0, options = {}) {
 
   saveGamification(data);
   const unlockedBadges = evaluateAndUnlockAchievements(getStudentProgress());
+
+  trackEvent("xp_earned", {
+    xp_gained: Number(points),
+    total_xp: nextTotal,
+    old_level: oldLevel,
+    new_level: nextLevel,
+    did_level_up: didLevelUp,
+    source: options.source || "manual",
+  });
 
   return {
     xpGained: Number(points),
@@ -689,6 +699,16 @@ export function markLessonComplete(courseSlug, lessonId, score, totalCards) {
       // Do not block lesson flow if cloud sync fails.
     });
   }
+
+  trackLessonCompletion({
+    courseSlug,
+    lessonId,
+    score: safeScore,
+    totalCards: safeTotal,
+    isNewLesson,
+    xpGained: gamifResult.xpGained || 0,
+    currentStreak: gamifResult.currentStreak || getGamificationStats().currentStreak || 0,
+  });
 
   return {
     ...gamifResult,
