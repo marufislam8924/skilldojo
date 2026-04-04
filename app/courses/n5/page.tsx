@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { jlptN5Course } from "../../../data/jlptN5Course";
+import { getCourseUnlockState } from "../../lib/studentProgress";
 import styles from "./n5.module.css";
 
 const skillClass: Record<string, string> = {
@@ -13,8 +13,24 @@ const skillClass: Record<string, string> = {
 };
 
 export default function N5CoursePage() {
-  const router = useRouter();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [unlockState, setUnlockState] = useState(() =>
+    getCourseUnlockState("n5", jlptN5Course.length)
+  );
+
+  useEffect(() => {
+    const refresh = () => {
+      setUnlockState(getCourseUnlockState("n5", jlptN5Course.length));
+    };
+
+    refresh();
+    window.addEventListener("storage", refresh);
+    window.addEventListener("skilldojo-progress-changed", refresh);
+
+    return () => {
+      window.removeEventListener("storage", refresh);
+      window.removeEventListener("skilldojo-progress-changed", refresh);
+    };
+  }, []);
 
   return (
     <main className={styles.main}>
@@ -31,19 +47,42 @@ export default function N5CoursePage() {
       <h2 className={styles.headerTag}>All JLPT N5 Lessons</h2>
 
       <div className={`${styles.grid} grid-cols-1 md:grid-cols-2 lg:grid-cols-3`}>
-        {jlptN5Course.map((lesson) => (
-          <div key={lesson.id} className={styles.lessonCard}>
-            <div className={styles.lessonNum}>Lesson {lesson.id}</div>
-            <div className={styles.lessonTitle}>{lesson.title}</div>
-            <div className={styles.lessonJapanese}>{lesson.titleJapanese}</div>
-            <span className={`${styles.skillBadge} ${skillClass[lesson.skill] || ""}`}>
-              {lesson.skill}
-            </span>
-            <Link href={`/courses/n5/${lesson.id}`} className={styles.startBtn}>
-              Start Lesson →
-            </Link>
-          </div>
-        ))}
+        {jlptN5Course.map((lesson) => {
+          const isCompleted = unlockState.completedSet.has(lesson.id);
+          const isLocked =
+            !isCompleted &&
+            unlockState.nextUnlockedLesson !== null &&
+            lesson.id > unlockState.nextUnlockedLesson;
+
+          return (
+            <div
+              key={lesson.id}
+              className={`${styles.lessonCard} ${isCompleted ? styles.lessonCardCompleted : ""} ${
+                isLocked ? styles.lessonCardLocked : ""
+              }`}
+            >
+              <div className={styles.lessonHead}>
+                <div className={styles.lessonNum}>Lesson {lesson.id}</div>
+                <span className={styles.lessonStatusIcon} aria-label={isCompleted ? "Completed" : isLocked ? "Locked" : "Unlocked"}>
+                  {isCompleted ? "✓" : isLocked ? "🔒" : "▶"}
+                </span>
+              </div>
+              <div className={styles.lessonTitle}>{lesson.title}</div>
+              <div className={styles.lessonJapanese}>{lesson.titleJapanese}</div>
+              <span className={`${styles.skillBadge} ${skillClass[lesson.skill] || ""}`}>
+                {lesson.skill}
+              </span>
+
+              {isLocked ? (
+                <span className={`${styles.startBtn} ${styles.startBtnLocked}`}>Locked</span>
+              ) : (
+                <Link href={`/courses/n5/${lesson.id}`} className={styles.startBtn}>
+                  {isCompleted ? "Review Lesson" : "Start Lesson →"}
+                </Link>
+              )}
+            </div>
+          );
+        })}
       </div>
     </main>
   );

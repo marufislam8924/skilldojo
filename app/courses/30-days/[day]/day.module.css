@@ -185,6 +185,14 @@
   box-shadow: 6px 6px 0 var(--red);
 }
 
+.completeBtn:disabled {
+  background: #94a3b8;
+  border-color: #94a3b8;
+  box-shadow: 4px 4px 0 #64748b;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .completedBtn {
   composes: completeBtn;
   background: #22c55e;
@@ -198,6 +206,13 @@
   border-color: #22c55e;
   transform: none;
   box-shadow: 4px 4px 0 #16a34a;
+}
+
+.completeFeedback {
+  text-align: center;
+  font-size: 0.88rem;
+  color: #065f46;
+  margin: -18px 0 28px;
 }
 
 /* NAV BUTTONS */

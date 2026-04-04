@@ -1,7 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { curriculum } from "../../../data/japaneseIn30Days";
+import { getCourseUnlockState } from "../../lib/studentProgress";
 import styles from "./thirtyDays.module.css";
 
 const focusClass: Record<string, string> = {
@@ -39,16 +40,24 @@ const weekTitles: Record<number, string> = {
 };
 
 export default function ThirtyDaysPage() {
-  const [completedDays, setCompletedDays] = useState<Set<number>>(new Set());
+  const [unlockState, setUnlockState] = useState(() => getCourseUnlockState("thirtyDays", 30));
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("skilldojo_30days_progress");
-      if (saved) setCompletedDays(new Set(JSON.parse(saved)));
-    } catch {}
+    const refresh = () => {
+      setUnlockState(getCourseUnlockState("thirtyDays", 30));
+    };
+
+    refresh();
+    window.addEventListener("storage", refresh);
+    window.addEventListener("skilldojo-progress-changed", refresh);
+
+    return () => {
+      window.removeEventListener("storage", refresh);
+      window.removeEventListener("skilldojo-progress-changed", refresh);
+    };
   }, []);
 
-  const progress = Math.round((completedDays.size / 30) * 100);
+  const progress = Math.round((unlockState.completedCount / 30) * 100);
   let currentWeek = 0;
 
   return (
@@ -67,7 +76,7 @@ export default function ThirtyDaysPage() {
           <div className={styles.progressInner} style={{ width: `${progress}%` }} />
         </div>
         <div className={styles.progressText}>
-          {completedDays.size} / 30 days completed ({progress}%)
+          {unlockState.completedCount} / 30 days completed ({progress}%)
         </div>
       </div>
 
@@ -78,35 +87,54 @@ export default function ThirtyDaysPage() {
         const showWeek = week !== currentWeek;
         if (showWeek) currentWeek = week;
 
+        const isCompleted = unlockState.completedSet.has(day.day);
+        const isLocked =
+          !isCompleted &&
+          unlockState.nextUnlockedLesson !== null &&
+          day.day > unlockState.nextUnlockedLesson;
+
         return (
           <div key={day.day}>
-            {showWeek && (
-              <div className={styles.weekLabel}>{weekTitles[week]}</div>
-            )}
+            {showWeek && <div className={styles.weekLabel}>{weekTitles[week]}</div>}
             <div className={`${styles.grid} grid-cols-1`}>
-              <Link
-                href={`/courses/30-days/${day.day}`}
-                className={`${styles.dayCard} ${completedDays.has(day.day) ? styles.completed : ""}`}
-              >
-                <div className={`${styles.dayNum} ${focusClass[day.focus] || ""}`}>
-                  {completedDays.has(day.day) ? "✓" : day.day}
-                </div>
-                <div className={styles.dayInfo}>
-                  <div className={styles.dayTitle}>{day.title}</div>
-                  <div className={styles.daySubtitle}>{day.subtitle}</div>
-                  <div className={styles.dayTasks}>
-                    {day.tasks.map((t, i) => (
-                      <span
-                        key={i}
-                        className={`${styles.taskBadge} ${badgeClass[t.label] || ""}`}
-                      >
-                        {t.label}
-                      </span>
-                    ))}
+              {isLocked ? (
+                <div className={`${styles.dayCard} ${styles.locked}`}>
+                  <div className={`${styles.dayNum} ${styles.dayNumLocked}`}>🔒</div>
+                  <div className={styles.dayInfo}>
+                    <div className={styles.dayTitle}>{day.title}</div>
+                    <div className={styles.daySubtitle}>Locked until you complete previous day</div>
+                    <div className={styles.dayTasks}>
+                      {day.tasks.map((t, i) => (
+                        <span key={i} className={`${styles.taskBadge} ${badgeClass[t.label] || ""}`}>
+                          {t.label}
+                        </span>
+                      ))}
+                    </div>
                   </div>
+                  <span className={styles.dayArrow}>🔒</span>
                 </div>
-                <span className={styles.dayArrow}>→</span>
-              </Link>
+              ) : (
+                <Link
+                  href={`/courses/30-days/${day.day}`}
+                  className={`${styles.dayCard} ${isCompleted ? styles.completed : ""}`}
+                >
+                  <div className={`${styles.dayNum} ${focusClass[day.focus] || ""}`}>
+                    {isCompleted ? "✓" : day.day}
+                  </div>
+                  <div className={styles.dayInfo}>
+                    <div className={styles.dayTitle}>{day.title}</div>
+                    <div className={styles.daySubtitle}>{day.subtitle}</div>
+                    <div className={styles.dayTasks}>
+                      {day.tasks.map((t, i) => (
+                        <span key={i} className={`${styles.taskBadge} ${badgeClass[t.label] || ""}`}>
+                          {t.label}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <span className={styles.dayArrow}>{isCompleted ? "✓" : "→"}</span>
+                </Link>
+              )}
             </div>
           </div>
         );

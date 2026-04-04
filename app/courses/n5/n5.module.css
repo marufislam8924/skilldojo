@@ -103,10 +103,43 @@
   transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
 }
 
+.lessonHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.lessonStatusIcon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
 .lessonCard:hover {
   transform: translate(-3px, -3px);
   box-shadow: 7px 7px 0 var(--red);
   border-color: var(--red);
+}
+
+.lessonCardCompleted {
+  border-color: #22c55e;
+  box-shadow: 4px 4px 0 #22c55e;
+}
+
+.lessonCardCompleted:hover {
+  box-shadow: 6px 6px 0 #22c55e;
+  border-color: #16a34a;
+}
+
+.lessonCardLocked {
+  border-color: #cbd5e1;
+  box-shadow: 4px 4px 0 #cbd5e1;
+}
+
+.lessonCardLocked:hover {
+  transform: none;
+  box-shadow: 4px 4px 0 #cbd5e1;
+  border-color: #cbd5e1;
 }
 
 .lessonNum {
@@ -179,6 +212,18 @@
 .startBtn:hover {
   background: var(--red);
   border-color: var(--red);
+}
+
+.startBtnLocked {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+  color: #475569;
+  cursor: not-allowed;
+}
+
+.startBtnLocked:hover {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
 }
 
 /* MOBILE */

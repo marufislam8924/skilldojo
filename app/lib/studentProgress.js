@@ -24,6 +24,8 @@ export const COURSE_TOTALS = {
   vocab: 25,
   grammar: 8,
   conversation: 15,
+  n5: 10,
+  thirtyDays: 30,
 };
 
 export const COURSE_LABELS = {
@@ -32,6 +34,8 @@ export const COURSE_LABELS = {
   vocab: "Vocabulary",
   grammar: "Grammar",
   conversation: "Conversation",
+  n5: "JLPT N5",
+  thirtyDays: "30-Day Challenge",
 };
 
 const ACHIEVEMENTS = [
@@ -380,7 +384,7 @@ export function saveProgress(progress) {
 
 export function getContinueLesson() {
   const dashboard = getDashboardData();
-  const priority = ["hiragana", "katakana", "vocab", "grammar", "conversation"];
+  const priority = ["hiragana", "katakana", "vocab", "grammar", "conversation", "n5", "thirtyDays"];
 
   for (const slug of priority) {
     const course = dashboard.courses.find((c) => c.slug === slug);
@@ -396,6 +400,36 @@ export function getContinueLesson() {
   }
 
   return null;
+}
+
+export function getCourseUnlockState(courseSlug, totalLessons) {
+  const safeTotalLessons = Number(totalLessons) || COURSE_TOTALS[courseSlug] || 0;
+  const progress = getStudentProgress();
+  const courseState = progress?.[courseSlug] || {};
+  const completedLessons = Array.isArray(courseState.completedLessons)
+    ? [...new Set(courseState.completedLessons)].sort((a, b) => a - b)
+    : [];
+
+  const completedSet = new Set(completedLessons);
+  let nextUnlockedLesson = safeTotalLessons > 0 ? 1 : null;
+
+  for (let lesson = 1; lesson <= safeTotalLessons; lesson += 1) {
+    if (!completedSet.has(lesson)) {
+      nextUnlockedLesson = lesson;
+      break;
+    }
+    if (lesson === safeTotalLessons) {
+      nextUnlockedLesson = null;
+    }
+  }
+
+  return {
+    completedLessons,
+    completedSet,
+    completedCount: completedLessons.length,
+    totalLessons: safeTotalLessons,
+    nextUnlockedLesson,
+  };
 }
 
 export function getGamificationStats() {

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { awardXP, checkAndAwardBadges, updateStreak } from "@/lib/gamification";
 import { supabase } from "@/lib/supabase";
+import { getCourseUnlockState, markLessonComplete } from "../../../lib/studentProgress";
 import { jlptN5Course } from "../../../../data/jlptN5Course";
 import type { N5Lesson } from "../../../../data/jlptN5Course";
 import styles from "./lesson.module.css";
@@ -22,6 +23,26 @@ export default function LessonClient({ params }: { params: { id: string } }) {
   const lesson: N5Lesson | undefined = jlptN5Course.find((l) => l.id === lessonId);
 
   const [activeTab, setActiveTab] = useState<Tab>("vocabulary");
+  const [unlockState, setUnlockState] = useState(() =>
+    getCourseUnlockState("n5", jlptN5Course.length)
+  );
+  const [isMarkingComplete, setIsMarkingComplete] = useState(false);
+  const [completionFeedback, setCompletionFeedback] = useState("");
+
+  useEffect(() => {
+    const refresh = () => {
+      setUnlockState(getCourseUnlockState("n5", jlptN5Course.length));
+    };
+
+    refresh();
+    window.addEventListener("storage", refresh);
+    window.addEventListener("skilldojo-progress-changed", refresh);
+
+    return () => {
+      window.removeEventListener("storage", refresh);
+      window.removeEventListener("skilldojo-progress-changed", refresh);
+    };
+  }, []);
 
   if (!lesson) {
     return (
@@ -31,6 +52,51 @@ export default function LessonClient({ params }: { params: { id: string } }) {
           <button className={styles.backBtn} onClick={() => router.push("/courses/n5")}>
             ← Back to Course
           </button>
+        </div>
+      </main>
+    );
+  }
+
+  const isCompleted = unlockState.completedSet.has(lesson.id);
+  const isLocked =
+    !isCompleted &&
+    unlockState.nextUnlockedLesson !== null &&
+    lesson.id > unlockState.nextUnlockedLesson;
+
+  const handleMarkComplete = async () => {
+    if (isCompleted || isLocked || isMarkingComplete) return;
+
+    setIsMarkingComplete(true);
+    try {
+      const result = markLessonComplete("n5", lesson.id, 0, 0);
+      setUnlockState(getCourseUnlockState("n5", jlptN5Course.length));
+      setCompletionFeedback(result?.message || "Lesson marked complete. Next lesson unlocked.");
+    } finally {
+      setIsMarkingComplete(false);
+    }
+  };
+
+  if (isLocked) {
+    return (
+      <main className={styles.main}>
+        <nav className={styles.nav}>
+          <span className={styles.logo}>
+            Skill<span style={{ color: "var(--red)" }}>Dojo</span> 道場
+          </span>
+          <button className={styles.backBtn} onClick={() => router.push("/courses/n5")}>
+            ← Back
+          </button>
+        </nav>
+
+        <div className={styles.content}>
+          <div className={styles.lockedCard}>
+            <div className={styles.lockedIcon}>🔒</div>
+            <h1 className={styles.lockedTitle}>Lesson {lesson.id} is locked</h1>
+            <p className={styles.lockedText}>
+              Complete Lesson {unlockState.nextUnlockedLesson || 1} first to unlock this lesson.
+            </p>
+            <button className={styles.quizNext} onClick={() => router.push("/courses/n5")}>Back to course</button>
+          </div>
         </div>
       </main>
     );
@@ -61,6 +127,40 @@ export default function LessonClient({ params }: { params: { id: string } }) {
         <span className={`${styles.skillBadge} ${skillClass[lesson.skill] || ""}`}>
           {lesson.skill}
         </span>
+
+        <section className={styles.overviewCard}>
+          <h2 className={styles.overviewTitle}>Lesson Overview</h2>
+          <p className={styles.overviewText}>{lesson.description}</p>
+          {lesson.videoUrl ? (
+            <div className={styles.videoWrap}>
+              <iframe
+                src={lesson.videoUrl}
+                title={lesson.videoTitle || `${lesson.title} video`}
+                className={styles.videoFrame}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          ) : null}
+        </section>
+
+        <div className={styles.completeBar}>
+          <div className={styles.completeStatus}>
+            {isCompleted ? "✓ Completed" : "Not completed yet"}
+          </div>
+          <button
+            className={styles.quizNext}
+            onClick={handleMarkComplete}
+            disabled={isCompleted || isMarkingComplete}
+          >
+            {isCompleted
+              ? "Completed"
+              : isMarkingComplete
+                ? "Saving..."
+                : "Mark as Complete"}
+          </button>
+        </div>
+        {completionFeedback ? <p className={styles.completeFeedback}>{completionFeedback}</p> : null}
 
         <div className={`${styles.tabs} flex-nowrap overflow-x-auto whitespace-nowrap md:overflow-visible`}>
           {tabs.map((t) => (

@@ -38,6 +38,8 @@ export interface N5Lesson {
   titleJapanese: string;
   skill: Skill;
   description: string;
+  videoUrl?: string;
+  videoTitle?: string;
   vocabulary: VocabItem[];
   grammarPoints: GrammarPoint[];
   practiceSentences: PracticeSentence[];

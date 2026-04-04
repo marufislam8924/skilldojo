@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { getCourseUnlockState, markLessonComplete } from "../../../lib/studentProgress";
 import { curriculum } from "../../../../data/japaneseIn30Days";
 import styles from "./day.module.css";
 
@@ -41,33 +42,24 @@ export default function DayClient() {
   const dayNum = Number(params.day);
   const day = curriculum.find((d) => d.day === dayNum);
 
-  const [completed, setCompleted] = useState(false);
+  const [unlockState, setUnlockState] = useState(() => getCourseUnlockState("thirtyDays", 30));
+  const [isSaving, setIsSaving] = useState(false);
+  const [feedback, setFeedback] = useState("");
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("skilldojo_30days_progress");
-      if (saved) {
-        const arr: number[] = JSON.parse(saved);
-        if (arr.includes(dayNum)) setCompleted(true);
-      }
-    } catch {}
-  }, [dayNum]);
+    const refresh = () => {
+      setUnlockState(getCourseUnlockState("thirtyDays", 30));
+    };
 
-  function toggleComplete() {
-    try {
-      const saved = localStorage.getItem("skilldojo_30days_progress");
-      const arr: number[] = saved ? JSON.parse(saved) : [];
-      let next: number[];
-      if (arr.includes(dayNum)) {
-        next = arr.filter((d) => d !== dayNum);
-        setCompleted(false);
-      } else {
-        next = [...arr, dayNum];
-        setCompleted(true);
-      }
-      localStorage.setItem("skilldojo_30days_progress", JSON.stringify(next));
-    } catch {}
-  }
+    refresh();
+    window.addEventListener("storage", refresh);
+    window.addEventListener("skilldojo-progress-changed", refresh);
+
+    return () => {
+      window.removeEventListener("storage", refresh);
+      window.removeEventListener("skilldojo-progress-changed", refresh);
+    };
+  }, [dayNum]);
 
   if (!day) {
     return (
@@ -75,6 +67,36 @@ export default function DayClient() {
         <div className={styles.header}>
           <Link href="/courses/30-days" className={styles.backLink}>← Back to 30-Day Plan</Link>
           <h1 className={styles.dayTitle}>Day not found</h1>
+        </div>
+      </main>
+    );
+  }
+
+  const isCompleted = unlockState.completedSet.has(dayNum);
+  const isLocked =
+    !isCompleted &&
+    unlockState.nextUnlockedLesson !== null &&
+    dayNum > unlockState.nextUnlockedLesson;
+
+  const markComplete = () => {
+    if (isCompleted || isLocked || isSaving) return;
+    setIsSaving(true);
+    try {
+      markLessonComplete("thirtyDays", dayNum, day.tasks.length, day.tasks.length);
+      setUnlockState(getCourseUnlockState("thirtyDays", 30));
+      setFeedback("Day complete. The next day is now unlocked.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  if (isLocked) {
+    return (
+      <main className={styles.main}>
+        <div className={styles.header}>
+          <Link href="/courses/30-days" className={styles.backLink}>← Back to 30-Day Plan</Link>
+          <h1 className={styles.dayTitle}>Day {dayNum} is locked 🔒</h1>
+          <p className={styles.daySubtitle}>Complete Day {unlockState.nextUnlockedLesson || 1} to unlock this lesson.</p>
         </div>
       </main>
     );
@@ -118,12 +140,14 @@ export default function DayClient() {
 
       <div className={styles.completeWrap}>
         <button
-          onClick={toggleComplete}
-          className={completed ? styles.completedBtn : styles.completeBtn}
+          onClick={markComplete}
+          className={isCompleted ? styles.completedBtn : styles.completeBtn}
+          disabled={isCompleted || isSaving}
         >
-          {completed ? "✓ Day Completed" : "Mark Day as Complete"}
+          {isCompleted ? "✓ Day Completed" : isSaving ? "Saving..." : "Mark Day as Complete"}
         </button>
       </div>
+      {feedback ? <p className={styles.completeFeedback}>{feedback}</p> : null}
 
       <div className={styles.navButtons}>
         {prevDay ? (

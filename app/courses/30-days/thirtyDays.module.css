@@ -101,10 +101,22 @@
   border-color: var(--red);
 }
 
-.dayCard.completed {
+.completed {
   border-color: #22c55e;
   box-shadow: 4px 4px 0 #22c55e;
   opacity: 0.85;
+}
+
+.locked {
+  border-color: #cbd5e1;
+  box-shadow: 4px 4px 0 #cbd5e1;
+  cursor: not-allowed;
+}
+
+.locked:hover {
+  transform: none;
+  box-shadow: 4px 4px 0 #cbd5e1;
+  border-color: #cbd5e1;
 }
 
 /* DAY NUMBER CIRCLE */
@@ -129,6 +141,10 @@
 .focusN5         { background: #f59e0b; }
 .focusQuiz       { background: #ec4899; }
 .focusConversation { background: #14b8a6; }
+
+.dayNumLocked {
+  background: #64748b;
+}
 
 /* DAY INFO */
 .dayInfo {
