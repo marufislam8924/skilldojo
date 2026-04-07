@@ -59,30 +59,6 @@ const reactionVariants: AnimePhraseVariant[] = [
     englishNote: "",
     contextNote: "",
   },
-  {
-    japaneseSuffix: "よ",
-    romajiSuffix: " yo",
-    englishNote: " (assertive)",
-    contextNote: " Often used to emphasize certainty to the listener.",
-  },
-  {
-    japaneseSuffix: "ね",
-    romajiSuffix: " ne",
-    englishNote: " (seeking agreement)",
-    contextNote: " Common when inviting agreement or shared feeling.",
-  },
-  {
-    japaneseSuffix: "な",
-    romajiSuffix: " na",
-    englishNote: " (casual reflection)",
-    contextNote: " Often used in casual inner thoughts or rough speech.",
-  },
-  {
-    japaneseSuffix: "！",
-    romajiSuffix: "!",
-    englishNote: " (exclaimed)",
-    contextNote: " Delivered with strong emotion in fast-paced scenes.",
-  },
 ];
 
 const doubtVariants: AnimePhraseVariant[] = [
@@ -92,30 +68,6 @@ const doubtVariants: AnimePhraseVariant[] = [
     englishNote: "",
     contextNote: "",
   },
-  {
-    japaneseSuffix: "か",
-    romajiSuffix: " ka",
-    englishNote: " (as a question)",
-    contextNote: " Frequently used as a direct question in dialogue.",
-  },
-  {
-    japaneseSuffix: "の",
-    romajiSuffix: " no",
-    englishNote: " (soft question)",
-    contextNote: " Softer questioning style, common with close friends.",
-  },
-  {
-    japaneseSuffix: "んだ",
-    romajiSuffix: " n da",
-    englishNote: " (explanatory)",
-    contextNote: " Adds explanation or emotional insistence.",
-  },
-  {
-    japaneseSuffix: "…",
-    romajiSuffix: "...",
-    englishNote: " (hesitant)",
-    contextNote: " Usually spoken while uncertain or processing information.",
-  },
 ];
 
 const battleVariants: AnimePhraseVariant[] = [
@@ -124,30 +76,6 @@ const battleVariants: AnimePhraseVariant[] = [
     romajiSuffix: "",
     englishNote: "",
     contextNote: "",
-  },
-  {
-    japaneseSuffix: "！",
-    romajiSuffix: "!",
-    englishNote: " (battle shout)",
-    contextNote: " Typical in combat and confrontation moments.",
-  },
-  {
-    japaneseSuffix: "ぞ",
-    romajiSuffix: " zo",
-    englishNote: " (fierce)",
-    contextNote: " Adds rough confidence, often from determined characters.",
-  },
-  {
-    japaneseSuffix: "よ",
-    romajiSuffix: " yo",
-    englishNote: " (declared)",
-    contextNote: " Used to declare intent clearly to an opponent.",
-  },
-  {
-    japaneseSuffix: "な",
-    romajiSuffix: " na",
-    englishNote: " (gritted)",
-    contextNote: " Often appears in tense, close-range exchanges.",
   },
 ];
 

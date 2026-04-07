@@ -34,7 +34,9 @@ export default function AnimePhrasesCoursePage() {
             </div>
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
               <p className="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Phrases per lesson</p>
-              <p className="mt-1 text-2xl font-black text-slate-900">50</p>
+              <p className="mt-1 text-2xl font-black text-slate-900">
+                {animePhrasesCourse.lessons[0]?.phrases.length || 0}
+              </p>
             </div>
           </div>
 
@@ -73,7 +75,7 @@ export default function AnimePhrasesCoursePage() {
                   </span>
                 </div>
                 <p className="mt-3 text-sm text-slate-600">{lesson.description}</p>
-                <p className="mt-4 text-sm font-bold text-orange-700">50 phrases →</p>
+                <p className="mt-4 text-sm font-bold text-orange-700">{lesson.phrases.length} phrases →</p>
               </Link>
             ))}
           </div>

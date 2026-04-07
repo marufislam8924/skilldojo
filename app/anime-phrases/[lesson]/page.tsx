@@ -25,7 +25,7 @@ export function generateMetadata({ params }: Props) {
 
   return {
     title: `Anime Phrases Lesson ${lesson.id}: ${lesson.title}`,
-    description: `${lesson.description} Learn 50 anime phrases with romaji and usage context.`,
+    description: `${lesson.description} Learn ${lesson.phrases.length} anime phrases with romaji and usage context.`,
     alternates: {
       canonical: `/anime-phrases/${lesson.id}`,
     },

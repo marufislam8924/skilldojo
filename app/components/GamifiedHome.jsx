@@ -410,7 +410,7 @@ export default function GamifiedHome() {
               <div className="mt-5 flex flex-wrap gap-2">
                 {[
                   "20 lessons",
-                  "50 phrases per lesson",
+                  "10 phrases per lesson",
                   "N5 to N3 range",
                   "Romaji and context included",
                 ].map((item) => (
@@ -448,7 +448,7 @@ export default function GamifiedHome() {
               <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-orange-700">Course Snapshot</p>
               <div className="mt-4 grid grid-cols-2 gap-3">
                 {[
-                  { label: "Total phrases", value: "1000" },
+                  { label: "Total phrases", value: "200" },
                   { label: "Lessons", value: "20" },
                   { label: "Format", value: "JP + Romaji" },
                   { label: "Focus", value: "Anime usage" },
