@@ -130,6 +130,7 @@ export default function GamifiedHome() {
   const router = useRouter();
   const { trackCTA, trackCustom } = useAnalytics("home");
   const homeAdSlot = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_HOME_SLOT;
+  const animeFeaturedHref = "/anime-phrases";
 
   const [stats, setStats] = useState({
     totalXP: 0,
@@ -387,6 +388,80 @@ export default function GamifiedHome() {
             maybeAwardVariableBonus("hero_continue");
           }}
         />
+      </Section>
+
+      <Section title="Anime Phrases Course" subtitle="Featured New Course">
+        <div className="relative overflow-hidden rounded-3xl border border-orange-200 bg-gradient-to-r from-orange-50 via-amber-50 to-rose-50 p-6 shadow-lg md:p-8">
+          <div className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full bg-orange-200/40 blur-2xl" />
+          <div className="pointer-events-none absolute -bottom-16 -left-14 h-44 w-44 rounded-full bg-rose-200/30 blur-2xl" />
+
+          <div className="relative z-10 grid gap-6 lg:grid-cols-[1.6fr_1fr] lg:items-center">
+            <div>
+              <p className="inline-flex items-center rounded-full border border-orange-300 bg-white/80 px-3 py-1 text-xs font-extrabold uppercase tracking-[0.12em] text-orange-700">
+                New on SkillDojo
+              </p>
+              <h3 className="mt-4 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
+                Anime Phrases: 1000 real lines you actually hear in anime
+              </h3>
+              <p className="mt-3 max-w-2xl text-slate-700">
+                Learn iconic expressions from greetings and reactions to battle lines, school life, and emotional endings. Structured for beginners to lower-intermediate learners.
+              </p>
+
+              <div className="mt-5 flex flex-wrap gap-2">
+                {[
+                  "20 lessons",
+                  "50 phrases per lesson",
+                  "N5 to N3 range",
+                  "Romaji and context included",
+                ].map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-orange-200 bg-white px-3 py-1 text-xs font-bold text-slate-700"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href={`${animeFeaturedHref}/1`}
+                  onClick={() => {
+                    trackCTA("start_anime_phrases", { location: "featured_course" });
+                    maybeAwardVariableBonus("anime_course_start");
+                  }}
+                  className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-6 py-3 text-sm font-bold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-800"
+                >
+                  Start Lesson 1
+                </Link>
+                <Link
+                  href={animeFeaturedHref}
+                  onClick={() => trackCTA("view_anime_phrases_overview", { location: "featured_course" })}
+                  className="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-800 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-900"
+                >
+                  Browse Course
+                </Link>
+              </div>
+            </div>
+
+            <div className="relative z-10 rounded-2xl border border-orange-200 bg-white/90 p-5 shadow-sm backdrop-blur">
+              <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-orange-700">Course Snapshot</p>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                {[
+                  { label: "Total phrases", value: "1000" },
+                  { label: "Lessons", value: "20" },
+                  { label: "Format", value: "JP + Romaji" },
+                  { label: "Focus", value: "Anime usage" },
+                ].map((item) => (
+                  <div key={item.label} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">{item.label}</p>
+                    <p className="mt-1 text-sm font-black text-slate-900">{item.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </Section>
 
       <Section title="Gamified Progress System" subtitle="Keep Momentum">
