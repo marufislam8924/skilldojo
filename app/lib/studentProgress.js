@@ -689,8 +689,8 @@ export function markLessonComplete(courseSlug, lessonId, score, totalCards) {
 
   saveStudentProgress(progress);
 
-  // Track XP and streak only for new lessons
-  const gamifResult = isNewLesson ? updateStreakAndXP(1) : {};
+  // Award XP only once per lesson, but keep streak alive for any daily completion.
+  const gamifResult = isNewLesson ? updateStreakAndXP(1) : updateStreak();
   const unlockedBadges = isNewLesson ? evaluateAndUnlockAchievements(progress) : [];
 
   const student = getStudentSession();
@@ -710,8 +710,21 @@ export function markLessonComplete(courseSlug, lessonId, score, totalCards) {
     currentStreak: gamifResult.currentStreak || getGamificationStats().currentStreak || 0,
   });
 
+  const latestStats = getGamificationStats();
+
   return {
-    ...gamifResult,
+    xpGained: Number(gamifResult?.xpGained) || 0,
+    baseXP: Number(gamifResult?.baseXP) || 0,
+    multiplier: Number(gamifResult?.multiplier) || 1,
+    newLevel: Number(gamifResult?.newLevel ?? latestStats.level) || 1,
+    oldLevel: Number(gamifResult?.oldLevel ?? latestStats.level) || 1,
+    didLevelUp: Boolean(gamifResult?.didLevelUp),
+    currentStreak: Number(gamifResult?.currentStreak ?? latestStats.currentStreak) || 0,
+    longestStreak: Number(gamifResult?.longestStreak ?? latestStats.longestStreak) || 0,
+    lessonsToday: Number(gamifResult?.lessonsToday ?? latestStats.lessonsCompletedToday) || 0,
+    minutesStudiedToday:
+      Number(gamifResult?.minutesStudiedToday ?? latestStats.minutesStudiedToday) || 0,
+    message: gamifResult?.message || "",
     unlockedBadges,
   };
 }

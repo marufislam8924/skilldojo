@@ -288,8 +288,13 @@ function QuizSection({ lesson }: { lesson: N5Lesson }) {
   };
 
   const finalizeLesson = async () => {
+    const localResult = markLessonComplete("n5", lesson.id, score, quiz.length);
+    if (typeof localResult?.currentStreak === "number") {
+      setCompletionStreak(localResult.currentStreak);
+    }
+
     if (!userId) {
-      setCompletionError("Please sign in to save XP and streak progress.");
+      setCompletionError("Progress saved on this device. Sign in to sync XP and streak to your account.");
       setFinished(true);
       setCompletionOpen(true);
       return;
@@ -305,9 +310,13 @@ function QuizSection({ lesson }: { lesson: N5Lesson }) {
     setCompletionError(null);
 
     try {
-      await awardXP(userId, 20, lesson.id);
+      if ((localResult?.xpGained ?? 0) > 0) {
+        await awardXP(userId, 20, lesson.id);
+      }
       const streak = await updateStreak(userId);
-      await checkAndAwardBadges(userId);
+      if ((localResult?.xpGained ?? 0) > 0) {
+        await checkAndAwardBadges(userId);
+      }
 
       setCompletionStreak(streak.currentStreak);
       setCompletionAwarded(true);
