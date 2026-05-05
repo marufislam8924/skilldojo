@@ -1,33 +1,28 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { blogPosts, getBlogPost, getAllBlogSlugs } from "../../../data/blogPosts";
+import { createSupabaseServerClient } from "../../../lib/supabaseServer";
 import styles from "./blogPost.module.css";
 
-export function generateStaticParams() {
-  return getAllBlogSlugs().map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  const supabase = createSupabaseServerClient();
+  const { data: posts } = await supabase.from("posts").select("slug").eq("published", true);
+  return (posts || []).map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({ params }) {
-  const post = getBlogPost(params.slug);
-  if (!post) return { title: "Post Not Found" };
-
+export async function generateMetadata({ params }) {
+  const supabase = createSupabaseServerClient();
+  const { data } = await supabase.from("posts").select("title, excerpt, created_at").eq("slug", params.slug).maybeSingle();
+  if (!data) return { title: "Post Not Found" };
   return {
-    title: post.title,
-    description: post.description,
-    keywords: post.keywords,
-    alternates: { canonical: `/blog/${post.slug}` },
+    title: data.title,
+    description: data.excerpt,
+    alternates: { canonical: `/blog/${params.slug}` },
     openGraph: {
-      title: post.title,
-      description: post.description,
-      url: `/blog/${post.slug}`,
+      title: data.title,
+      description: data.excerpt,
+      url: `/blog/${params.slug}`,
       type: "article",
-      publishedTime: post.publishDate,
-      authors: [post.author],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.description,
+      publishedTime: data.created_at,
     },
   };
 }
@@ -255,100 +250,50 @@ function renderMarkdown(md) {
 
   return elements;
 }
+export default async function BlogPostPage({ params }) {
+  const supabase = createSupabaseServerClient();
+  const { data: post } = await supabase
+    .from("posts")
+    .select("id, title, slug, content, excerpt, cover_image_url, category, created_at")
+    .eq("slug", params.slug)
+    .maybeSingle();
 
-export default function BlogPostPage({ params }) {
-  const post = getBlogPost(params.slug);
   if (!post) notFound();
 
-  const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
-    description: post.description,
-    datePublished: post.publishDate,
-    author: { "@type": "Organization", name: post.author },
-    publisher: {
-      "@type": "EducationalOrganization",
-      name: "SkillDojo",
-      url: siteUrl,
-    },
+    description: post.excerpt,
+    datePublished: post.created_at,
+    publisher: { "@type": "EducationalOrganization", name: "SkillDojo", url: siteUrl },
     mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
   };
 
-  const relatedPosts = blogPosts.filter((p) => p.slug !== post.slug);
-
   return (
-    <main className={styles.main}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
+    <main className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-12">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
 
-      <nav className={styles.nav}>
-        <Link href="/" className={styles.logo}>
-          Skill<span style={{ color: "var(--red, #c41e3a)" }}>Dojo</span> 道場
-        </Link>
-        <Link href="/blog" className={styles.backLink}>
-          ← All Articles
-        </Link>
+      <nav className="flex items-center justify-between mb-6">
+        <Link href="/" className="text-lg font-black text-[var(--ink)] no-underline">Skill<span className="text-[var(--red)]">Dojo</span> 道場</Link>
+        <Link href="/blog" className="text-sm text-[var(--muted)]">← All Articles</Link>
       </nav>
 
-      <header className={styles.header}>
-        <span className={styles.tag}>Guide</span>
-        <h1 className={styles.title}>{post.title}</h1>
-        <p className={styles.meta}>
-          {post.author} ·{" "}
-          {new Date(post.publishDate).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </p>
+      <header className="mb-6">
+        <div className="inline-block rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-slate-700">{post.category || 'Guide'}</div>
+        <h1 className="mt-4 text-2xl font-extrabold text-[var(--ink)]">{post.title}</h1>
+        <p className="mt-2 text-sm text-[var(--muted)]">{new Date(post.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</p>
       </header>
 
       <article className={styles.article}>{renderMarkdown(post.content)}</article>
 
-      {relatedPosts.length > 0 && (
-        <section className={styles.related}>
-          <h2 className={styles.relatedTitle}>More Articles</h2>
-          <div className={styles.relatedGrid}>
-            {relatedPosts.map((rp) => (
-              <Link
-                key={rp.slug}
-                href={`/blog/${rp.slug}`}
-                className={styles.relatedCard}
-              >
-                <span className={styles.relatedCardTitle}>{rp.title}</span>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      <section className={styles.cta}>
-        <h2 className={styles.ctaTitle}>Start Learning Japanese Free</h2>
-        <p className={styles.ctaDesc}>
-          Structured lessons, interactive flashcards, and a 30-day study plan.
-        </p>
-        <Link href="/courses/30-days" className={styles.ctaBtn}>
-          Begin the 30-Day Course
-        </Link>
+      <section className="mt-12">
+        <h2 className="text-lg font-bold">Start Learning Japanese Free</h2>
+        <p className="text-sm text-[var(--muted)] mt-2">Structured lessons, interactive flashcards, and a 30-day study plan.</p>
+        <Link href="/courses/30-days" className="mt-3 inline-flex items-center rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white no-underline shadow-sm hover:bg-slate-800">Begin the 30-Day Course</Link>
       </section>
-
-      <footer className={styles.footer}>
-        <div className={styles.footerLinks}>
-          <Link href="/" className={styles.footerLink}>Home</Link>
-          <Link href="/blog" className={styles.footerLink}>Blog</Link>
-          <Link href="/hiragana" className={styles.footerLink}>Hiragana</Link>
-          <Link href="/katakana" className={styles.footerLink}>Katakana</Link>
-          <Link href="/vocab" className={styles.footerLink}>Vocabulary</Link>
-          <Link href="/conversation" className={styles.footerLink}>Conversation</Link>
-          <Link href="/about" className={styles.footerLink}>About</Link>
-        </div>
-      </footer>
     </main>
   );
 }

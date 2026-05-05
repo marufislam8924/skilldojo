@@ -12,6 +12,7 @@ const navLinks = [
   { href: "/katakana", label: "Katakana", icon: "カ" },
   { href: "/vocab", label: "Vocabulary", icon: "語" },
   { href: "/grammar", label: "Grammar", icon: "文" },
+  { href: "/blog", label: "Blog", icon: "✍️" },
   { href: "/conversation", label: "Conversation", icon: "話" },
   { href: "/quiz", label: "Quiz", icon: "✓" },
 ];
