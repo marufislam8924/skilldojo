@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "../../lib/supabaseServer";
+import { blogPosts } from "../../data/blogPosts";
 
 export const metadata = {
   title: "Blog — Japanese Learning Guides",
@@ -17,15 +18,18 @@ export const metadata = {
   },
 };
 
-export const metadata = {
-  title: "Blog — Japanese Learning Guides",
-  description:
-    "Read Japanese learning guides, JLPT N5 tips, and conversation practice articles on the SkillDojo blog.",
-  alternates: { canonical: "/blog" },
-};
-
 export default async function BlogPage() {
   const supabase = createSupabaseServerClient();
+
+  const localPosts = blogPosts.map((post) => ({
+    id: post.slug,
+    title: post.title,
+    slug: post.slug,
+    excerpt: post.excerpt || post.description || "",
+    cover_image_url: post.cover_image_url || null,
+    category: post.category || "Guide",
+    created_at: post.created_at || post.publishDate || "2026-01-01",
+  }));
 
   const { data: posts, error } = await supabase
     .from("posts")
@@ -36,6 +40,8 @@ export default async function BlogPage() {
   if (error) {
     console.error("Supabase fetch error:", error);
   }
+
+  const postList = Array.isArray(posts) && posts.length > 0 ? posts : localPosts;
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
 

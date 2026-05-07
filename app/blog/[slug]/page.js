@@ -6,23 +6,42 @@ import styles from "./blogPost.module.css";
 export async function generateStaticParams() {
   const supabase = createSupabaseServerClient();
   const { data: posts } = await supabase.from("posts").select("slug").eq("published", true);
-  return (posts || []).map((p) => ({ slug: p.slug }));
+  const dbSlugs = Array.isArray(posts) ? posts.map((p) => p.slug) : [];
+  return Array.from(new Set([...dbSlugs, ...blogPosts.map((post) => post.slug)])).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }) {
   const supabase = createSupabaseServerClient();
   const { data } = await supabase.from("posts").select("title, excerpt, created_at").eq("slug", params.slug).maybeSingle();
-  if (!data) return { title: "Post Not Found" };
-  return {
-    title: data.title,
-    description: data.excerpt,
-    alternates: { canonical: `/blog/${params.slug}` },
-    openGraph: {
+  const localPost = blogPosts.find((post) => post.slug === params.slug);
+
+  if (data) {
+    return {
       title: data.title,
       description: data.excerpt,
+      alternates: { canonical: `/blog/${params.slug}` },
+      openGraph: {
+        title: data.title,
+        description: data.excerpt,
+        url: `/blog/${params.slug}`,
+        type: "article",
+        publishedTime: data.created_at,
+      },
+    };
+  }
+
+  if (!localPost) return { title: "Post Not Found" };
+
+  return {
+    title: localPost.title,
+    description: localPost.excerpt || localPost.description,
+    alternates: { canonical: `/blog/${params.slug}` },
+    openGraph: {
+      title: localPost.title,
+      description: localPost.excerpt || localPost.description,
       url: `/blog/${params.slug}`,
       type: "article",
-      publishedTime: data.created_at,
+      publishedTime: localPost.created_at || localPost.publishDate,
     },
   };
 }
@@ -258,7 +277,17 @@ export default async function BlogPostPage({ params }) {
     .eq("slug", params.slug)
     .maybeSingle();
 
-  if (!post) notFound();
+  const localPost = blogPosts.find((item) => item.slug === params.slug);
+  const postData =
+    post ||
+    (localPost
+      ? {
+          ...localPost,
+          created_at: localPost.created_at || localPost.publishDate,
+        }
+      : null);
+
+  if (!postData) notFound();
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
 
@@ -282,12 +311,12 @@ export default async function BlogPostPage({ params }) {
       </nav>
 
       <header className="mb-6">
-        <div className="inline-block rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-slate-700">{post.category || 'Guide'}</div>
-        <h1 className="mt-4 text-2xl font-extrabold text-[var(--ink)]">{post.title}</h1>
-        <p className="mt-2 text-sm text-[var(--muted)]">{new Date(post.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</p>
+        <div className="inline-block rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-slate-700">{postData.category || 'Guide'}</div>
+        <h1 className="mt-4 text-2xl font-extrabold text-[var(--ink)]">{postData.title}</h1>
+        <p className="mt-2 text-sm text-[var(--muted)]">{new Date(postData.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</p>
       </header>
 
-      <article className={styles.article}>{renderMarkdown(post.content)}</article>
+      <article className={styles.article}>{renderMarkdown(postData.content)}</article>
 
       <section className="mt-12">
         <h2 className="text-lg font-bold">Start Learning Japanese Free</h2>

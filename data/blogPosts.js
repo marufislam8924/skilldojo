@@ -16,6 +16,9 @@ export const blogPosts = [
     ],
     publishDate: "2026-03-15",
     author: "SkillDojo Team",
+    created_at: "2026-03-15",
+    excerpt:
+      "A step-by-step guide to learning Japanese N5 from zero. Covers Hiragana, Katakana, vocabulary, grammar, and a 30-day study plan for JLPT N5 success.",
     content: `
 ## Why Start with JLPT N5?
 
@@ -126,6 +129,9 @@ Ready to begin? [Start the 30-day Japanese course](/courses/30-days) or [explore
     ],
     publishDate: "2026-03-20",
     author: "SkillDojo Team",
+    created_at: "2026-03-20",
+    excerpt:
+      "A complete Hiragana chart with all 46 basic characters, romaji readings, stroke order tips, and audio pronunciation.",
     content: `
 ## What Is Hiragana?
 
@@ -290,6 +296,9 @@ Start your Hiragana journey now with SkillDojo's [complete Hiragana course](/hir
     ],
     publishDate: "2026-03-25",
     author: "SkillDojo Team",
+    created_at: "2026-03-25",
+    excerpt:
+      "Learn essential Japanese conversation phrases for beginners. Covers greetings, self-introduction, shopping, travel, and daily life with romaji and English translations.",
     content: `
 ## Why Conversation Practice Matters
 
@@ -417,6 +426,129 @@ Even without a language partner, you can improve your speaking:
 Conversation is where your Japanese truly comes alive. Start with greetings, practice self-introductions, and gradually add shopping, dining, and travel scenarios to your repertoire.
 
 Ready to practice? Try SkillDojo's [conversation lessons](/conversation) with 15 beginner dialogue scenarios, or start from scratch with our [Hiragana course](/hiragana) and [30-day study plan](/courses/30-days).
+    `,
+  },
+  {
+    slug: "5-free-ways-to-learn-japanese-online",
+    title: "5 Free Ways to Learn Japanese Online — Beginner-Friendly Study Tips",
+    description:
+      "Learn Japanese for free with beginner-friendly resources, daily study habits, and simple routines that fit your schedule.",
+    excerpt:
+      "Use five free strategies to practice Japanese every day, with study tips for beginners and quick habits that build speaking, reading, and listening skills.",
+    keywords: [
+      "learn japanese online",
+      "free japanese lessons",
+      "beginner japanese study",
+      "japanese learning tips",
+      "study japanese free",
+    ],
+    publishDate: "2026-04-10",
+    created_at: "2026-04-10",
+    author: "SkillDojo Team",
+    category: "Study Tips",
+    content: `
+## Learn Japanese for Free with These 5 Easy Habits
+
+You can make steady progress in Japanese without paying for expensive classes. The key is consistency, variety, and using free resources smartly.
+
+### 1. Practice Hiragana and Katakana Daily
+Spend 10–15 minutes every day reviewing the two Japanese phonetic alphabets. Writing a few characters by hand and reading simple words will help them stick.
+
+- Use free charts and quizzes on SkillDojo.
+- Match kana with their romaji and pronunciation.
+- Read easy words like こんにちは and ありがとう aloud.
+
+### 2. Learn Vocabulary in Small Groups
+Pick one theme each day, such as greetings, food, numbers, or travel words.
+
+- Focus on 5–10 words per session.
+- Use flashcards or SkillDojo vocabulary lessons.
+- Review the same words again the next day.
+
+### 3. Listen to Short Japanese Audio
+Even if you don’t understand everything, listening builds your ear for rhythm and pronunciation.
+
+- Try beginner audio from SkillDojo lessons.
+- Listen to short Japanese podcasts or anime clips.
+- Repeat phrases out loud after each sentence.
+
+### 4. Read Simple Japanese Sentences
+Start with very short sentences and build from there.
+
+- Use Hiragana first, then add Katakana.
+- Read example dialogue and practice common patterns.
+- Don’t worry about kanji yet.
+
+### 5. Practice Speaking Every Day
+Speak Japanese even if it’s just one sentence.
+
+- Say greetings aloud.
+- Describe what you’re doing in simple Japanese.
+- Use the [conversation practice lessons](/conversation) to repeat real phrases.
+
+## Keep It Simple and Consistent
+Progress comes from doing a little bit regularly. Five minutes each day is better than one long session once a week.
+
+SkillDojo is designed to help you build this routine with audio, flashcards, and lessons that fit into your daily schedule.
+
+Ready to start? Try the free [Hiragana course](/hiragana), [Katakana course](/katakana), or [30-Day Japanese course](/courses/30-days).
+    `,
+  },
+  {
+    slug: "anime-travel-japanese-phrases",
+    title: "Anime & Travel Japanese Phrases — Learn Japanese the Fun Way",
+    description:
+      "Practice Japanese phrases for anime fans and travelers. Includes greetings, daily expressions, and must-know words for your first trip to Japan.",
+    excerpt:
+      "Learn useful Japanese phrases for anime, travel, and everyday life with easy examples and romaji.",
+    keywords: [
+      "anime japanese phrases",
+      "travel japanese expressions",
+      "japanese phrases for beginners",
+      "learn japanese for travel",
+      "anime language guide",
+    ],
+    publishDate: "2026-04-18",
+    created_at: "2026-04-18",
+    author: "SkillDojo Team",
+    category: "Culture",
+    content: `
+## Fun Japanese Phrases from Anime and Travel
+You can learn Japanese faster when the content feels exciting. Anime phrases and travel expressions are great because they are memorable and practical.
+
+### Greetings You Hear in Anime
+| Japanese | Romaji | English |
+|----------|--------|---------|
+| こんにちは | konnichiwa | Hello |
+| おはよう | ohayou | Good morning |
+| こんばんは | konbanwa | Good evening |
+| ありがとう | arigatou | Thank you |
+| すみません | sumimasen | Excuse me / Sorry |
+
+### Useful Travel Phrases
+Whether you're exploring Tokyo or ordering sushi, these phrases will help you get around.
+
+- **これをください。** (Kore o kudasai.) — Please give me this.
+- **いくらですか。** (Ikura desu ka?) — How much is it?
+- **トイレはどこですか？** (Toire wa doko desu ka?) — Where is the bathroom?
+- **メニューをください。** (Menyuu o kudasai.) — Please give me the menu.
+
+### Daily Expressions for Beginners
+These are phrases you will use every day.
+
+- **はい / いいえ** — Yes / No
+- **わかります / わかりません** — I understand / I don't understand
+- **もういちどおねがいします。** (Mou ichido onegaishimasu.) — Please say that again.
+- **ゆっくり はなして ください。** (Yukkuri hanashite kudasai.) — Please speak slowly.
+
+### Make Learning Enjoyable
+Combine anime listening with real travel phrases to keep your study sessions fun.
+
+- Watch short anime clips and write down phrases.
+- Learn one new travel phrase each day.
+- Practice pronunciation aloud with your favorite scenes.
+
+SkillDojo helps you use these phrases with guided practice, audio, and example sentences so you can study Japanese the fun way.
     `,
   },
 ];
