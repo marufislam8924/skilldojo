@@ -19,8 +19,6 @@ export const metadata = {
 };
 
 export default async function BlogPage() {
-  const supabase = createSupabaseServerClient();
-
   const localPosts = blogPosts.map((post) => ({
     id: post.slug,
     title: post.title,
@@ -31,14 +29,24 @@ export default async function BlogPage() {
     created_at: post.created_at || post.publishDate || "2026-01-01",
   }));
 
-  const { data: posts, error } = await supabase
-    .from("posts")
-    .select("id, title, slug, excerpt, cover_image_url, category, created_at")
-    .eq("published", true)
-    .order("created_at", { ascending: false });
+  const hasSupabaseEnv = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
 
-  if (error) {
-    console.error("Supabase fetch error:", error);
+  let posts = null;
+  if (hasSupabaseEnv) {
+    const supabase = createSupabaseServerClient();
+    const { data, error } = await supabase
+      .from("posts")
+      .select("id, title, slug, excerpt, cover_image_url, category, created_at")
+      .eq("published", true)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Supabase fetch error:", error);
+    }
+
+    posts = data;
   }
 
   const postList = Array.isArray(posts) && posts.length > 0 ? posts : localPosts;
@@ -53,7 +61,7 @@ export default async function BlogPage() {
     description:
       "Japanese learning guides, Hiragana charts, JLPT N5 tips, and conversation practice strategies.",
     publisher: { "@type": "EducationalOrganization", name: "SkillDojo", url: siteUrl },
-    blogPost: (posts || []).map((post) => ({
+    blogPost: postList.map((post) => ({
       "@type": "BlogPosting",
       headline: post.title,
       description: post.excerpt,

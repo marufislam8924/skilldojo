@@ -1,19 +1,49 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createSupabaseServerClient } from "../../../lib/supabaseServer";
+import { blogPosts } from "../../../data/blogPosts";
 import styles from "./blogPost.module.css";
 
 export async function generateStaticParams() {
-  const supabase = createSupabaseServerClient();
-  const { data: posts } = await supabase.from("posts").select("slug").eq("published", true);
-  const dbSlugs = Array.isArray(posts) ? posts.map((p) => p.slug) : [];
-  return Array.from(new Set([...dbSlugs, ...blogPosts.map((post) => post.slug)])).map((slug) => ({ slug }));
+  const localSlugs = blogPosts.map((post) => post.slug);
+  const hasSupabaseEnv = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
+
+  let dbSlugs = [];
+  if (hasSupabaseEnv) {
+    const supabase = createSupabaseServerClient();
+    const { data: posts, error } = await supabase.from("posts").select("slug").eq("published", true);
+    if (error) {
+      console.error("Supabase fetch error:", error);
+    }
+    if (Array.isArray(posts)) {
+      dbSlugs = posts.map((p) => p.slug);
+    }
+  }
+
+  return Array.from(new Set([...dbSlugs, ...localSlugs])).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }) {
-  const supabase = createSupabaseServerClient();
-  const { data } = await supabase.from("posts").select("title, excerpt, created_at").eq("slug", params.slug).maybeSingle();
   const localPost = blogPosts.find((post) => post.slug === params.slug);
+  const hasSupabaseEnv = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
+
+  let data = null;
+  if (hasSupabaseEnv) {
+    const supabase = createSupabaseServerClient();
+    const { data: dbData, error } = await supabase
+      .from("posts")
+      .select("title, excerpt, created_at")
+      .eq("slug", params.slug)
+      .maybeSingle();
+    if (error) {
+      console.error("Supabase fetch error:", error);
+    }
+    data = dbData;
+  }
 
   if (data) {
     return {
@@ -270,12 +300,20 @@ function renderMarkdown(md) {
   return elements;
 }
 export default async function BlogPostPage({ params }) {
-  const supabase = createSupabaseServerClient();
-  const { data: post } = await supabase
-    .from("posts")
-    .select("id, title, slug, content, excerpt, cover_image_url, category, created_at")
-    .eq("slug", params.slug)
-    .maybeSingle();
+  const hasSupabaseEnv = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
+
+  let post = null;
+  if (hasSupabaseEnv) {
+    const supabase = createSupabaseServerClient();
+    const { data } = await supabase
+      .from("posts")
+      .select("id, title, slug, content, excerpt, cover_image_url, category, created_at")
+      .eq("slug", params.slug)
+      .maybeSingle();
+    post = data;
+  }
 
   const localPost = blogPosts.find((item) => item.slug === params.slug);
   const postData =
@@ -294,11 +332,11 @@ export default async function BlogPostPage({ params }) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: post.title,
-    description: post.excerpt,
-    datePublished: post.created_at,
+    headline: postData.title,
+    description: postData.excerpt,
+    datePublished: postData.created_at,
     publisher: { "@type": "EducationalOrganization", name: "SkillDojo", url: siteUrl },
-    mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
+    mainEntityOfPage: `${siteUrl}/blog/${postData.slug}`,
   };
 
   return (
