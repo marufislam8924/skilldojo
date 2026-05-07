@@ -9,27 +9,36 @@ export function createSupabaseServerClient() {
     throw new Error("Missing Supabase env vars. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.");
   }
 
-  const cookieStore = cookies();
+  let cookieStore;
+  try {
+    cookieStore = cookies();
+  } catch {
+    cookieStore = null;
+  }
 
-  return createServerClient(supabaseUrl, supabaseAnonKey, {
-    cookies: {
-      get(name: string) {
-        return cookieStore.get(name)?.value;
-      },
-      set(name: string, value: string, options: CookieOptions) {
-        try {
-          cookieStore.set({ name, value, ...options });
-        } catch {
-          // Setting cookies can fail in Server Components; middleware can refresh auth.
-        }
-      },
-      remove(name: string, options: CookieOptions) {
-        try {
-          cookieStore.set({ name, value: "", ...options, maxAge: 0 });
-        } catch {
-          // Removing cookies can fail in Server Components; middleware can refresh auth.
-        }
-      },
-    },
-  });
+  const options = cookieStore
+    ? {
+        cookies: {
+          get(name: string) {
+            return cookieStore.get(name)?.value;
+          },
+          set(name: string, value: string, options: CookieOptions) {
+            try {
+              cookieStore.set({ name, value, ...options });
+            } catch {
+              // Setting cookies can fail in Server Components; middleware can refresh auth.
+            }
+          },
+          remove(name: string, options: CookieOptions) {
+            try {
+              cookieStore.set({ name, value: "", ...options, maxAge: 0 });
+            } catch {
+              // Removing cookies can fail in Server Components; middleware can refresh auth.
+            }
+          },
+        },
+      }
+    : undefined;
+
+  return createServerClient(supabaseUrl, supabaseAnonKey, options);
 }
