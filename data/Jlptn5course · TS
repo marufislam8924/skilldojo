@@ -1,0 +1,752 @@
+// jlptN5Course.ts
+// SkillDojo — JLPT N5 Prep Course Data
+
+export type Skill = "vocabulary" | "grammar" | "reading" | "listening";
+
+export interface VocabItem {
+  japanese: string;
+  romaji: string;
+  english: string;
+}
+
+export interface GrammarPoint {
+  pattern: string;
+  meaning: string;
+  example: {
+    japanese: string;
+    romaji: string;
+    english: string;
+  };
+}
+
+export interface PracticeSentence {
+  japanese: string;
+  romaji: string;
+  english: string;
+}
+
+export interface QuizQuestion {
+  question: string;
+  options: string[];
+  answer: string;
+  explanation: string;
+}
+
+export interface N5Lesson {
+  id: number;
+  title: string;
+  titleJapanese: string;
+  skill: Skill;
+  description: string;
+  vocabulary: VocabItem[];
+  grammarPoints: GrammarPoint[];
+  practiceSentences: PracticeSentence[];
+  quiz: QuizQuestion[];
+}
+
+export const jlptN5Course: N5Lesson[] = [
+  // ─── LESSON 1 ─── Vocabulary ────────────────────────────────────────────────
+  {
+    id: 1,
+    title: "Everyday Objects",
+    titleJapanese: "にちじょうのもの",
+    skill: "vocabulary",
+    description: "Learn essential nouns for everyday objects you'll encounter in JLPT N5 reading and listening sections.",
+    vocabulary: [
+      { japanese: "本", romaji: "hon", english: "book" },
+      { japanese: "電話", romaji: "denwa", english: "telephone" },
+      { japanese: "時計", romaji: "tokei", english: "clock / watch" },
+      { japanese: "かばん", romaji: "kaban", english: "bag" },
+      { japanese: "机", romaji: "tsukue", english: "desk" },
+      { japanese: "いす", romaji: "isu", english: "chair" },
+      { japanese: "窓", romaji: "mado", english: "window" },
+      { japanese: "ドア", romaji: "doa", english: "door" },
+      { japanese: "鍵", romaji: "kagi", english: "key" },
+      { japanese: "財布", romaji: "saifu", english: "wallet" },
+    ],
+    grammarPoints: [
+      {
+        pattern: "これ / それ / あれ",
+        meaning: "This / That (near you) / That (over there) — demonstrative pronouns for objects",
+        example: {
+          japanese: "これは本です。",
+          romaji: "Kore wa hon desu.",
+          english: "This is a book.",
+        },
+      },
+      {
+        pattern: "〜は〜です",
+        meaning: "Topic marker + noun predicate. Used to identify or describe things.",
+        example: {
+          japanese: "あれは時計です。",
+          romaji: "Are wa tokei desu.",
+          english: "That is a clock.",
+        },
+      },
+    ],
+    practiceSentences: [
+      { japanese: "これはかばんです。", romaji: "Kore wa kaban desu.", english: "This is a bag." },
+      { japanese: "それは私の財布です。", romaji: "Sore wa watashi no saifu desu.", english: "That is my wallet." },
+      { japanese: "あの机の上に鍵があります。", romaji: "Ano tsukue no ue ni kagi ga arimasu.", english: "There is a key on that desk." },
+      { japanese: "ドアの横に窓があります。", romaji: "Doa no yoko ni mado ga arimasu.", english: "There is a window next to the door." },
+    ],
+    quiz: [
+      {
+        question: "What does 時計 (tokei) mean?",
+        options: ["Book", "Clock / Watch", "Bag", "Key"],
+        answer: "Clock / Watch",
+        explanation: "時計 (tokei) means clock or watch — a common N5 vocab word.",
+      },
+      {
+        question: "Which sentence means 'This is a book'?",
+        options: ["それは本です。", "あれは本です。", "これは本です。", "ここは本です。"],
+        answer: "これは本です。",
+        explanation: "これ refers to something close to the speaker. これは本です = This is a book.",
+      },
+      {
+        question: "Choose the correct word for 'wallet'.",
+        options: ["さいふ", "かばん", "つくえ", "まど"],
+        answer: "さいふ",
+        explanation: "財布 (さいふ / saifu) means wallet.",
+      },
+    ],
+  },
+
+  // ─── LESSON 2 ─── Grammar ───────────────────────────────────────────────────
+  {
+    id: 2,
+    title: "Basic Sentence Patterns",
+    titleJapanese: "きほんのぶんけい",
+    skill: "grammar",
+    description: "Master the core sentence patterns tested on JLPT N5: は, が, の, and negation with じゃない/ではありません.",
+    vocabulary: [
+      { japanese: "学生", romaji: "gakusei", english: "student" },
+      { japanese: "先生", romaji: "sensei", english: "teacher" },
+      { japanese: "友達", romaji: "tomodachi", english: "friend" },
+      { japanese: "日本人", romaji: "nihonjin", english: "Japanese person" },
+      { japanese: "会社員", romaji: "kaishain", english: "office worker" },
+      { japanese: "医者", romaji: "isha", english: "doctor" },
+      { japanese: "名前", romaji: "namae", english: "name" },
+      { japanese: "国", romaji: "kuni", english: "country" },
+    ],
+    grammarPoints: [
+      {
+        pattern: "〜は〜じゃないです / ではありません",
+        meaning: "Negative form: 'is not'. じゃない is casual; ではありません is formal.",
+        example: {
+          japanese: "私は先生じゃないです。",
+          romaji: "Watashi wa sensei ja nai desu.",
+          english: "I am not a teacher.",
+        },
+      },
+      {
+        pattern: "〜の〜",
+        meaning: "Possessive / descriptive connector. Equivalent to 'of' or apostrophe-s.",
+        example: {
+          japanese: "田中さんの本です。",
+          romaji: "Tanaka-san no hon desu.",
+          english: "It is Tanaka's book.",
+        },
+      },
+      {
+        pattern: "〜か？",
+        meaning: "Question marker. Add か to the end of a statement to turn it into a yes/no question.",
+        example: {
+          japanese: "あなたは学生ですか？",
+          romaji: "Anata wa gakusei desu ka?",
+          english: "Are you a student?",
+        },
+      },
+    ],
+    practiceSentences: [
+      { japanese: "私は会社員です。", romaji: "Watashi wa kaishain desu.", english: "I am an office worker." },
+      { japanese: "田中さんは医者じゃないです。", romaji: "Tanaka-san wa isha ja nai desu.", english: "Tanaka-san is not a doctor." },
+      { japanese: "これは友達の本ですか？", romaji: "Kore wa tomodachi no hon desu ka?", english: "Is this your friend's book?" },
+      { japanese: "あなたの名前は何ですか？", romaji: "Anata no namae wa nan desu ka?", english: "What is your name?" },
+    ],
+    quiz: [
+      {
+        question: "Which particle marks the topic of a sentence?",
+        options: ["が", "の", "は", "を"],
+        answer: "は",
+        explanation: "は (wa) is the topic marker particle in Japanese.",
+      },
+      {
+        question: "How do you say 'I am not a student' in casual Japanese?",
+        options: ["私は学生です。", "私は学生じゃないです。", "私は学生ではありません。", "私は学生がないです。"],
+        answer: "私は学生じゃないです。",
+        explanation: "じゃないです is the casual negative. ではありません is the formal version.",
+      },
+      {
+        question: "What does 〜の〜 indicate?",
+        options: ["Direction", "Possession or description", "Time", "Location"],
+        answer: "Possession or description",
+        explanation: "の connects two nouns to show possession (友達の本 = friend's book) or description.",
+      },
+    ],
+  },
+
+  // ─── LESSON 3 ─── Vocabulary ────────────────────────────────────────────────
+  {
+    id: 3,
+    title: "Numbers, Time & Dates",
+    titleJapanese: "すうじ・じかん・ひづけ",
+    skill: "vocabulary",
+    description: "Numbers, telling time, and dates are heavily tested in the JLPT N5 listening section.",
+    vocabulary: [
+      { japanese: "一", romaji: "ichi", english: "one" },
+      { japanese: "二", romaji: "ni", english: "two" },
+      { japanese: "三", romaji: "san", english: "three" },
+      { japanese: "四", romaji: "shi / yon", english: "four" },
+      { japanese: "五", romaji: "go", english: "five" },
+      { japanese: "十", romaji: "juu", english: "ten" },
+      { japanese: "百", romaji: "hyaku", english: "hundred" },
+      { japanese: "〜時", romaji: "〜ji", english: "o'clock (hour counter)" },
+      { japanese: "〜分", romaji: "〜fun / pun", english: "minute counter" },
+      { japanese: "〜月", romaji: "〜gatsu", english: "month counter" },
+      { japanese: "〜日", romaji: "〜nichi / ka", english: "day counter" },
+      { japanese: "今", romaji: "ima", english: "now" },
+    ],
+    grammarPoints: [
+      {
+        pattern: "〜時〜分です",
+        meaning: "Telling time: [hour]時[minute]分です",
+        example: {
+          japanese: "今、三時十分です。",
+          romaji: "Ima, sanji juppun desu.",
+          english: "It is now 3:10.",
+        },
+      },
+      {
+        pattern: "〜月〜日",
+        meaning: "Stating a date: [month]月[day]日",
+        example: {
+          japanese: "今日は四月五日です。",
+          romaji: "Kyou wa shigatsu itsuka desu.",
+          english: "Today is April 5th.",
+        },
+      },
+    ],
+    practiceSentences: [
+      { japanese: "今、何時ですか？", romaji: "Ima, nanji desu ka?", english: "What time is it now?" },
+      { japanese: "授業は九時に始まります。", romaji: "Jugyou wa kuji ni hajimarimasu.", english: "Class starts at 9 o'clock." },
+      { japanese: "誕生日は七月二十日です。", romaji: "Tanjoubi wa shichigatsu hatsuka desu.", english: "My birthday is July 20th." },
+      { japanese: "五時半に会いましょう。", romaji: "Goji han ni aimashou.", english: "Let's meet at 5:30." },
+    ],
+    quiz: [
+      {
+        question: "How do you read 三時 (3時)?",
+        options: ["sanji", "mitsiji", "sanju", "sanju-ji"],
+        answer: "sanji",
+        explanation: "三時 is read as さんじ (sanji) — 3 o'clock.",
+      },
+      {
+        question: "What counter is used for months?",
+        options: ["〜日", "〜時", "〜月", "〜分"],
+        answer: "〜月",
+        explanation: "〜月 (〜gatsu) is the counter for months. e.g. 四月 = April.",
+      },
+      {
+        question: "How do you say 'It is 7:00' in Japanese?",
+        options: ["今は七分です。", "今は七時です。", "今は七日です。", "今は七月です。"],
+        answer: "今は七時です。",
+        explanation: "七時 (shichiji) means 7 o'clock. 〜時 is the hour counter.",
+      },
+    ],
+  },
+
+  // ─── LESSON 4 ─── Grammar ───────────────────────────────────────────────────
+  {
+    id: 4,
+    title: "Location & Existence",
+    titleJapanese: "ばしょとそんざい",
+    skill: "grammar",
+    description: "Learn あります vs います, location words, and に/で particles — core grammar for N5.",
+    vocabulary: [
+      { japanese: "上", romaji: "ue", english: "above / on top" },
+      { japanese: "下", romaji: "shita", english: "below / under" },
+      { japanese: "右", romaji: "migi", english: "right" },
+      { japanese: "左", romaji: "hidari", english: "left" },
+      { japanese: "前", romaji: "mae", english: "in front" },
+      { japanese: "後ろ", romaji: "ushiro", english: "behind" },
+      { japanese: "中", romaji: "naka", english: "inside" },
+      { japanese: "隣", romaji: "tonari", english: "next to" },
+      { japanese: "駅", romaji: "eki", english: "train station" },
+      { japanese: "近く", romaji: "chikaku", english: "nearby" },
+    ],
+    grammarPoints: [
+      {
+        pattern: "〜に〜があります / います",
+        meaning: "あります = exists (inanimate). います = exists (animate: people, animals).",
+        example: {
+          japanese: "公園に犬がいます。",
+          romaji: "Kouen ni inu ga imasu.",
+          english: "There is a dog in the park.",
+        },
+      },
+      {
+        pattern: "〜の〜に",
+        meaning: "Combining location words with の to describe position relative to an object.",
+        example: {
+          japanese: "机の上に本があります。",
+          romaji: "Tsukue no ue ni hon ga arimasu.",
+          english: "There is a book on top of the desk.",
+        },
+      },
+    ],
+    practiceSentences: [
+      { japanese: "駅の近くにコンビニがあります。", romaji: "Eki no chikaku ni konbini ga arimasu.", english: "There is a convenience store near the station." },
+      { japanese: "いすの下に猫がいます。", romaji: "Isu no shita ni neko ga imasu.", english: "There is a cat under the chair." },
+      { japanese: "銀行はどこですか？郵便局の右です。", romaji: "Ginkou wa doko desu ka? Yuubinkyoku no migi desu.", english: "Where is the bank? It is to the right of the post office." },
+      { japanese: "箱の中に何がありますか？", romaji: "Hako no naka ni nani ga arimasu ka?", english: "What is inside the box?" },
+    ],
+    quiz: [
+      {
+        question: "Which verb is used for the existence of a living thing (e.g. a cat)?",
+        options: ["あります", "います", "です", "あります or います"],
+        answer: "います",
+        explanation: "います is used for animate things (people, animals). あります is for inanimate objects.",
+      },
+      {
+        question: "What does 隣 (tonari) mean?",
+        options: ["Behind", "Under", "Next to", "In front"],
+        answer: "Next to",
+        explanation: "隣 (tonari) means 'next to' or 'neighboring'.",
+      },
+      {
+        question: "Translate: 'There is a book on the desk.'",
+        options: [
+          "机の下に本があります。",
+          "机の上に本がいます。",
+          "机の上に本があります。",
+          "机に本があります。",
+        ],
+        answer: "机の上に本があります。",
+        explanation: "上 = on top, あります = exists (inanimate). Full pattern: 〜の上に〜があります.",
+      },
+    ],
+  },
+
+  // ─── LESSON 5 ─── Vocabulary ────────────────────────────────────────────────
+  {
+    id: 5,
+    title: "Food & Drink",
+    titleJapanese: "たべものとのみもの",
+    skill: "vocabulary",
+    description: "Essential food and drink vocabulary commonly tested in JLPT N5 listening and reading passages.",
+    vocabulary: [
+      { japanese: "ご飯", romaji: "gohan", english: "rice / meal" },
+      { japanese: "パン", romaji: "pan", english: "bread" },
+      { japanese: "肉", romaji: "niku", english: "meat" },
+      { japanese: "魚", romaji: "sakana", english: "fish" },
+      { japanese: "野菜", romaji: "yasai", english: "vegetables" },
+      { japanese: "水", romaji: "mizu", english: "water" },
+      { japanese: "お茶", romaji: "ocha", english: "tea" },
+      { japanese: "コーヒー", romaji: "koohii", english: "coffee" },
+      { japanese: "たまご", romaji: "tamago", english: "egg" },
+      { japanese: "くだもの", romaji: "kudamono", english: "fruit" },
+    ],
+    grammarPoints: [
+      {
+        pattern: "〜を食べます / 飲みます",
+        meaning: "を marks the direct object. 食べます = eat, 飲みます = drink.",
+        example: {
+          japanese: "毎朝、ご飯を食べます。",
+          romaji: "Maiasa, gohan wo tabemasu.",
+          english: "I eat rice every morning.",
+        },
+      },
+      {
+        pattern: "〜が好きです / 嫌いです",
+        meaning: "Expressing likes and dislikes. が marks the subject of preference.",
+        example: {
+          japanese: "私はお茶が好きです。",
+          romaji: "Watashi wa ocha ga suki desu.",
+          english: "I like tea.",
+        },
+      },
+    ],
+    practiceSentences: [
+      { japanese: "毎日コーヒーを飲みます。", romaji: "Mainichi koohii wo nomimasu.", english: "I drink coffee every day." },
+      { japanese: "野菜が好きですか？", romaji: "Yasai ga suki desu ka?", english: "Do you like vegetables?" },
+      { japanese: "朝ご飯にパンとたまごを食べました。", romaji: "Asagohan ni pan to tamago wo tabemashita.", english: "I ate bread and eggs for breakfast." },
+      { japanese: "くだものの中で、何が好きですか？", romaji: "Kudamono no naka de, nani ga suki desu ka?", english: "Among fruits, what do you like?" },
+    ],
+    quiz: [
+      {
+        question: "What does 野菜 (yasai) mean?",
+        options: ["Fruit", "Fish", "Vegetables", "Meat"],
+        answer: "Vegetables",
+        explanation: "野菜 (やさい / yasai) means vegetables.",
+      },
+      {
+        question: "Which particle marks the direct object of 食べます?",
+        options: ["は", "が", "に", "を"],
+        answer: "を",
+        explanation: "を (wo) marks the direct object. e.g. パンを食べます = I eat bread.",
+      },
+      {
+        question: "How do you say 'I like coffee'?",
+        options: ["コーヒーは好きです。", "コーヒーが好きです。", "コーヒーを好きです。", "コーヒーに好きです。"],
+        answer: "コーヒーが好きです。",
+        explanation: "〜が好きです is the correct pattern. が marks the object of the feeling.",
+      },
+    ],
+  },
+
+  // ─── LESSON 6 ─── Grammar ───────────────────────────────────────────────────
+  {
+    id: 6,
+    title: "Verb Conjugation Basics",
+    titleJapanese: "どうしのかつよう",
+    skill: "grammar",
+    description: "Learn the ます form (present/future) and ました form (past), the two most essential verb forms for N5.",
+    vocabulary: [
+      { japanese: "行く", romaji: "iku", english: "to go" },
+      { japanese: "来る", romaji: "kuru", english: "to come" },
+      { japanese: "帰る", romaji: "kaeru", english: "to return / go home" },
+      { japanese: "見る", romaji: "miru", english: "to see / watch" },
+      { japanese: "聞く", romaji: "kiku", english: "to listen / ask" },
+      { japanese: "話す", romaji: "hanasu", english: "to speak" },
+      { japanese: "読む", romaji: "yomu", english: "to read" },
+      { japanese: "書く", romaji: "kaku", english: "to write" },
+      { japanese: "買う", romaji: "kau", english: "to buy" },
+      { japanese: "起きる", romaji: "okiru", english: "to wake up" },
+    ],
+    grammarPoints: [
+      {
+        pattern: "〜ます (present / future affirmative)",
+        meaning: "Polite present-tense or future action. Add ます to the verb stem.",
+        example: {
+          japanese: "明日、図書館へ行きます。",
+          romaji: "Ashita, toshokan e ikimasu.",
+          english: "I will go to the library tomorrow.",
+        },
+      },
+      {
+        pattern: "〜ました (past affirmative)",
+        meaning: "Polite past tense. Replace ます with ました.",
+        example: {
+          japanese: "昨日、映画を見ました。",
+          romaji: "Kinou, eiga wo mimashita.",
+          english: "I watched a movie yesterday.",
+        },
+      },
+      {
+        pattern: "〜ません / 〜ませんでした (negative)",
+        meaning: "ません = present negative. ませんでした = past negative.",
+        example: {
+          japanese: "朝ご飯を食べませんでした。",
+          romaji: "Asagohan wo tabemasen deshita.",
+          english: "I did not eat breakfast.",
+        },
+      },
+    ],
+    practiceSentences: [
+      { japanese: "毎朝６時に起きます。", romaji: "Maiasa rokuji ni okimasu.", english: "I wake up at 6 every morning." },
+      { japanese: "昨日、日本語を勉強しました。", romaji: "Kinou, nihongo wo benkyou shimashita.", english: "I studied Japanese yesterday." },
+      { japanese: "今日はテレビを見ませんでした。", romaji: "Kyou wa terebi wo mimasen deshita.", english: "I didn't watch TV today." },
+      { japanese: "図書館でこの本を読みました。", romaji: "Toshokan de kono hon wo yomimashita.", english: "I read this book at the library." },
+    ],
+    quiz: [
+      {
+        question: "What is the past tense of 行きます (ikimasu)?",
+        options: ["行きました", "行きません", "行きましょう", "行きませんでした"],
+        answer: "行きました",
+        explanation: "Replace ます with ました to form the polite past tense.",
+      },
+      {
+        question: "How do you say 'I did not read'?",
+        options: ["読みます", "読みました", "読みません", "読みませんでした"],
+        answer: "読みませんでした",
+        explanation: "ませんでした = past negative form. 読みませんでした = did not read.",
+      },
+      {
+        question: "Which is the correct ます form of 話す (hanasu)?",
+        options: ["話ます", "話します", "話きます", "話めます"],
+        answer: "話します",
+        explanation: "話す → stem 話し + ます → 話します (hanashimasu).",
+      },
+    ],
+  },
+
+  // ─── LESSON 7 ─── Reading ───────────────────────────────────────────────────
+  {
+    id: 7,
+    title: "Reading Short Passages",
+    titleJapanese: "みじかいぶんをよむ",
+    skill: "reading",
+    description: "Practice reading N5-level short passages (notices, schedules, short messages) and answering comprehension questions.",
+    vocabulary: [
+      { japanese: "開く", romaji: "hiraku", english: "to open" },
+      { japanese: "閉まる", romaji: "shimaru", english: "to close" },
+      { japanese: "休み", romaji: "yasumi", english: "holiday / day off" },
+      { japanese: "〜から〜まで", romaji: "〜kara〜made", english: "from 〜 to 〜" },
+      { japanese: "無料", romaji: "muryou", english: "free of charge" },
+      { japanese: "入口", romaji: "iriguchi", english: "entrance" },
+      { japanese: "出口", romaji: "deguchi", english: "exit" },
+      { japanese: "案内", romaji: "annai", english: "information / guide" },
+    ],
+    grammarPoints: [
+      {
+        pattern: "〜から〜まで",
+        meaning: "Expresses a range: from [time/place] to [time/place].",
+        example: {
+          japanese: "図書館は九時から五時まで開いています。",
+          romaji: "Toshokan wa kuji kara goji made aite imasu.",
+          english: "The library is open from 9 to 5.",
+        },
+      },
+      {
+        pattern: "〜てください",
+        meaning: "Polite request / instruction: 'Please do 〜'.",
+        example: {
+          japanese: "入口からお入りください。",
+          romaji: "Iriguchi kara o-hairi kudasai.",
+          english: "Please enter from the entrance.",
+        },
+      },
+    ],
+    practiceSentences: [
+      {
+        japanese: "このカフェは月曜日から金曜日まで開いています。",
+        romaji: "Kono kafe wa getsuyoubi kara kin'youbi made aite imasu.",
+        english: "This café is open from Monday to Friday.",
+      },
+      {
+        japanese: "日曜日は休みです。",
+        romaji: "Nichiyoubi wa yasumi desu.",
+        english: "Sunday is a day off.",
+      },
+      {
+        japanese: "出口はあちらです。",
+        romaji: "Deguchi wa achira desu.",
+        english: "The exit is over there.",
+      },
+      {
+        japanese: "このイベントは無料です。",
+        romaji: "Kono ibento wa muryou desu.",
+        english: "This event is free of charge.",
+      },
+    ],
+    quiz: [
+      {
+        question: "A notice says: 「月曜日から金曜日まで」. What does this mean?",
+        options: ["Only on weekends", "From Monday to Friday", "Every day", "On Monday and Friday only"],
+        answer: "From Monday to Friday",
+        explanation: "〜から〜まで = from 〜 to 〜. 月曜日 = Monday, 金曜日 = Friday.",
+      },
+      {
+        question: "What does 無料 (muryou) mean?",
+        options: ["No entry", "Free of charge", "Closed", "Information"],
+        answer: "Free of charge",
+        explanation: "無料 (muryou) means free of charge / no cost.",
+      },
+      {
+        question: "Which word means 'exit'?",
+        options: ["入口", "案内", "出口", "休み"],
+        answer: "出口",
+        explanation: "出口 (でぐち / deguchi) = exit. 入口 (いりぐち / iriguchi) = entrance.",
+      },
+    ],
+  },
+
+  // ─── LESSON 8 ─── Listening ─────────────────────────────────────────────────
+  {
+    id: 8,
+    title: "Listening for Key Information",
+    titleJapanese: "きくポイント",
+    skill: "listening",
+    description: "Train yourself to pick out key information (time, place, item, person) from short N5-style conversations.",
+    vocabulary: [
+      { japanese: "すみません", romaji: "sumimasen", english: "excuse me / sorry" },
+      { japanese: "〜はどこですか", romaji: "〜wa doko desu ka", english: "Where is 〜?" },
+      { japanese: "まっすぐ", romaji: "massugu", english: "straight ahead" },
+      { japanese: "曲がる", romaji: "magaru", english: "to turn" },
+      { japanese: "〜番線", romaji: "〜bansen", english: "platform number 〜" },
+      { japanese: "乗り換え", romaji: "norikae", english: "transfer (train)" },
+      { japanese: "〜円", romaji: "〜en", english: "〜 yen" },
+      { japanese: "いくら", romaji: "ikura", english: "how much" },
+    ],
+    grammarPoints: [
+      {
+        pattern: "〜はどこですか",
+        meaning: "Asking for the location of something. Standard in N5 listening scenarios.",
+        example: {
+          japanese: "トイレはどこですか？",
+          romaji: "Toire wa doko desu ka?",
+          english: "Where is the restroom?",
+        },
+      },
+      {
+        pattern: "〜てから",
+        meaning: "After doing 〜, then... Useful for giving directions in sequence.",
+        example: {
+          japanese: "まっすぐ行ってから、右に曲がってください。",
+          romaji: "Massugu itte kara, migi ni magatte kudasai.",
+          english: "Go straight, then turn right.",
+        },
+      },
+    ],
+    practiceSentences: [
+      { japanese: "すみません、駅はどこですか？", romaji: "Sumimasen, eki wa doko desu ka?", english: "Excuse me, where is the station?" },
+      { japanese: "まっすぐ行って、左に曲がってください。", romaji: "Massugu itte, hidari ni magatte kudasai.", english: "Go straight and turn left." },
+      { japanese: "このりんごはいくらですか？", romaji: "Kono ringo wa ikura desu ka?", english: "How much is this apple?" },
+      { japanese: "東京行きは何番線ですか？", romaji: "Tokyo yuki wa nan bansen desu ka?", english: "Which platform is for Tokyo?" },
+    ],
+    quiz: [
+      {
+        question: "In a listening dialogue, someone says 「まっすぐ行ってから右に曲がってください」. What should you do?",
+        options: ["Turn left, then go straight", "Go straight, then turn right", "Turn right immediately", "Go straight only"],
+        answer: "Go straight, then turn right",
+        explanation: "まっすぐ = straight ahead. 右に曲がる = turn right. てから = after doing first action.",
+      },
+      {
+        question: "What does いくら (ikura) mean in a shopping context?",
+        options: ["Where", "How many", "How much", "Which one"],
+        answer: "How much",
+        explanation: "いくら asks for a price. e.g. これはいくらですか = How much is this?",
+      },
+      {
+        question: "A train announcement says 「3番線から乗ってください」. What does this mean?",
+        options: ["Transfer at station 3", "Board from platform 3", "Train departs at 3:00", "Buy ticket at counter 3"],
+        answer: "Board from platform 3",
+        explanation: "〜番線 = platform number. 乗ってください = please board. So: please board from platform 3.",
+      },
+    ],
+  },
+
+  // ─── LESSON 9 ─── Reading ───────────────────────────────────────────────────
+  {
+    id: 9,
+    title: "Reading Hiragana & Katakana Text",
+    titleJapanese: "ひらがな・カタカナのよみかた",
+    skill: "reading",
+    description: "Practice reading mixed hiragana and katakana text as seen in real N5 exam passages.",
+    vocabulary: [
+      { japanese: "テスト", romaji: "tesuto", english: "test / exam" },
+      { japanese: "クラス", romaji: "kurasu", english: "class" },
+      { japanese: "スーパー", romaji: "suupaa", english: "supermarket" },
+      { japanese: "レストラン", romaji: "resutoran", english: "restaurant" },
+      { japanese: "アパート", romaji: "apaato", english: "apartment" },
+      { japanese: "ノート", romaji: "nooto", english: "notebook" },
+      { japanese: "ケータイ", romaji: "keetai", english: "mobile phone" },
+      { japanese: "バス", romaji: "basu", english: "bus" },
+      { japanese: "タクシー", romaji: "takushii", english: "taxi" },
+      { japanese: "エレベーター", romaji: "erebeetaa", english: "elevator" },
+    ],
+    grammarPoints: [
+      {
+        pattern: "〜で行く / 来る",
+        meaning: "〜で indicates the means of transport. e.g. バスで = by bus.",
+        example: {
+          japanese: "バスで学校に行きます。",
+          romaji: "Basu de gakkou ni ikimasu.",
+          english: "I go to school by bus.",
+        },
+      },
+      {
+        pattern: "〜に乗る",
+        meaning: "に乗る = to ride / board 〜.",
+        example: {
+          japanese: "タクシーに乗りました。",
+          romaji: "Takushii ni norimashita.",
+          english: "I took a taxi.",
+        },
+      },
+    ],
+    practiceSentences: [
+      { japanese: "スーパーはレストランの隣にあります。", romaji: "Suupaa wa resutoran no tonari ni arimasu.", english: "The supermarket is next to the restaurant." },
+      { japanese: "アパートにエレベーターがありますか？", romaji: "Apaato ni erebeetaa ga arimasu ka?", english: "Is there an elevator in the apartment?" },
+      { japanese: "クラスのノートを忘れました。", romaji: "Kurasu no nooto wo wasuremashita.", english: "I forgot my class notebook." },
+      { japanese: "テストの前に勉強しました。", romaji: "Tesuto no mae ni benkyou shimashita.", english: "I studied before the test." },
+    ],
+    quiz: [
+      {
+        question: "What does アパート (apaato) mean?",
+        options: ["Airport", "Apartment", "Department store", "Park"],
+        answer: "Apartment",
+        explanation: "アパート is a loanword from English 'apartment'.",
+      },
+      {
+        question: "How do you say 'I went by bus'?",
+        options: ["バスに行きました。", "バスで行きました。", "バスを行きました。", "バスから行きました。"],
+        answer: "バスで行きました。",
+        explanation: "〜で indicates means of transport. バスで = by bus.",
+      },
+      {
+        question: "Which katakana word means 'elevator'?",
+        options: ["エレベーター", "エスカレーター", "レストラン", "スーパー"],
+        answer: "エレベーター",
+        explanation: "エレベーター (erebeetaa) = elevator. エスカレーター = escalator.",
+      },
+    ],
+  },
+
+  // ─── LESSON 10 ─── Listening ─────────────────────────────────────────────────
+  {
+    id: 10,
+    title: "Full N5 Practice Simulation",
+    titleJapanese: "N5れんしゅうもぎしけん",
+    skill: "listening",
+    description: "A final consolidated lesson bringing together all four skills with N5 exam-style questions to simulate test conditions.",
+    vocabulary: [
+      { japanese: "試験", romaji: "shiken", english: "exam / test" },
+      { japanese: "合格", romaji: "goukaku", english: "passing (an exam)" },
+      { japanese: "練習", romaji: "renshuu", english: "practice" },
+      { japanese: "問題", romaji: "mondai", english: "question / problem" },
+      { japanese: "答え", romaji: "kotae", english: "answer" },
+      { japanese: "正しい", romaji: "tadashii", english: "correct" },
+      { japanese: "間違い", romaji: "machigai", english: "mistake" },
+      { japanese: "頑張る", romaji: "ganbaru", english: "to do one's best" },
+    ],
+    grammarPoints: [
+      {
+        pattern: "〜ましょう",
+        meaning: "Let's 〜. A suggestion or invitation to do something together.",
+        example: {
+          japanese: "一緒に頑張りましょう！",
+          romaji: "Issho ni ganbarimashoo!",
+          english: "Let's do our best together!",
+        },
+      },
+      {
+        pattern: "〜と思います",
+        meaning: "I think that 〜. Used to express an opinion or assumption.",
+        example: {
+          japanese: "この答えは正しいと思います。",
+          romaji: "Kono kotae wa tadashii to omoimasu.",
+          english: "I think this answer is correct.",
+        },
+      },
+    ],
+    practiceSentences: [
+      { japanese: "JLPT N5の試験は難しくないと思います。", romaji: "JLPT N5 no shiken wa muzukashiku nai to omoimasu.", english: "I think the JLPT N5 exam is not difficult." },
+      { japanese: "毎日練習しましょう。", romaji: "Mainichi renshuu shimashou.", english: "Let's practice every day." },
+      { japanese: "間違いは勉強のチャンスです。", romaji: "Machigai wa benkyou no chansu desu.", english: "Mistakes are chances to learn." },
+      { japanese: "合格するために、頑張ります！", romaji: "Goukaku suru tame ni, ganbarimasu!", english: "I will do my best to pass!" },
+    ],
+    quiz: [
+      {
+        question: "What does 合格 (goukaku) mean?",
+        options: ["Failure", "Practice", "Passing an exam", "Question"],
+        answer: "Passing an exam",
+        explanation: "合格 (goukaku) means passing / clearing an exam. e.g. N5に合格した = passed N5.",
+      },
+      {
+        question: "Which sentence means 'Let's study together'?",
+        options: ["一緒に勉強します。", "一緒に勉強しましょう。", "一緒に勉強しました。", "一緒に勉強してください。"],
+        answer: "一緒に勉強しましょう。",
+        explanation: "〜ましょう = let's 〜. 一緒に = together. 勉強しましょう = let's study.",
+      },
+      {
+        question: "How do you express 'I think that 〜' in Japanese?",
+        options: ["〜と言います", "〜と思います", "〜と聞きます", "〜と書きます"],
+        answer: "〜と思います",
+        explanation: "〜と思います (to omoimasu) = I think that 〜. It expresses a personal opinion.",
+      },
+    ],
+  },
+];
+
+export default jlptN5Course;
