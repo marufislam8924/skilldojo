@@ -24,7 +24,7 @@ export const metadata = {
 };
 
 export default function Home() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.skilldojojp.com";
   const faqItems = [
     {
       question: "Can I learn Japanese N5 for free on SkillDojo?",

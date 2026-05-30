@@ -560,10 +560,9 @@ export default function GamifiedHome() {
         />
       </Section>
 
-      <Section title="Trusted by 10,000+ learners" subtitle="Social Proof">
-        <div className="mb-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-center shadow-sm">
-          <p className="text-sm font-bold text-emerald-800">{liveLearners} users learning now</p>
-        </div>
+      {/* // TODO: connect to real analytics */}
+      <Section>
+        {/* // TODO: connect to real analytics */}
 
         <div className="grid gap-4 md:grid-cols-3">
           {contentReady

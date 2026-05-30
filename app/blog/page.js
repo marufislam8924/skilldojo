@@ -51,7 +51,7 @@ export default async function BlogPage() {
 
   const postList = Array.isArray(posts) && posts.length > 0 ? posts : localPosts;
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.skilldojojp.com";
 
   const structuredData = {
     "@context": "https://schema.org",

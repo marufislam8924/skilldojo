@@ -1,4 +1,4 @@
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.skilldojojp.com";
 
 export const metadata = {
   title: "JLPT N5 Study Plan (Pass in 30 Days)",

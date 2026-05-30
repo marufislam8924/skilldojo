@@ -11,7 +11,7 @@ import { keywordPages } from "../data/keywords";
 import { hiraganaCharPages } from "../data/hiraganaCharPages";
 import { conversationTopicPages } from "../data/conversationTopicPages";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.skilldojojp.com";
 
 export default function sitemap() {
   const now = new Date();

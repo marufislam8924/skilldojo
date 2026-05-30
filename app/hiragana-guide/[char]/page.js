@@ -46,7 +46,7 @@ export default function HiraganaGuidePage({ params }) {
   if (!page) notFound();
 
   const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
+    process.env.NEXT_PUBLIC_SITE_URL || "https://www.skilldojojp.com";
 
   const structuredData = {
     "@context": "https://schema.org",

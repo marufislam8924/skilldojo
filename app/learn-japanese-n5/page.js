@@ -75,7 +75,7 @@ const faqItems = [
 ];
 
 export default function LearnJapaneseN5Page() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.skilldojojp.com";
 
   const structuredData = {
     "@context": "https://schema.org",

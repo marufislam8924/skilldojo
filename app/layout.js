@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Breadcrumbs from "./components/Breadcrumbs";
 import Script from "next/script";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://skilldojo.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.skilldojojp.com";
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -52,6 +52,14 @@ export const metadata = {
     description:
       "Master Japanese language basics with Hiragana, Katakana, JLPT N5 vocabulary, and interactive beginner lessons built for learners in the United States.",
     siteName: "SkillDojo",
+    images: [
+      {
+        url: `${siteUrl}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "SkillDojo - Learn Japanese Fast",
+      },
+    ],
     locale: "en_US",
   },
   twitter: {
@@ -59,6 +67,7 @@ export const metadata = {
     title: "Learn Japanese Fast (Beginner Guide 2026)",
     description:
       "Japanese beginner course with Hiragana, Katakana, JLPT N5 vocabulary, and listening practice for learners in the United States.",
+    images: [`${siteUrl}/og-image.png`],
   },
   robots: {
     index: true,
