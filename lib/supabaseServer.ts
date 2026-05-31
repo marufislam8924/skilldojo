@@ -9,34 +9,32 @@ export function createSupabaseServerClient() {
     throw new Error("Missing Supabase env vars. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.");
   }
 
-  let cookieStore = null;
+  let cookieStore;
   try {
     cookieStore = cookies();
   } catch {
-    cookieStore = null;
+    cookieStore = undefined;
   }
 
-  const options = cookieStore
-    ? {
-        cookies: {
-          getAll() {
-            return cookieStore.getAll();
-          },
-          setAll(cookiesToSet: Array<{ name: string; value: string; options?: any }>) {
-            try {
-              cookiesToSet.forEach(({ name, value, options }) =>
-                // cookieStore.set supports (name, value, options) in this runtime
-                // or an object — either form is fine depending on Next.js version
-                // so we try the common (name, value, options) signature
-                cookieStore.set(name, value, options)
-              );
-            } catch {
-              // Ignore cookie errors in Server Components
-            }
-          },
-        },
-      }
-    : undefined;
+  const options = {
+    cookies: {
+      getAll() {
+        try {
+          return cookieStore?.getAll() ?? [];
+        } catch {
+          return [];
+        }
+      },
+      setAll(cookiesToSet: Array<{ name: string; value: string; options?: any }>) {
+        if (!cookieStore) return;
+        try {
+          cookiesToSet.forEach(({ name, value, options }) => cookieStore.set(name, value, options));
+        } catch {
+          // Ignore cookie errors in Server Components
+        }
+      },
+    },
+  };
 
   return createServerClient(supabaseUrl, supabaseAnonKey, options);
 }
