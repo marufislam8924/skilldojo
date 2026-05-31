@@ -50,6 +50,7 @@ export async function generateMetadata({ params }) {
       title: data.title,
       description: data.excerpt,
       alternates: { canonical: `/blog/${params.slug}` },
+      authors: [{ name: "Maruf Islam", url: "https://www.skilldojojp.com/about" }],
       openGraph: {
         title: data.title,
         description: data.excerpt,
@@ -66,6 +67,7 @@ export async function generateMetadata({ params }) {
     title: localPost.title,
     description: localPost.excerpt || localPost.description,
     alternates: { canonical: `/blog/${params.slug}` },
+    authors: [{ name: "Maruf Islam", url: "https://www.skilldojojp.com/about" }],
     openGraph: {
       title: localPost.title,
       description: localPost.excerpt || localPost.description,
@@ -351,8 +353,20 @@ export default async function BlogPostPage({ params }) {
       <header className="mb-6">
         <div className="inline-block rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-slate-700">{postData.category || 'Guide'}</div>
         <h1 className="mt-4 text-2xl font-extrabold text-[var(--ink)]">{postData.title}</h1>
-        <p className="mt-2 text-sm text-[var(--muted)]">{new Date(postData.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</p>
       </header>
+
+      <div className="flex items-center gap-4 mt-3 mb-6">
+        <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-sm font-semibold text-slate-800">
+          MI
+        </div>
+        <div>
+          <p className="text-sm font-medium text-[var(--ink)]">Maruf Islam</p>
+          <p className="text-xs text-[var(--muted)]">Japanese Language Learner &amp; Founder of SkillDojo — Dhaka, Bangladesh</p>
+        </div>
+        <div className="ml-auto text-sm text-[var(--muted)]">
+          {new Date(postData.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+        </div>
+      </div>
 
       <article className={styles.article}>{renderMarkdown(postData.content)}</article>
 
