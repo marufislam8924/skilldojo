@@ -69,6 +69,9 @@ export const metadata = {
       "Japanese beginner course with Hiragana, Katakana, JLPT N5 vocabulary, and listening practice for learners in the United States.",
     images: ["https://www.skilldojojp.com/og-image.png"],
   },
+  verification: {
+    google: "DP1MP_AhTkSshQyv2E8_cm8VCyW7mYfRuI4bdFq1Y3Q",
+  },
   robots: {
     index: true,
     follow: true,
