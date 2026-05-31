@@ -22,23 +22,7 @@ import {
 import { useAnalytics } from "../hooks/useAnalytics";
 import { useBehavioralRetention } from "../hooks/useBehavioralRetention";
 
-const TESTIMONIALS = [
-  {
-    quote: "I finally stayed consistent for 21 days because every lesson feels like a tiny win.",
-    name: "Maya R.",
-    role: "Beginner learner",
-  },
-  {
-    quote: "The one-click start removed my excuses. I open SkillDojo and continue instantly.",
-    name: "Ken J.",
-    role: "Busy professional",
-  },
-  {
-    quote: "The streak and XP feedback made me practice daily instead of weekly.",
-    name: "Sara T.",
-    role: "JLPT N5 student",
-  },
-];
+// Social proof (testimonials) removed per request
 
 const BADGE_SHOWCASE = ["first_lesson", "three_day_streak", "week_streak", "xp_500"];
 
@@ -143,7 +127,6 @@ export default function GamifiedHome() {
   const [overall, setOverall] = useState({ completedLessons: 0, totalLessons: 0, completedPercent: 0 });
   const [mistakes, setMistakes] = useState([]);
   const [continueInfo, setContinueInfo] = useState(null);
-  const [liveLearners, setLiveLearners] = useState(23);
   const [contentReady, setContentReady] = useState(false);
   const [reward, setReward] = useState({ show: false, text: "" });
   const [showConfetti, setShowConfetti] = useState(false);
@@ -166,20 +149,7 @@ export default function GamifiedHome() {
     return () => window.clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      setLiveLearners((current) => {
-        const delta = Math.floor(Math.random() * 5) - 2;
-        return Math.max(14, Math.min(42, current + delta));
-      });
-    }, 7000);
-
-    return () => window.clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    trackCustom("live_learning_indicator", { learners_now: liveLearners });
-  }, [liveLearners, trackCustom]);
+  // live learners indicator removed
 
   const continueHref = continueInfo?.href || "/hiragana/1";
   const continueLabel = continueInfo
@@ -560,36 +530,7 @@ export default function GamifiedHome() {
         />
       </Section>
 
-      {/* // TODO: connect to real analytics */}
-      <Section>
-        {/* // TODO: connect to real analytics */}
-
-        <div className="grid gap-4 md:grid-cols-3">
-          {contentReady
-            ? TESTIMONIALS.map((item) => (
-                <article
-                  key={item.name}
-                  className="rounded-2xl border border-slate-200 bg-white p-5 shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
-                >
-                  <p className="text-slate-700">"{item.quote}"</p>
-                  <p className="mt-4 text-sm font-bold text-slate-900">{item.name}</p>
-                  <p className="text-xs text-slate-500">{item.role}</p>
-                </article>
-              ))
-            : [1, 2, 3].map((item) => (
-                <article key={item} className="h-44 animate-pulse rounded-2xl border border-slate-200 bg-slate-100" />
-              ))}
-        </div>
-
-        <SectionAction
-          href="/conversation"
-          label="Try Next Challenge →"
-          onClick={() => {
-            trackCTA("next_challenge_after_social_proof", { target: "/conversation" });
-            maybeAwardVariableBonus("social_proof_challenge");
-          }}
-        />
-      </Section>
+      {/* Social proof section removed per request */}
 
       <Section title="The Curiosity Trigger" subtitle="Why learners quit">
         <div className="grid gap-4 md:grid-cols-2">
