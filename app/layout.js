@@ -47,14 +47,14 @@ export const metadata = {
   },
   openGraph: {
     type: "website",
-    url: "https://www.skilldojojp.com",
+    url: siteUrl,
     title: "Learn Japanese Fast (Beginner Guide 2026)",
     description:
       "Master Japanese language basics with Hiragana, Katakana, JLPT N5 vocabulary, and interactive beginner lessons built for learners in the United States.",
     siteName: "SkillDojo",
     images: [
       {
-        url: "https://www.skilldojojp.com/og-image.png",
+        url: `${siteUrl}/og-image.png`,
         width: 1200,
         height: 630,
         alt: "SkillDojo - Learn Japanese Fast",
@@ -67,7 +67,7 @@ export const metadata = {
     title: "Learn Japanese Fast (Beginner Guide 2026)",
     description:
       "Japanese beginner course with Hiragana, Katakana, JLPT N5 vocabulary, and listening practice for learners in the United States.",
-    images: ["https://www.skilldojojp.com/og-image.png"],
+    images: [`${siteUrl}/og-image.png`],
   },
   robots: {
     index: true,
@@ -89,8 +89,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en-US">
       <head>
-        <link rel="alternate" hrefLang="en-us" href="https://www.skilldojojp.com" />
-        <link rel="alternate" hrefLang="x-default" href="https://www.skilldojojp.com" />
+        <link rel="alternate" hrefLang="en-us" href={siteUrl} />
+        <link rel="alternate" hrefLang="x-default" href={siteUrl} />
         <meta name="language" content="en-US" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
