@@ -54,10 +54,10 @@ export const metadata = {
     siteName: "SkillDojo",
     images: [
       {
-        url: `${siteUrl}/og-image.png`,
+        url: "https://www.skilldojojp.com/og-image.png",
         width: 1200,
         height: 630,
-        alt: "SkillDojo - Learn Japanese Fast",
+        alt: "SkillDojo - Learn Japanese Free",
       },
     ],
     locale: "en_US",
@@ -67,7 +67,7 @@ export const metadata = {
     title: "Learn Japanese Fast (Beginner Guide 2026)",
     description:
       "Japanese beginner course with Hiragana, Katakana, JLPT N5 vocabulary, and listening practice for learners in the United States.",
-    images: [`${siteUrl}/og-image.png`],
+    images: ["https://www.skilldojojp.com/og-image.png"],
   },
   robots: {
     index: true,
