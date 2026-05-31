@@ -17,6 +17,7 @@ import {
   getContinueLesson,
   getDashboardData,
   getGamificationStats,
+  getStudentSession,
   getReviewMistakes,
 } from "../lib/studentProgress";
 import { useAnalytics } from "../hooks/useAnalytics";
@@ -127,6 +128,7 @@ export default function GamifiedHome() {
   const [overall, setOverall] = useState({ completedLessons: 0, totalLessons: 0, completedPercent: 0 });
   const [mistakes, setMistakes] = useState([]);
   const [continueInfo, setContinueInfo] = useState(null);
+  const [studentSession, setStudentSession] = useState(null);
   const [contentReady, setContentReady] = useState(false);
   const [reward, setReward] = useState({ show: false, text: "" });
   const [showConfetti, setShowConfetti] = useState(false);
@@ -136,6 +138,7 @@ export default function GamifiedHome() {
     setOverall(getDashboardData().overall);
     setMistakes(getReviewMistakes(5));
     setContinueInfo(getContinueLesson());
+    setStudentSession(getStudentSession());
   }, []);
 
   useEffect(() => {
@@ -478,56 +481,70 @@ export default function GamifiedHome() {
       </Section>
 
       <Section title="Continue Where You Left Off" subtitle="Progress Loop">
-        <ContinueCard />
+        {studentSession ? (
+          <>
+            <ContinueCard />
 
-        <div className="mt-5 grid gap-4 md:grid-cols-2">
-          <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h3 className="text-lg font-bold text-slate-900">You are {persistentPercent}% complete</h3>
-            <p className="mt-1 text-sm text-slate-600">
-              Completed {overall.completedLessons} of {overall.totalLessons || 1} lessons. Keep your streak alive with one short lesson now.
-            </p>
-          </article>
+            <div className="mt-5 grid gap-4 md:grid-cols-2">
+              <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <h3 className="text-lg font-bold text-slate-900">You are {persistentPercent}% complete</h3>
+                <p className="mt-1 text-sm text-slate-600">
+                  Completed {overall.completedLessons} of {overall.totalLessons || 1} lessons. Keep your streak alive with one short lesson now.
+                </p>
+              </article>
 
-          <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div className="mb-2 flex items-center justify-between">
-              <h3 className="text-lg font-bold text-slate-900">Review mistakes</h3>
-              {mistakes.length > 0 ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    clearReviewMistakes();
-                    setMistakes([]);
-                    trackCTA("clear_mistakes", { location: "progress_loop" });
-                  }}
-                  className="text-xs font-bold text-red-600 transition-colors hover:text-red-700"
-                >
-                  Clear
-                </button>
-              ) : null}
+              <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div className="mb-2 flex items-center justify-between">
+                  <h3 className="text-lg font-bold text-slate-900">Review mistakes</h3>
+                  {mistakes.length > 0 ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        clearReviewMistakes();
+                        setMistakes([]);
+                        trackCTA("clear_mistakes", { location: "progress_loop" });
+                      }}
+                      className="text-xs font-bold text-red-600 transition-colors hover:text-red-700"
+                    >
+                      Clear
+                    </button>
+                  ) : null}
+                </div>
+
+                {mistakes.length === 0 ? (
+                  <p className="text-sm text-slate-500">No mistakes saved yet. Keep practicing for perfect streak runs.</p>
+                ) : (
+                  <ul className="space-y-2">
+                    {mistakes.map((item) => (
+                      <li key={item.id} className="rounded-lg border border-slate-200 bg-slate-50 p-2.5 text-sm text-slate-700">
+                        {item.prompt || "Question"}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </article>
             </div>
 
-            {mistakes.length === 0 ? (
-              <p className="text-sm text-slate-500">No mistakes saved yet. Keep practicing for perfect streak runs.</p>
-            ) : (
-              <ul className="space-y-2">
-                {mistakes.map((item) => (
-                  <li key={item.id} className="rounded-lg border border-slate-200 bg-slate-50 p-2.5 text-sm text-slate-700">
-                    {item.prompt || "Question"}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </article>
-        </div>
-
-        <SectionAction
-          href={continueHref}
-          label={`${continueLabel} →`}
-          onClick={() => {
-            trackCTA("continue_after_progress_loop", { target: continueHref });
-            maybeAwardVariableBonus("progress_loop_continue");
-          }}
-        />
+            <SectionAction
+              href={continueHref}
+              label={`${continueLabel} →`}
+              onClick={() => {
+                trackCTA("continue_after_progress_loop", { target: continueHref });
+                maybeAwardVariableBonus("progress_loop_continue");
+              }}
+            />
+          </>
+        ) : (
+          <div className="text-center">
+            <button
+              type="button"
+              onClick={handleStartOneClick}
+              className="mt-5 inline-flex items-center justify-center rounded-2xl bg-emerald-500 px-6 py-3 text-base font-bold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-600"
+            >
+              Start Learning Now
+            </button>
+          </div>
+        )}
       </Section>
 
       {/* Social proof section removed per request */}
