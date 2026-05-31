@@ -71,6 +71,8 @@ function TopProgressLoop({
   percent,
   continueHref,
   onContinueClick,
+  onGuestStart,
+  isAuthenticated,
   urgencyMessage,
   streakWarningText,
   showStreakWarning,
@@ -99,13 +101,23 @@ function TopProgressLoop({
           ) : null}
         </div>
 
-        <Link
-          href={continueHref}
-          onClick={onContinueClick}
-          className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-800"
-        >
-          Continue where you left off
-        </Link>
+        {isAuthenticated ? (
+          <Link
+            href={continueHref}
+            onClick={onContinueClick}
+            className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-800"
+          >
+            Continue where you left off
+          </Link>
+        ) : (
+          <button
+            type="button"
+            onClick={onGuestStart}
+            className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-800"
+          >
+            Start Learning Now
+          </button>
+        )}
       </div>
     </div>
   );
