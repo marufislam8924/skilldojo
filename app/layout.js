@@ -35,10 +35,7 @@ export const metadata = {
     "USA JLPT N5 preparation",
   ],
   alternates: {
-    canonical: "/",
-    languages: {
-      "en-us": "/",
-    },
+    canonical: "https://www.skilldojojp.com",
   },
   other: {
     "geo.region": "US",
