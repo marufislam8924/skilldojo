@@ -56,7 +56,9 @@ export default function UserProgressBanner() {
       <div className={styles.bannerContent}>
         <div className={styles.greeting}>
           <h2 className={styles.welcomeText}>Welcome back, {student.name}!</h2>
-          <p className={styles.subtitle}>Keep your streak alive 🔥</p>
+          <p className={styles.subtitle}>
+            Keep your streak alive {gamifStats.currentStreak > 0 ? "🔥" : ""}
+          </p>
         </div>
 
         <div className={styles.statsRow}>

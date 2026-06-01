@@ -5,15 +5,14 @@ import HomeClient from "./components/HomeClient";
 export const metadata = {
   title: "Learn Japanese Fast (Beginner Guide 2026)",
   description:
-    "Learn Japanese N5 from scratch with vocabulary lists, easy grammar explanations, listening practice, and a practical 30-day JLPT N5 study plan for learners in the United States.",
+    "Learn Japanese N5 from scratch with vocabulary lists, easy grammar explanations, listening practice, and a practical 30-day JLPT N5 study plan for Bengali-speaking learners.",
   keywords: [
     "Japanese N5",
     "JLPT N5",
     "Learn Japanese N5",
     "Japanese beginner course",
     "Japanese language basics",
-    "learn Japanese in USA",
-    "United States Japanese learning",
+    
   ],
   alternates: {
     canonical: "/",
@@ -53,10 +52,10 @@ export default function Home() {
         inLanguage: "en-US",
         areaServed: {
           "@type": "Country",
-          name: "United States",
+          name: "Bangladesh",
         },
         description:
-          "Free Japanese learning website with Hiragana, Katakana, and JLPT N5 vocabulary lessons for learners in the United States.",
+          "Free Japanese learning website with Hiragana, Katakana, and JLPT N5 vocabulary lessons for Bengali-speaking learners.",
       },
       {
         "@type": "EducationalOrganization",

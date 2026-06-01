@@ -1,7 +1,7 @@
 export const metadata = {
   title: "Quiz — Test Your Japanese Knowledge | JLPT N5 Practice",
   description:
-    "Take quizzes on Hiragana, Katakana, Vocabulary, and Grammar to test your Japanese knowledge with multiple choice, instant feedback, and XP rewards for learners in the United States.",
+    "Take quizzes on Hiragana, Katakana, Vocabulary, and Grammar to test your Japanese knowledge with multiple choice, instant feedback, and XP rewards for Bengali-speaking learners.",
   keywords: [
     "Japanese quiz",
     "JLPT N5 practice test",
@@ -18,7 +18,7 @@ export const metadata = {
   openGraph: {
     title: "Quiz — Test Your Japanese Knowledge",
     description:
-      "Take quizzes on Hiragana, Katakana, Vocabulary, and Grammar with instant feedback and XP rewards for learners in the United States.",
+      "Take quizzes on Hiragana, Katakana, Vocabulary, and Grammar with instant feedback and XP rewards for Bengali-speaking learners.",
     url: "/quiz",
     type: "website",
   },
@@ -26,7 +26,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Japanese Quiz — JLPT N5 Practice",
     description:
-      "Test your Hiragana, Katakana, Vocabulary, and Grammar knowledge with interactive quizzes designed for learners in the United States.",
+      "Test your Hiragana, Katakana, Vocabulary, and Grammar knowledge with interactive quizzes designed for Bengali-speaking learners.",
   },
 };
 

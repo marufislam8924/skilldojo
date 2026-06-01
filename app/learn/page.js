@@ -8,7 +8,7 @@ const allLearnPages = [...seoPages, ...keywordPages];
 export const metadata = {
   title: "Learn Japanese — 100+ Free Lessons, Vocabulary & Grammar Guides",
   description:
-    "Browse 100+ free Japanese learning guides covering Hiragana, Katakana, JLPT N5 vocabulary, grammar, conversation, and study strategy for learners in the United States. Start from zero.",
+    "Browse 100+ free Japanese learning guides covering Hiragana, Katakana, JLPT N5 vocabulary, grammar, conversation, and study strategy for Bengali-speaking learners. Start from zero.",
   keywords: [
     "learn japanese",
     "japanese lessons",
@@ -17,8 +17,6 @@ export const metadata = {
     "JLPT N5",
     "japanese vocabulary",
     "japanese grammar",
-    "learn Japanese in USA",
-    "United States Japanese lessons",
   ],
   alternates: {
     canonical: "/learn",
@@ -29,7 +27,7 @@ export const metadata = {
   openGraph: {
     title: "Learn Japanese — 100+ Free Lessons & Guides | SkillDojo",
     description:
-      "Browse 100+ free Japanese learning guides covering Hiragana, Katakana, vocabulary, grammar, conversation, and study strategy for learners in the United States.",
+      "Browse 100+ free Japanese learning guides covering Hiragana, Katakana, vocabulary, grammar, conversation, and study strategy for Bengali-speaking learners.",
     url: "/learn",
     type: "website",
   },

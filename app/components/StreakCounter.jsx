@@ -1,6 +1,8 @@
 import styles from "./StreakCounter.module.css";
 
 export default function StreakCounter({ currentStreak, longestStreak }) {
+  if (!currentStreak || currentStreak <= 0) return null;
+
   return (
     <div className={styles.container}>
       <div className={styles.streakBox}>

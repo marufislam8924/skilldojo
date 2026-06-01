@@ -3,7 +3,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.skilldojojp.com
 export const metadata = {
   title: "Japanese Courses",
   description:
-    "Browse structured Japanese beginner courses on SkillDojo, including the 30-day plan and complete JLPT N5 curriculum for learners in the United States.",
+    "Browse structured Japanese beginner courses on SkillDojo, including the 30-day plan and complete JLPT N5 curriculum for Bengali-speaking learners.",
   alternates: {
     canonical: "/courses",
     languages: {
@@ -13,7 +13,7 @@ export const metadata = {
   openGraph: {
     title: "Japanese Courses | SkillDojo",
     description:
-      "Browse structured Japanese beginner courses on SkillDojo, including the 30-day plan and complete JLPT N5 curriculum for learners in the United States.",
+      "Browse structured Japanese beginner courses on SkillDojo, including the 30-day plan and complete JLPT N5 curriculum for Bengali-speaking learners.",
     url: "/courses",
     type: "website",
   },
@@ -21,7 +21,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Japanese Courses | SkillDojo",
     description:
-      "Structured beginner Japanese courses with clear daily progression and JLPT N5 preparation for learners in the United States.",
+      "Structured beginner Japanese courses with clear daily progression and JLPT N5 preparation for Bengali-speaking learners.",
   },
 };
 

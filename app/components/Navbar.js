@@ -143,10 +143,12 @@ export default function Navbar() {
 
               <div className="mx-2 h-5 w-px bg-[var(--border)]" />
 
-              <div className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-2.5 py-1 text-xs font-bold text-orange-700">
-                <span aria-hidden="true">🔥</span>
-                <span>{streak}</span>
-              </div>
+              {streak > 0 ? (
+                <div className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-2.5 py-1 text-xs font-bold text-orange-700">
+                  <span aria-hidden="true">🔥</span>
+                  <span>{streak}</span>
+                </div>
+              ) : null}
 
               {continueInfo ? (
                 <Link
@@ -242,9 +244,11 @@ export default function Navbar() {
             <span className="text-xl font-black tracking-tight text-[var(--ink)]">
               Skill<span className="text-[var(--red)]">Dojo</span>
             </span>
-            <div className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-2 py-0.5 text-[11px] font-bold text-orange-700">
-              🔥 {streak}
-            </div>
+            {streak > 0 ? (
+              <div className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-2 py-0.5 text-[11px] font-bold text-orange-700">
+                🔥 {streak}
+              </div>
+            ) : null}
           </div>
           <button
             type="button"

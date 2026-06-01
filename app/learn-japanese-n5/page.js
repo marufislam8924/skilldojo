@@ -5,7 +5,7 @@ import styles from "./page.module.css";
 export const metadata = {
   title: "Learn Japanese N5: Complete Beginner Roadmap, Study Plan, and FAQ",
   description:
-    "Learn Japanese N5 with a complete step-by-step roadmap covering hiragana, katakana, vocabulary, grammar, listening, and conversation practice for learners in the United States. Includes FAQ, study plan, and free course CTA.",
+    "Learn Japanese N5 with a complete step-by-step roadmap covering hiragana, katakana, vocabulary, grammar, listening, and conversation practice for Bengali-speaking learners. Includes FAQ, study plan, and free course CTA.",
   keywords: [
     "learn japanese n5",
     "jlpt n5 study plan",
@@ -13,8 +13,7 @@ export const metadata = {
     "learn japanese online",
     "jlpt n5 vocabulary",
     "japanese basic conversation",
-    "learn Japanese in USA",
-    "United States JLPT N5 guide",
+    
   ],
   alternates: {
     canonical: "/learn-japanese-n5",
@@ -24,8 +23,8 @@ export const metadata = {
   },
   openGraph: {
     title: "Learn Japanese N5: Complete Beginner Roadmap",
-    description:
-      "A practical guide to learn Japanese N5 with clear milestones for scripts, vocabulary, grammar, listening, and speaking for learners in the United States.",
+        description:
+          "A practical guide to learn Japanese N5 with clear milestones for scripts, vocabulary, grammar, listening, and speaking for Bengali-speaking learners.",
     url: "/learn-japanese-n5",
     type: "article",
   },
@@ -84,7 +83,7 @@ export default function LearnJapaneseN5Page() {
         "@type": "Course",
         name: "Learn Japanese N5",
         description:
-          "A complete beginner roadmap to learn Japanese N5, including scripts, vocabulary, grammar, listening, and conversation practice for learners in the United States.",
+          "A complete beginner roadmap to learn Japanese N5, including scripts, vocabulary, grammar, listening, and conversation practice for Bengali-speaking learners.",
         provider: {
           "@type": "EducationalOrganization",
           name: "SkillDojo",

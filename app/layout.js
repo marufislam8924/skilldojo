@@ -12,7 +12,7 @@ export const metadata = {
     template: "%s | SkillDojo",
   },
   description:
-    "Learn Japanese N5 from scratch with JLPT N5 vocabulary, grammar basics, listening practice, and beginner-friendly study plans for learners in the United States.",
+    "Learn Japanese N5 from scratch with JLPT N5 vocabulary, grammar basics, listening practice, and beginner-friendly study plans for Bengali-speaking learners.",
   applicationName: "SkillDojo",
   keywords: [
     "Japanese N5",
@@ -30,16 +30,11 @@ export const metadata = {
     "Japanese N5 conversation practice",
     "JLPT N5 mock test free",
     "Japanese N5 verbs list with examples",
-    "learn Japanese in USA",
-    "United States Japanese learners",
-    "USA JLPT N5 preparation",
   ],
   alternates: {
     canonical: "https://www.skilldojojp.com",
   },
   other: {
-    "geo.region": "US",
-    "geo.placename": "United States",
     "content-language": "en-US",
   },
   openGraph: {
@@ -47,7 +42,7 @@ export const metadata = {
     url: siteUrl,
     title: "Learn Japanese Fast (Beginner Guide 2026)",
     description:
-      "Master Japanese language basics with Hiragana, Katakana, JLPT N5 vocabulary, and interactive beginner lessons built for learners in the United States.",
+      "Master Japanese language basics with Hiragana, Katakana, JLPT N5 vocabulary, and interactive beginner lessons built for Bengali-speaking learners.",
     siteName: "SkillDojo",
     images: [
       {
@@ -63,7 +58,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Learn Japanese Fast (Beginner Guide 2026)",
     description:
-      "Japanese beginner course with Hiragana, Katakana, JLPT N5 vocabulary, and listening practice for learners in the United States.",
+      "Japanese beginner course with Hiragana, Katakana, JLPT N5 vocabulary, and listening practice for Bengali-speaking learners.",
     images: ["https://www.skilldojojp.com/og-image.png"],
   },
   verification: {

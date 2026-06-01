@@ -3,7 +3,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.skilldojojp.com
 export const metadata = {
   title: "JLPT N5 Study Plan (Pass in 30 Days)",
   description:
-    "Follow a free 30-day study plan to learn Japanese from scratch with daily lessons covering Hiragana, Katakana, vocabulary, grammar, and conversation for JLPT N5 learners in the United States.",
+    "Follow a free 30-day study plan to learn Japanese from scratch with daily lessons covering Hiragana, Katakana, vocabulary, grammar, and conversation for JLPT N5 Bengali-speaking learners.",
   keywords: [
     "learn Japanese in 30 days",
     "JLPT N5 study plan",
@@ -21,7 +21,7 @@ export const metadata = {
   openGraph: {
     title: "JLPT N5 Study Plan (Pass in 30 Days)",
     description:
-      "Free 30-day study plan to learn Japanese from scratch with daily lessons for learners in the United States.",
+      "Free 30-day study plan to learn Japanese from scratch with daily lessons for Bengali-speaking learners.",
     url: "/courses/30-days",
     type: "website",
   },
@@ -29,7 +29,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "JLPT N5 Study Plan (Pass in 30 Days)",
     description:
-      "Free 30-day JLPT N5 study plan covering Hiragana, Katakana, vocabulary, grammar, and conversation for learners in the United States.",
+      "Free 30-day JLPT N5 study plan covering Hiragana, Katakana, vocabulary, grammar, and conversation for Bengali-speaking learners.",
   },
 };
 

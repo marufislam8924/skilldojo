@@ -1,7 +1,7 @@
 export const metadata = {
   title: "Learn Hiragana — Complete Japanese Alphabet Course for Beginners",
   description:
-    "Master all 46 Hiragana characters with interactive lessons, audio pronunciation, and beginner-friendly flashcards for learners in the United States. Start reading Japanese today.",
+    "Master all 46 Hiragana characters with interactive lessons, audio pronunciation, and beginner-friendly flashcards for Bengali-speaking learners. Start reading Japanese today.",
   keywords: [
     "learn hiragana",
     "hiragana course",
@@ -21,7 +21,7 @@ export const metadata = {
   openGraph: {
     title: "Learn Hiragana — Complete Japanese Alphabet Course",
     description:
-      "Master all 46 Hiragana characters with interactive lessons, audio pronunciation, and beginner-friendly flashcards for learners in the United States.",
+      "Master all 46 Hiragana characters with interactive lessons, audio pronunciation, and beginner-friendly flashcards for Bengali-speaking learners.",
     url: "/hiragana",
     type: "website",
   },
@@ -29,7 +29,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Learn Hiragana — Japanese Alphabet Course",
     description:
-      "Master all 46 Hiragana characters with interactive lessons and audio pronunciation for learners in the United States.",
+      "Master all 46 Hiragana characters with interactive lessons and audio pronunciation for Bengali-speaking learners.",
   },
 };
 

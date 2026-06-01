@@ -260,18 +260,21 @@ export default function GamifiedHome() {
         onDone={() => setReward({ show: false, text: "" })}
       />
 
-      <TopProgressLoop
-        percent={persistentPercent}
-        continueHref={continueHref}
-        urgencyMessage={urgencyMessage}
-        streakWarningText={streakWarningText}
-        showStreakWarning={showStreakWarning}
-        zeigarnikMessage={zeigarnik.message}
-        onContinueClick={() => {
-          trackCTA("continue_where_left_off", { location: "sticky_progress" });
-          maybeAwardVariableBonus("sticky_continue");
-        }}
-      />
+      {studentSession ? (
+        <TopProgressLoop
+          percent={persistentPercent}
+          continueHref={continueHref}
+          urgencyMessage={urgencyMessage}
+          streakWarningText={streakWarningText}
+          showStreakWarning={showStreakWarning}
+          zeigarnikMessage={zeigarnik.message}
+          isAuthenticated={Boolean(studentSession)}
+          onContinueClick={() => {
+            trackCTA("continue_where_left_off", { location: "sticky_progress" });
+            maybeAwardVariableBonus("sticky_continue");
+          }}
+        />
+      ) : null}
 
       <Section id="hero">
         <div className="grid items-center gap-7 lg:grid-cols-2">
@@ -548,13 +551,9 @@ export default function GamifiedHome() {
           </>
         ) : (
           <div className="text-center">
-            <button
-              type="button"
-              onClick={handleStartOneClick}
-              className="mt-5 inline-flex items-center justify-center rounded-2xl bg-emerald-500 px-6 py-3 text-base font-bold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-600"
-            >
-              Start Learning Now
-            </button>
+            <Link href="/student/signin" className="text-sm font-bold text-slate-800">
+              Sign in to track your progress
+            </Link>
           </div>
         )}
       </Section>

@@ -1,7 +1,7 @@
 export const metadata = {
   title: "Japanese N5 Grammar Course — JLPT N5 Grammar Explained Easy",
   description:
-    "Learn core JLPT N5 grammar with interactive flashcards, AI voice playback, and practical example sentences for learners in the United States.",
+    "Learn core JLPT N5 grammar with interactive flashcards, AI voice playback, and practical example sentences for Bengali-speaking learners.",
   keywords: [
     "JLPT N5 grammar",
     "Japanese grammar for beginners",
@@ -18,7 +18,7 @@ export const metadata = {
   openGraph: {
     title: "Japanese N5 Grammar Course — JLPT N5 Grammar Explained Easy",
     description:
-      "Learn core JLPT N5 grammar with interactive flashcards, AI voice playback, and practical example sentences for learners in the United States.",
+      "Learn core JLPT N5 grammar with interactive flashcards, AI voice playback, and practical example sentences for Bengali-speaking learners.",
     url: "/grammar",
     type: "website",
   },
@@ -26,7 +26,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Japanese N5 Grammar Course",
     description:
-      "JLPT N5 grammar with flashcards, voice playback, and example sentences for learners in the United States.",
+      "JLPT N5 grammar with flashcards, voice playback, and example sentences for Bengali-speaking learners.",
   },
 };
 
