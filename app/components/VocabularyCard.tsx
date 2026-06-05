@@ -2,7 +2,6 @@
 
 import { useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { VocabularyLesson, VocabularyWord } from '../../data/vocabularyLessons';
 import ProgressBar from './gamification/ProgressBar';
 import AchievementPopup from './gamification/AchievementPopup';
 import { markLessonComplete, recordMistake } from '../lib/studentProgress';
