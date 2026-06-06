@@ -11,6 +11,7 @@ import AchievementPopup from "./gamification/AchievementPopup";
 import Confetti from "./Confetti";
 import DailyGoal from "./DailyGoal";
 import AdSenseUnit from "./AdSenseUnit";
+import WordOfTheDay from "../../components/vocab/WordOfTheDay";
 import {
   addXP,
   clearReviewMistakes,
@@ -351,6 +352,8 @@ export default function GamifiedHome() {
                     </div>
                   ))}
             </div>
+
+            <WordOfTheDay />
 
             {showStreakWarning ? (
               <p className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-bold text-rose-700">

@@ -178,7 +178,7 @@ function calculateXPForNextLevel(level) {
   return level * 100;
 }
 
-export function updateStreakAndXP(lessonsCompleted = 0) {
+export function updateStreakAndXP(lessonsCompleted = 0, xpPerLesson = 10) {
   if (!hasWindow() || lessonsCompleted <= 0) return {};
 
   const today = new Date().toDateString();
@@ -225,8 +225,8 @@ export function updateStreakAndXP(lessonsCompleted = 0) {
   else if (currentStreak >= 7) multiplier = 1.3;
   else if (currentStreak >= 3) multiplier = 1.1;
 
-  // XP: 10 points per lesson, modified by streak multiplier
-  const baseXP = lessonsCompleted * 10;
+  // XP: `xpPerLesson` points per lesson, modified by streak multiplier
+  const baseXP = lessonsCompleted * Number(xpPerLesson || 10);
   const xpGained = Math.floor(baseXP * multiplier);
   const oldTotal = gamif.totalXP || 0;
   const newTotal = oldTotal + xpGained;
@@ -646,7 +646,7 @@ export async function syncProgressToCloud(uid) {
   await writeRemoteProgress(uid, localProgress);
 }
 
-export function markLessonComplete(courseSlug, lessonId, score, totalCards) {
+export function markLessonComplete(courseSlug, lessonId, score, totalCards, options = {}) {
   if (!hasWindow() || !courseSlug || !lessonId) return;
 
   const safeScore = Number(score) || 0;
@@ -690,7 +690,17 @@ export function markLessonComplete(courseSlug, lessonId, score, totalCards) {
   saveStudentProgress(progress);
 
   // Award XP only once per lesson, but keep streak alive for any daily completion.
-  const gamifResult = isNewLesson ? updateStreakAndXP(1) : updateStreak();
+  const gamifResult = isNewLesson ? updateStreakAndXP(1, options?.xpPerLesson || 10) : updateStreak();
+  // Perfect-score bonus for vocabulary lessons
+  let perfectBonus = 0;
+  try {
+    if (safeTotal > 0 && safeScore === safeTotal && courseSlug === "vocab") {
+      const bonus = addXP(100, { source: "vocab_perfect_bonus" });
+      perfectBonus = Number(bonus?.xpGained || 0);
+    }
+  } catch (e) {
+    // ignore bonus failures
+  }
   const unlockedBadges = isNewLesson ? evaluateAndUnlockAchievements(progress) : [];
 
   const student = getStudentSession();
@@ -713,7 +723,7 @@ export function markLessonComplete(courseSlug, lessonId, score, totalCards) {
   const latestStats = getGamificationStats();
 
   return {
-    xpGained: Number(gamifResult?.xpGained) || 0,
+    xpGained: Number(gamifResult?.xpGained || 0) + Number(perfectBonus || 0),
     baseXP: Number(gamifResult?.baseXP) || 0,
     multiplier: Number(gamifResult?.multiplier) || 1,
     newLevel: Number(gamifResult?.newLevel ?? latestStats.level) || 1,

@@ -101,7 +101,13 @@ export default function LessonView({
     if (nextIndex >= data.chars.length) {
       const finalScore = score + 1;
       setScore(finalScore);
-      const gamifResult = markLessonComplete(courseSlug, lessonId, finalScore, data.chars.length);
+      const gamifResult = markLessonComplete(
+        courseSlug,
+        lessonId,
+        finalScore,
+        data.chars.length,
+        { xpPerLesson: courseSlug === "vocab" ? 50 : 10 }
+      );
       setXPGained(gamifResult?.xpGained || 0);
       setGamifStats(gamifResult);
       setDone(true);
